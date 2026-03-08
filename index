@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DiscussReady — AI Discussion Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8f7ff;
+    --white: #ffffff;
+    --surface: #f1f0fa;
+    --border: #e4e2f5;
+    --violet-50: #f5f3ff;
+    --violet-100: #ede9fe;
+    --violet-200: #ddd6fe;
+    --violet-500: #8b5cf6;
+    --violet-600: #7c3aed;
+    --violet-700: #6d28d9;
+    --blue-50: #eff6ff;
+    --blue-100: #dbeafe;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --emerald-50: #ecfdf5;
+    --emerald-100: #d1fae5;
+    --emerald-500: #10b981;
+    --emerald-600: #059669;
+    --amber-50: #fffbeb;
+    --amber-500: #f59e0b;
+    --amber-600: #d97706;
+    --pink-500: #ec4899;
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+    --red-500: #ef4444;
+    --teal-500: #14b8a6;
+    --teal-600: #0d9488;
+    --indigo-600: #4f46e5;
+    --nav-w: 240px;
+    --radius: 12px;
+    --shadow: 0 2px 16px rgba(124,58,237,0.08);
+    --shadow-lg: 0 8px 32px rgba(124,58,237,0.14);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--slate-800);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  h1,h2,h3,h4,h5 { font-family: 'Sora', sans-serif; line-height: 1.25; }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: var(--nav-w);
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    transition: transform .3s ease;
+  }
+  .sidebar.hidden { transform: translateX(-100%); }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 22px 20px 18px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .logo-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--violet-600), var(--blue-500));
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-icon svg { width: 18px; height: 18px; color: white; }
+  .logo-text h2 { font-size: 14px; font-weight: 700; color: var(--slate-900); }
+  .logo-text p { font-size: 11px; color: var(--slate-400); }
+  .nav-list { flex: 1; overflow-y: auto; padding: 6px 12px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 10px;
+    cursor: pointer; text-decoration: none;
+    color: var(--slate-600); font-size: 13.5px; font-weight: 500;
+    transition: background .15s, color .15s;
+    margin-bottom: 2px;
+    border: none; background: none; width: 100%; text-align: left;
+  }
+  .nav-item:hover { background: var(--slate-50); color: var(--slate-900); }
+  .nav-item.active { background: var(--violet-50); color: var(--violet-700); font-weight: 600; }
+  .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .sidebar-footer {
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+  }
+  .avatar-sm {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet-500), var(--blue-500));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .sidebar-user-name { font-size: 12px; font-weight: 600; color: var(--slate-700); }
+  .sidebar-user-role { font-size: 11px; color: var(--slate-400); }
+
+  /* Main area */
+  .main { margin-left: var(--nav-w); flex: 1; min-width: 0; }
+  .page { display: none; animation: fadeUp .35s ease; }
+  .page.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  .mobile-header {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    z-index: 200;
+    padding: 12px 16px;
+    align-items: center; justify-content: space-between;
+  }
+  .burger { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; }
+  .burger:hover { background: var(--slate-100); }
+  .mobile-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    z-index: 150; backdrop-filter: blur(2px);
+  }
+  .mobile-overlay.open { display: block; }
+
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); z-index: 160; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding-top: 56px; }
+    .mobile-header { display: flex; }
+  }
+
+  /* ── COMMON COMPONENTS ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+  .container-lg { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+
+  /* Cards */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .card-body { padding: 24px; }
+  .card-header { padding: 20px 24px 0; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--slate-800); display: flex; align-items: center; gap: 8px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 18px; border-radius: 9px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    border: none; transition: all .18s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn svg { width: 15px; height: 15px; }
+  .btn-primary { background: var(--violet-600); color: white; }
+  .btn-primary:hover { background: var(--violet-700); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(124,58,237,.3); }
+  .btn-secondary { background: var(--slate-100); color: var(--slate-700); }
+  .btn-secondary:hover { background: var(--slate-200); }
+  .btn-emerald { background: var(--emerald-600); color: white; }
+  .btn-emerald:hover { background: #047857; transform: translateY(-1px); }
+  .btn-amber { background: var(--amber-600); color: white; }
+  .btn-amber:hover { background: #b45309; }
+  .btn-blue { background: var(--blue-600); color: white; }
+  .btn-blue:hover { background: #1d4ed8; }
+  .btn-indigo { background: var(--indigo-600); color: white; }
+  .btn-indigo:hover { background: #4338ca; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--slate-700); }
+  .btn-outline:hover { border-color: var(--violet-300); color: var(--violet-700); background: var(--violet-50); }
+  .btn-ghost { background: transparent; color: var(--slate-500); }
+  .btn-ghost:hover { background: var(--slate-100); color: var(--slate-700); }
+  .btn-danger { background: #fee2e2; color: var(--red-500); }
+  .btn-danger:hover { background: #fecaca; }
+  .btn:disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+  .btn-lg { padding: 12px 26px; font-size: 15px; border-radius: 11px; }
+  .btn-sm { padding: 6px 12px; font-size: 12.5px; border-radius: 7px; }
+  .btn-icon { padding: 7px; border-radius: 8px; }
+
+  /* Badges */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 20px;
+    font-size: 11.5px; font-weight: 600;
+  }
+  .badge-violet { background: var(--violet-100); color: var(--violet-700); }
+  .badge-blue { background: var(--blue-100); color: var(--blue-600); }
+  .badge-emerald { background: var(--emerald-100); color: var(--emerald-600); }
+  .badge-amber { background: #fef3c7; color: #92400e; }
+  .badge-slate { background: var(--slate-100); color: var(--slate-600); }
+  .badge-white { background: rgba(255,255,255,.25); color: white; border: 1px solid rgba(255,255,255,.3); }
+  .badge-red { background: #fee2e2; color: #b91c1c; }
+
+  /* Form elements */
+  .form-group { margin-bottom: 16px; }
+  .label { display: block; font-size: 13px; font-weight: 600; color: var(--slate-700); margin-bottom: 6px; }
+  input[type="text"], input[type="number"], input[type="date"], input[type="email"],
+  select, textarea {
+    width: 100%; padding: 9px 13px; border-radius: 9px;
+    border: 1.5px solid var(--border); background: var(--white);
+    font-size: 14px; color: var(--slate-800);
+    font-family: 'DM Sans', sans-serif;
+    transition: border .15s, box-shadow .15s; outline: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--violet-500);
+    box-shadow: 0 0 0 3px rgba(139,92,246,.12);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+
+  /* Progress bar */
+  .progress-bar { height: 8px; background: var(--slate-100); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--violet-500), var(--blue-500)); border-radius: 99px; transition: width .6s ease; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 4px; background: var(--slate-100); padding: 4px; border-radius: 10px; }
+  .tab {
+    flex: 1; text-align: center; padding: 8px 14px;
+    border-radius: 7px; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none; background: none;
+    color: var(--slate-500); transition: all .18s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tab.active { background: white; color: var(--violet-700); box-shadow: 0 1px 6px rgba(0,0,0,.1); }
+
+  /* Stars */
+  .stars { display: flex; gap: 4px; }
+  .star { cursor: pointer; transition: transform .15s; }
+  .star:hover { transform: scale(1.2); }
+  .star svg { width: 28px; height: 28px; }
+  .star.filled svg { fill: var(--amber-500); stroke: var(--amber-500); }
+  .star.empty svg { stroke: var(--slate-300); fill: none; }
+
+  /* Gradient hero cards */
+  .hero-card {
+    background: linear-gradient(135deg, var(--violet-600), var(--blue-600));
+    border-radius: var(--radius); color: white;
+    box-shadow: var(--shadow-lg);
+  }
+  .hero-card p { color: rgba(255,255,255,.8); }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 680px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* Toast */
+  #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+  .toast {
+    background: var(--slate-900); color: white;
+    padding: 12px 18px; border-radius: 10px;
+    font-size: 13.5px; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    animation: toastIn .3s ease;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toast.success { background: #064e3b; }
+  .toast.error { background: #7f1d1d; }
+  @keyframes toastIn { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 500;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(3px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 16px;
+    width: 90%; max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    animation: modalIn .25s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-lg { max-width: 700px; }
+  @keyframes modalIn { from { opacity:0; transform: scale(.95); } to { opacity:1; transform: scale(1); } }
+  .modal-header { padding: 22px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+  .modal-body { padding: 20px 24px 24px; }
+  .close-btn { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 7px; color: var(--slate-400); }
+  .close-btn:hover { background: var(--slate-100); color: var(--slate-600); }
+  .close-btn svg { width: 18px; height: 18px; }
+
+  /* Animations helpers */
+  .fade-in { animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .slide-up { animation: slideUp .35s ease; }
+  @keyframes slideUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+
+  /* Misc helpers */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .items-start { align-items: flex-start; }
+  .justify-between { justify-content: space-between; }
+  .justify-center { justify-content: center; }
+  .gap-1 { gap: 4px; } .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; }
+  .flex-1 { flex: 1; }
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+  .mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; }
+  .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; } .mt-8 { margin-top: 32px; }
+  .mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; } .mb-3 { margin-bottom: 12px; }
+  .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; } .mb-8 { margin-bottom: 32px; }
+  .p-3 { padding: 12px; } .p-4 { padding: 16px; } .p-5 { padding: 20px; } .p-6 { padding: 24px; }
+  .px-4 { padding-left: 16px; padding-right: 16px; }
+  .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .w-full { width: 100%; }
+  .hidden { display: none !important; }
+  .relative { position: relative; }
+  .inline-flex { display: inline-flex; }
+  .shrink-0 { flex-shrink: 0; }
+  .min-w-0 { min-width: 0; }
+
+  /* ───── PAGE: LANDING ───── */
+  #page-Landing {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f8f7ff 0%, #fff 50%, #f0fdf4 100%);
+  }
+  .landing-header {
+    max-width: 1100px; margin: 0 auto;
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .landing-hero {
+    max-width: 780px; margin: 0 auto;
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+  .landing-hero h1 { font-size: clamp(36px, 6vw, 56px); color: var(--slate-900); margin-bottom: 16px; }
+  .landing-hero p { font-size: 17px; color: var(--slate-500); max-width: 540px; margin: 0 auto 32px; }
+  .pill-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--violet-100); color: var(--violet-700);
+    padding: 6px 14px; border-radius: 99px;
+    font-size: 13px; font-weight: 600; margin-bottom: 20px;
+  }
+  .features-grid {
+    max-width: 900px; margin: 20px auto 0;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    padding: 0 24px 60px;
+  }
+  @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature-card {
+    background: white; border-radius: 14px; padding: 22px;
+    border: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+  .feature-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .feature-icon svg { width: 22px; height: 22px; }
+
+  /* ───── PAGE: HOME ───── */
+  .stage-card {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 20px; cursor: pointer;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .stage-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+  .stage-icon { width: 48px; height: 48px; border-radius: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .stage-icon svg { width: 24px; height: 24px; }
+  .conf-bar { margin-top: 10px; }
+  .stat-num { font-size: 30px; font-weight: 800; font-family: 'Sora', sans-serif; }
+
+  /* ───── PAGE: MATERIALS ───── */
+  .material-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px 20px; cursor: pointer;
+    border-bottom: 1px solid var(--border);
+  }
+  .material-item:last-child { border-bottom: none; }
+  .material-item:hover { background: var(--slate-50); }
+
+  /* ───── PAGE: PREP ───── */
+  .concept-card { margin-bottom: 12px; }
+  .concept-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; cursor: pointer;
+  }
+  .concept-body { padding: 0 20px 20px; border-top: 1px solid var(--border); }
+  .concept-num { width: 32px; height: 32px; border-radius: 50%; background: var(--slate-100); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .concept-num.done { background: var(--emerald-100); color: var(--emerald-600); }
+
+  /* ───── PAGE: REHEARSAL ───── */
+  .chat-area { max-height: 440px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { display: flex; gap: 10px; }
+  .msg.user { flex-direction: row-reverse; }
+  .msg-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+  .msg-avatar.ai { background: linear-gradient(135deg, #a78bfa, #60a5fa); color: white; }
+  .msg-avatar.user { background: linear-gradient(135deg, var(--indigo-600), #3b82f6); color: white; }
+  .msg-bubble {
+    max-width: 72%; padding: 12px 15px; border-radius: 14px;
+    font-size: 14px; line-height: 1.55;
+  }
+  .msg-bubble.ai { background: white; border: 1px solid var(--border); color: var(--slate-700); border-radius: 4px 14px 14px 14px; }
+  .msg-bubble.user { background: linear-gradient(135deg, var(--indigo-600), #3b82f6); color: white; border-radius: 14px 4px 14px 14px; }
+  .recording-pulse { animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+  .timer-badge { font-family: 'Sora', monospace; font-weight: 700; font-size: 16px; padding: 6px 14px; border-radius: 99px; }
+  .timer-normal { background: var(--slate-100); color: var(--slate-700); }
+  .timer-urgent { background: #fee2e2; color: var(--red-500); animation: timerUrgent .8s ease infinite alternate; }
+  @keyframes timerUrgent { from { opacity:1; } to { opacity:.6; } }
+
+  /* ───── PAGE: PHRASES ───── */
+  .phrase-tab-list { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 4px; }
+  .phrase-tab {
+    padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1.5px solid transparent; transition: all .18s;
+    background: var(--slate-100); color: var(--slate-600);
+  }
+  .phrase-tab.active { background: var(--violet-100); color: var(--violet-700); border-color: var(--violet-300); }
+  .phrase-item { display: flex; align-items: flex-start; gap: 10px; padding: 13px 16px; background: var(--slate-50); border-radius: 10px; margin-bottom: 8px; }
+
+  /* ───── PAGE: REFLECTION ───── */
+  .speak-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    border: 2px solid transparent; transition: all .18s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .speak-yes { background: var(--emerald-50); color: var(--emerald-600); border-color: var(--emerald-200); }
+  .speak-yes.selected { background: var(--emerald-600); color: white; border-color: var(--emerald-600); }
+  .speak-no { background: var(--slate-50); color: var(--slate-600); border-color: var(--slate-200); }
+  .speak-no.selected { background: var(--slate-700); color: white; border-color: var(--slate-700); }
+
+  /* ───── PAGE: PROFILE ───── */
+  .profile-hero { padding: 32px; border-radius: var(--radius); color: white; background: linear-gradient(135deg, var(--violet-700), #5b21b6, var(--indigo-600)); }
+  .avatar-lg { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; color: white; }
+  .stat-card { padding: 18px 20px; }
+  .stat-label { font-size: 12px; color: var(--slate-500); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+
+  /* ───── PAGE: ACHIEVEMENTS ───── */
+  .ach-badge {
+    border-radius: 16px; padding: 22px; text-align: center;
+    position: relative; transition: transform .2s;
+  }
+  .ach-badge:hover { transform: translateY(-3px); }
+  .ach-badge.locked { background: var(--slate-50); border: 2px solid var(--slate-100); }
+  .ach-badge.unlocked { color: white; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+  .ach-icon-wrap { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; }
+  .ach-icon-wrap svg { width: 36px; height: 36px; }
+  .ach-level-badge { position: absolute; top: 12px; right: 12px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+
+  /* ───── PAGE: LANGUAGE HELPER ───── */
+  .kw-pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 99px; background: #fef3c7; border: 1px solid #fde68a; font-size: 13px; font-weight: 600; color: #92400e; margin: 3px; }
+  .history-item { padding: 14px 16px; border-radius: 11px; border: 1.5px solid var(--border); cursor: pointer; transition: border-color .15s; margin-bottom: 8px; }
+  .history-item:hover { border-color: var(--violet-300); }
+
+  /* ───── PAGE: TEACHER DASHBOARD ───── */
+  .student-item { padding: 14px 16px; border-radius: 11px; border: 1.5px solid var(--border); cursor: pointer; transition: all .15s; margin-bottom: 8px; }
+  .student-item:hover, .student-item.selected { background: var(--indigo-600); color: white; border-color: var(--indigo-600); }
+  .student-item:hover .student-sub, .student-item.selected .student-sub { color: rgba(255,255,255,.75); }
+  .student-sub { font-size: 12px; color: var(--slate-400); }
+
+  /* Loading spinner */
+  .spinner { width: 36px; height: 36px; border: 4px solid var(--violet-100); border-top-color: var(--violet-600); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-center { display: flex; align-items: center; justify-content: center; padding: 60px; }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 56px 24px; }
+  .empty-state svg { width: 56px; height: 56px; stroke: var(--slate-200); margin-bottom: 14px; }
+  .empty-state h3 { font-size: 17px; color: var(--slate-600); margin-bottom: 6px; }
+  .empty-state p { font-size: 13.5px; color: var(--slate-400); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--slate-200); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--slate-300); }
+
+  /* AI Insights */
+  .insight-box { background: linear-gradient(135deg, #fffbeb, #fff7ed); border: 1px solid #fde68a; border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; }
+
+  /* Chip list for sentence examples */
+  .chip { display: inline-block; background: white; border: 1px solid var(--border); padding: 6px 12px; border-radius: 8px; font-size: 13px; color: var(--slate-600); margin: 3px; cursor: pointer; transition: all .15s; }
+  .chip:hover { border-color: var(--emerald-400); color: var(--emerald-700); background: var(--emerald-50); }
+
+  /* Onboarding modal specific */
+  .role-btn {
+    display: flex; align-items: center; gap: 14px; padding: 18px 20px;
+    border-radius: 13px; border: 2px solid var(--border); cursor: pointer;
+    background: white; transition: all .18s; text-align: left; width: 100%;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .role-btn:hover { border-color: var(--violet-400); background: var(--violet-50); }
+  .role-btn-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .role-btn-icon svg { width: 24px; height: 24px; }
+
+  /* Confidence level special */
+  .conf-tier { border-radius: 14px; padding: 20px 22px; cursor: pointer; transition: box-shadow .2s; }
+  .conf-tier:hover { box-shadow: var(--shadow-lg); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     LANDING PAGE (shown when not logged in)
+══════════════════════════════════════════════ -->
+<div id="landing-page">
+  <header class="landing-header">
+    <div class="flex items-center gap-2" style="gap:10px">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div><div style="font-family:Sora;font-weight:700;font-size:16px;color:#0f172a">DiscussReady</div><div style="font-size:11px;color:#94a3b8">AI Discussion Coach</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="enterApp()">Sign In →</button>
+  </header>
+
+  <section class="landing-hero">
+    <div class="pill-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+      Built for International Students
+    </div>
+    <h1>Speak up in class.<br><span style="background:linear-gradient(90deg,var(--violet-600),var(--blue-500));-webkit-background-clip:text;-webkit-text-fill-color:transparent">With confidence.</span></h1>
+    <p>DiscussReady helps international students prepare for classroom discussions — through AI-powered rehearsal, phrase building, and structured reflection.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" onclick="enterApp()">Get Started Free →</button>
+      <button class="btn btn-outline btn-lg" onclick="showRoleModal()">Join or Create Classroom</button>
+    </div>
+
+    <div style="margin-top:28px;background:rgba(255,255,255,.7);border:1px solid var(--border);border-radius:14px;padding:18px 22px;max-width:520px;margin-left:auto;margin-right:auto;backdrop-filter:blur(4px)">
+      <p style="font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:8px">Based on proven frameworks:</p>
+      <p style="font-size:13px;color:var(--slate-600)"><span style="font-weight:700;color:var(--violet-600)">ICAP</span> – Progress from Constructive to Interactive engagement</p>
+      <p style="font-size:13px;color:var(--slate-600);margin-top:4px"><span style="font-weight:700;color:var(--emerald-600)">SToG</span> – Scaffolds fade as skills internalize</p>
+    </div>
+  </section>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#ede9fe"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div><div style="font-weight:700;color:var(--slate-800);margin-bottom:4px">Pre-Class Prep</div><div style="font-size:13px;color:var(--slate-500)">Understand concepts deeply before class</div></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#dbeafe"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
+      <div><div style="font-weight:700;color:var(--slate-800);margin-bottom:4px">Voice Rehearsal</div><div style="font-size:13px;color:var(--slate-500)">Practice with AI classmates in real discussions</div></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#d1fae5"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div><div style="font-weight:700;color:var(--slate-800);margin-bottom:4px">Discussion Phrases</div><div style="font-size:13px;color:var(--slate-500)">Build a toolkit of ready-to-use expressions</div></div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fef3c7"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+      <div><div style="font-weight:700;color:var(--slate-800);margin-bottom:4px">Reflection</div><div style="font-size:13px;color:var(--slate-500)">Track progress and improve over time</div></div>
+    </div>
+  </div>
+
+  <div style="max-width:860px;margin:0 auto;padding:0 24px 60px">
+    <div class="hero-card" style="padding:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <div style="width:64px;height:64px;background:rgba(255,255,255,.2);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div style="flex:1">
+        <h3 style="font-size:22px;font-weight:700;margin-bottom:6px">For Classrooms</h3>
+        <p>Teachers can create classrooms, share materials, and track every student's preparation progress in real time.</p>
+      </div>
+      <button class="btn btn-lg" style="background:white;color:var(--violet-700);flex-shrink:0" onclick="showRoleModal()">Join or Create →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Role Selection Modal -->
+<div class="modal-overlay" id="role-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="card-title">Join or Create a Classroom</h3>
+      <button class="close-btn" onclick="closeModal('role-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--slate-500);margin-bottom:20px;text-align:center">Choose your role to get started</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <button class="role-btn" onclick="enterApp('student')">
+          <div class="role-btn-icon" style="background:var(--violet-100)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div><div style="font-weight:700;font-size:16px;color:var(--slate-900)">I'm a Student</div><div style="font-size:13px;color:var(--slate-500)">Join a classroom with an invite code</div></div>
+        </button>
+        <button class="role-btn" onclick="enterApp('teacher')">
+          <div class="role-btn-icon" style="background:var(--blue-100)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <div><div style="font-weight:700;font-size:16px;color:var(--slate-900)">I'm a Teacher</div><div style="font-size:13px;color:var(--slate-500)">Create a classroom and share materials</div></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN APP (shown after "login")
+══════════════════════════════════════════════ -->
+<div id="main-app" class="hidden">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo" onclick="navigate('Home')">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="logo-text"><h2>DiscussReady</h2><p>AI Discussion Coach</p></div>
+    </div>
+    <nav class="nav-list" id="nav-list"></nav>
+    <div class="sidebar-footer" onclick="navigate('Profile')">
+      <div class="avatar-sm" id="nav-avatar">E</div>
+      <div class="min-w-0">
+        <div class="sidebar-user-name truncate" id="nav-username">Erica Shao</div>
+        <div class="sidebar-user-role" id="nav-role">student</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile header -->
+  <header class="mobile-header">
+    <div class="flex items-center gap-2" style="gap:8px">
+      <div class="logo-icon" style="width:32px;height:32px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <span style="font-family:Sora;font-weight:700;color:var(--slate-900)">DiscussReady</span>
+    </div>
+    <button class="burger" onclick="toggleSidebar()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </header>
+  <div class="mobile-overlay" id="mobile-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Pages -->
+  <main class="main">
+
+    <!-- ── HOME ── -->
+    <div class="page" id="page-Home">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:36px">
+          <div class="pill-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            AI-Powered Discussion Preparation
+          </div>
+          <h1 style="font-size:clamp(28px,4vw,40px);margin:12px 0">Prepare. Practice.<span style="background:linear-gradient(90deg,var(--violet-600),var(--blue-500));-webkit-background-clip:text;-webkit-text-fill-color:transparent"> Participate.</span></h1>
+          <p style="color:var(--slate-500);font-size:16px;max-width:500px;margin:0 auto">Transform passive reading into confident classroom discussion through structured preparation and AI-guided rehearsal.</p>
+        </div>
+
+        <!-- Upcoming material banner -->
+        <div id="home-upcoming" class="hidden mb-6">
+          <div class="hero-card p-5">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div>
+                <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.7);margin-bottom:4px">Next Class</p>
+                <h3 id="home-upcoming-title" style="font-size:18px;font-weight:700;margin-bottom:2px">Material Title</h3>
+                <p id="home-upcoming-subject" style="font-size:13px;color:rgba(255,255,255,.75)">Subject</p>
+              </div>
+              <button class="btn" style="background:white;color:var(--violet-700)" onclick="continuePrep()">Continue Preparing →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stages grid -->
+        <div class="grid-2 mb-6">
+          <div class="card stage-card" onclick="navigate('PreClassPrep')">
+            <div class="stage-icon" style="background:var(--violet-50)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div class="flex-1">
+              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Pre-Class Prep</h3>
+              <p style="font-size:13px;color:var(--slate-500)">Explain concepts in your own words & form discussion positions</p>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card stage-card" onclick="navigate('Rehearsal')">
+            <div class="stage-icon" style="background:var(--blue-50)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
+            <div class="flex-1">
+              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Rehearsal</h3>
+              <p style="font-size:13px;color:var(--slate-500)">Practice articulating your ideas with AI-guided simulation</p>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card stage-card" onclick="navigate('DiscussionPhrases')">
+            <div class="stage-icon" style="background:var(--emerald-50)"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="flex-1">
+              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Discussion Phrases</h3>
+              <p style="font-size:13px;color:var(--slate-500)">Prepare situational sentences for in-class participation</p>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card stage-card" onclick="navigate('Reflection')">
+            <div class="stage-icon" style="background:var(--amber-50)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+            <div class="flex-1">
+              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Reflection</h3>
+              <p style="font-size:13px;color:var(--slate-500)">Review your participation and plan improvements</p>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Confidence banner -->
+        <div class="conf-tier mb-4" id="conf-tier-card" style="background:var(--violet-50);cursor:pointer" onclick="navigate('Profile')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div style="font-size:32px" id="conf-emoji">🌱</div>
+              <div>
+                <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate-400)">Your Confidence Level</p>
+                <p style="font-size:17px;font-weight:700" id="conf-label" class="conf-label-violet">Getting Started</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="stat-num" id="conf-score" style="color:var(--violet-600)">0</div>
+              <div style="font-size:12px;color:var(--slate-400)">/ 100</div>
+            </div>
+          </div>
+          <div class="progress-bar conf-bar">
+            <div class="progress-fill" id="conf-progress" style="width:0%"></div>
+          </div>
+          <p style="font-size:12px;color:var(--slate-500);margin-top:8px">⚡ Complete activities to grow your confidence → View full breakdown</p>
+        </div>
+
+        <!-- Quick stats -->
+        <div class="card">
+          <div class="card-body grid-3" style="text-align:center;padding:24px">
+            <div><div class="stat-num" id="stat-materials">0</div><div style="font-size:13px;color:var(--slate-500)">Materials</div></div>
+            <div><div class="stat-num" style="color:var(--violet-600)" id="stat-rehearsals">0</div><div style="font-size:13px;color:var(--slate-500)">Rehearsals Done</div></div>
+            <div><div class="stat-num" style="color:var(--emerald-600)" id="stat-preps">0</div><div style="font-size:13px;color:var(--slate-500)">Preparations</div></div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-outline" onclick="navigate('Materials')">Manage Class Materials →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MATERIALS ── -->
+    <div class="page" id="page-Materials">
+      <div class="container">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <div>
+            <h1 style="font-size:28px;font-weight:800;color:var(--slate-900)">Class Materials</h1>
+            <p style="color:var(--slate-500);margin-top:2px">Manage your class materials</p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('add-material-modal')">+ Add Material</button>
+        </div>
+
+        <div id="materials-list">
+          <div class="loading-center"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PRE-CLASS PREP ── -->
+    <div class="page" id="page-PreClassPrep">
+      <div class="container">
+        <div class="mb-6">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--violet-600);font-size:13px;font-weight:600;margin-bottom:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Stage 1: Constructive Preparation
+          </div>
+          <h1 style="font-size:28px;font-weight:800">Pre-Class Preparation</h1>
+          <p style="color:var(--slate-500);margin-top:4px">Explain key concepts in your own words and form your discussion position</p>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <label class="label">Select Class Material</label>
+            <select id="prep-material-select" onchange="loadPrepMaterial()">
+              <option value="">Choose material to prepare for...</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="prep-content" class="hidden">
+          <!-- Progress -->
+          <div class="card mb-4" style="background:linear-gradient(135deg,var(--violet-50),var(--blue-50))">
+            <div class="card-body">
+              <div class="flex items-center justify-between mb-2">
+                <span style="font-weight:600;color:var(--slate-700)">Your Progress</span>
+                <span style="font-weight:700;color:var(--violet-600)" id="prep-progress-pct">0%</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" id="prep-progress-bar" style="width:0%"></div></div>
+              <p style="font-size:12.5px;color:var(--slate-500);margin-top:6px" id="prep-progress-text">0 of 0 concepts explained</p>
+            </div>
+          </div>
+
+          <!-- Concept cards generated by JS -->
+          <div id="concept-cards"></div>
+
+          <!-- Discussion position -->
+          <div class="card mb-4" id="discussion-pos-card">
+            <div class="card-header">
+              <div class="card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Your Discussion Position</div>
+            </div>
+            <div class="card-body" style="padding-top:12px">
+              <p style="font-size:13px;color:var(--slate-500);margin-bottom:8px">Based on your understanding, what position would you bring to a class discussion?</p>
+              <textarea id="discussion-position" placeholder="I think... / I believe... / I would argue that..." rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <button class="btn btn-outline" onclick="savePrepProgress()">Save Progress</button>
+            <button class="btn btn-primary" onclick="navigate('Rehearsal')">Continue to Rehearsal →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REHEARSAL ── -->
+    <div class="page" id="page-Rehearsal">
+      <div class="container">
+        <!-- Setup view -->
+        <div id="rehearsal-setup">
+          <div class="mb-6">
+            <div style="display:flex;align-items:center;gap:6px;color:var(--blue-600);font-size:13px;font-weight:600;margin-bottom:6px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+              Stage 2: Interactive Rehearsal
+            </div>
+            <h1 style="font-size:28px;font-weight:800">Practice with AI Classmates</h1>
+            <p style="color:var(--slate-500);margin-top:4px">5-minute voice discussion — speak English, get real-time peer responses with coaching</p>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Setup Your Discussion</div></div>
+            <div class="card-body" style="padding-top:14px">
+              <div class="form-group">
+                <label class="label">Select Material</label>
+                <select id="rehearsal-material-select"><option value="">Choose a class material</option></select>
+              </div>
+              <div class="form-group">
+                <label class="label">Number of Classmates</label>
+                <select id="rehearsal-num-participants">
+                  <option value="2">2 classmates</option>
+                  <option value="3" selected>3 classmates</option>
+                  <option value="4">4 classmates</option>
+                </select>
+              </div>
+              <!-- Classmate avatars -->
+              <div id="classmate-preview" class="mb-4"></div>
+              <div style="background:var(--blue-50);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--blue-700);margin-bottom:16px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                5-minute session. Each classmate has a unique personality. AI ends automatically when time is up.
+              </div>
+              <button class="btn btn-blue btn-lg w-full" onclick="startRehearsal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Start Discussion
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session view -->
+        <div id="rehearsal-session" class="hidden">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+            <div>
+              <h2 style="font-size:17px;font-weight:700" id="session-title">Topic</h2>
+              <p style="font-size:13px;color:var(--slate-500)">Click transcript to see coaching tips</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="timer-badge timer-normal" id="session-timer">05:00</div>
+              <button class="btn btn-ghost btn-icon" onclick="resetRehearsal()" title="Reset">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="chat-area" id="chat-area">
+              <div style="text-align:center;padding:20px;color:var(--slate-400);font-size:13px">Starting discussion...</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body" id="session-controls">
+              <div id="session-active-controls">
+                <div class="flex items-center gap-3 flex-wrap">
+                  <button class="btn btn-blue btn-lg flex-1" id="mic-btn" onclick="toggleMic()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    Speak English
+                  </button>
+                  <button class="btn btn-outline" onclick="finishRehearsalEarly()">Finish Early →</button>
+                </div>
+                <p style="font-size:12px;color:var(--slate-400);margin-top:6px" id="mic-hint">Click to start, click again when finished speaking</p>
+              </div>
+              <div id="session-done-controls" class="hidden text-center">
+                <p style="color:var(--slate-600);font-weight:600;margin-bottom:12px">Session complete — great work!</p>
+                <button class="btn btn-emerald btn-lg" onclick="completeRehearsal()">Continue to Discussion Phrases →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DISCUSSION PHRASES ── -->
+    <div class="page" id="page-DiscussionPhrases">
+      <div class="container">
+        <div class="mb-6">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--emerald-600);font-size:13px;font-weight:600;margin-bottom:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Stage 3: Discussion Scaffolding
+          </div>
+          <h1 style="font-size:28px;font-weight:800">Discussion Phrases</h1>
+          <p style="color:var(--slate-500);margin-top:4px">Prepare ready-to-use sentences for different discussion situations</p>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <label class="label">Select Material</label>
+            <select id="phrases-material-select" onchange="loadPhrases()">
+              <option value="">Choose material...</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="phrases-content" class="hidden">
+          <!-- Situation tabs -->
+          <div class="phrase-tab-list mb-4" id="phrase-tabs"></div>
+
+          <!-- Phrase area -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <div class="card-title" id="phrase-tab-title">Starting Discussion</div>
+            </div>
+            <div class="card-body" style="padding-top:14px">
+              <!-- Example starters -->
+              <div style="background:var(--slate-50);border-radius:10px;padding:14px;margin-bottom:16px">
+                <p style="font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:8px">Example sentence starters:</p>
+                <div id="phrase-examples"></div>
+              </div>
+
+              <!-- Saved phrases -->
+              <div id="phrases-list" class="mb-3"></div>
+
+              <!-- Add new -->
+              <div class="flex gap-2 items-start">
+                <textarea id="new-phrase-input" rows="2" placeholder="Write your own sentence or click an example above..." style="flex:1;resize:none"></textarea>
+                <button class="btn btn-emerald btn-icon" style="padding:10px;height:44px;margin-top:2px" onclick="addPhrase()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <button class="btn btn-outline" onclick="savePhrases()">💾 Save Phrases</button>
+            <button class="btn btn-emerald" onclick="navigate('Reflection')">Continue to Reflection →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REFLECTION ── -->
+    <div class="page" id="page-Reflection">
+      <div class="container">
+        <div class="mb-6">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--amber-600);font-size:13px;font-weight:600;margin-bottom:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            Stage 4: Post-Class Reflection
+          </div>
+          <h1 style="font-size:28px;font-weight:800">Reflect & Improve</h1>
+          <p style="color:var(--slate-500);margin-top:4px">Review your participation and plan for next time</p>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <label class="label">Which class are you reflecting on?</label>
+            <select id="reflection-material-select" onchange="loadReflection()"><option value="">Choose material...</option></select>
+          </div>
+        </div>
+
+        <div id="reflection-content" class="hidden">
+          <!-- Participation -->
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Did you participate?</div></div>
+            <div class="card-body" style="padding-top:14px">
+              <div class="flex gap-3 mb-4 flex-wrap">
+                <button class="speak-btn speak-yes" id="speak-yes-btn" onclick="setSpeak(true)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Yes, I spoke
+                </button>
+                <button class="speak-btn speak-no" id="speak-no-btn" onclick="setSpeak(false)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  Not this time
+                </button>
+              </div>
+              <div id="speak-details" class="hidden">
+                <div class="form-group">
+                  <label class="label">How many times did you contribute?</label>
+                  <input type="number" id="times-spoken" min="1" max="20" value="1" style="width:80px">
+                </div>
+                <div class="form-group">
+                  <label class="label">Did you use any prepared sentences?</label>
+                  <div class="flex gap-2">
+                    <button class="btn btn-secondary" id="used-yes" onclick="setUsedSentences(true)">Yes</button>
+                    <button class="btn btn-secondary" id="used-no" onclick="setUsedSentences(false)">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title" style="color:var(--emerald-600)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              What worked well?
+            </div></div>
+            <div class="card-body" style="padding-top:12px">
+              <textarea id="what-worked" rows="3" placeholder="Think about what strategies helped you participate..."></textarea>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">What challenges did you face?</div></div>
+            <div class="card-body" style="padding-top:12px">
+              <textarea id="challenges" rows="3" placeholder="Were there barriers to participating?"></textarea>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">What will you do differently next time?</div></div>
+            <div class="card-body" style="padding-top:12px">
+              <textarea id="improvement-notes" rows="3" placeholder="One small change you want to try..."></textarea>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Overall satisfaction with your participation</div></div>
+            <div class="card-body" style="padding-top:12px;text-align:center">
+              <div class="stars" style="justify-content:center" id="satisfaction-stars">
+                <div class="star empty" onclick="setSatisfaction(1)" data-val="1"><svg viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <div class="star empty" onclick="setSatisfaction(2)" data-val="2"><svg viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <div class="star empty" onclick="setSatisfaction(3)" data-val="3"><svg viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <div class="star empty" onclick="setSatisfaction(4)" data-val="4"><svg viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <div class="star empty" onclick="setSatisfaction(5)" data-val="5"><svg viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Insights output -->
+          <div id="ai-insights-output" class="hidden mb-4">
+            <div class="card" style="background:linear-gradient(135deg,#fffbeb,#fff7ed);border:1px solid #fde68a">
+              <div class="card-header"><div class="card-title" style="color:#b45309">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                Personal Insights
+              </div></div>
+              <div class="card-body" style="padding-top:12px">
+                <div class="insight-box mb-2" id="insight-recognition"></div>
+                <div class="insight-box mb-2"><p style="font-size:12px;font-weight:700;color:#b45309;margin-bottom:4px">Key Insight</p><p id="insight-text" style="font-size:14px;color:var(--slate-700)"></p></div>
+                <div class="insight-box mb-2"><p style="font-size:12px;font-weight:700;color:#b45309;margin-bottom:4px">Tip for Next Time</p><p id="insight-tip" style="font-size:14px;color:var(--slate-700)"></p></div>
+                <p id="insight-motivation" style="text-align:center;font-weight:600;color:#92400e;padding-top:8px"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-3 flex-wrap">
+            <button class="btn btn-amber" onclick="saveReflection()">Save Reflection</button>
+            <button class="btn btn-outline" id="get-insights-btn" onclick="getAIInsights()">✨ Get AI Insights</button>
+            <button class="btn btn-ghost" onclick="navigate('Home')">← Back to Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LANGUAGE HELPER ── -->
+    <div class="page" id="page-LanguageHelper">
+      <div class="container">
+        <div class="mb-6">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--teal-600);font-size:13px;font-weight:600;margin-bottom:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            Language Helper
+          </div>
+          <h1 style="font-size:28px;font-weight:800">Say It in English</h1>
+          <p style="color:var(--slate-500);margin-top:4px">Speak or type in your native language — get simple, classroom-ready English with audio</p>
+        </div>
+
+        <div class="tabs mb-4" style="max-width:320px">
+          <button class="tab active" onclick="switchLangTab('translate',this)">🌐 Translate</button>
+          <button class="tab" onclick="switchLangTab('history',this)">📋 History</button>
+        </div>
+
+        <div id="lang-translate-tab">
+          <div class="grid-2">
+            <!-- Input -->
+            <div class="card">
+              <div class="card-header"><div class="card-title">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--teal-500);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                </div>
+                Express Your Idea
+              </div></div>
+              <div class="card-body" style="padding-top:14px">
+                <div class="form-group">
+                  <label class="label">Your Native Language</label>
+                  <select id="native-lang">
+                    <option value="zh">🇨🇳 Chinese</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                    <option value="fr">🇫🇷 French</option>
+                    <option value="de">🇩🇪 German</option>
+                    <option value="ja">🇯🇵 Japanese</option>
+                    <option value="ko">🇰🇷 Korean</option>
+                    <option value="ar">🇸🇦 Arabic</option>
+                    <option value="pt">🇧🇷 Portuguese</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="label">Discussion Topic (optional)</label>
+                  <input type="text" id="lang-context" placeholder="e.g., Psychology class, debate about social media">
+                </div>
+                <div class="form-group">
+                  <label class="label">What do you want to say?</label>
+                  <textarea id="native-text" rows="5" placeholder="Type in your native language…"></textarea>
+                </div>
+                <button class="btn w-full" style="background:var(--teal-600);color:white" onclick="translateText()">✨ Translate to Spoken English</button>
+              </div>
+            </div>
+
+            <!-- Result -->
+            <div>
+              <div id="lang-result-placeholder" class="card">
+                <div class="empty-state">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  <h3>Ready to translate</h3>
+                  <p>Speak or type your idea — we'll convert it into natural spoken English you can use in class right away.</p>
+                </div>
+              </div>
+              <div id="lang-result" class="hidden">
+                <div class="card mb-3" style="background:linear-gradient(135deg,var(--blue-50),#ecfeff)">
+                  <div class="card-header"><div class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    Listen & Practice
+                  </div></div>
+                  <div class="card-body" style="padding-top:12px">
+                    <button class="btn btn-blue w-full mb-2" onclick="speakTranslation()">▶ Play English</button>
+                    <div style="border-top:1px solid var(--blue-100);padding-top:10px;margin-top:4px">
+                      <p id="translation-text" style="font-size:15px;color:var(--slate-800);line-height:1.6"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card mb-3">
+                  <div class="card-header"><div class="card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    Key Words & Phrases
+                  </div></div>
+                  <div class="card-body" style="padding-top:12px" id="keywords-container"></div>
+                </div>
+                <div class="card mb-3" id="learning-tip-card" style="background:linear-gradient(135deg,var(--violet-50),#faf5ff)">
+                  <div class="card-body">
+                    <div class="flex items-start gap-2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                      <p id="learning-tip" style="font-size:14px;color:var(--slate-700);line-height:1.55"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn flex-1" style="background:var(--teal-600);color:white" onclick="saveTranslation()">💾 Save to History</button>
+                  <button class="btn btn-outline" onclick="resetTranslation()">Start Over</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="lang-history-tab" class="hidden">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📋 Translation History</div></div>
+            <div class="card-body" style="padding-top:14px" id="lang-history-list">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                <p>No saved translations yet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ACHIEVEMENTS ── -->
+    <div class="page" id="page-Achievements">
+      <div class="container-lg">
+        <div class="mb-6">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--violet-600);font-size:13px;font-weight:600;margin-bottom:6px">🏆 Achievements</div>
+          <h1 style="font-size:28px;font-weight:800">Your Achievement Badges</h1>
+          <p style="color:var(--slate-500);margin-top:4px">Track your progress and unlock badges as you improve</p>
+        </div>
+        <div id="achievements-grid"></div>
+
+        <!-- Summary -->
+        <div class="hero-card mt-6" style="padding:28px">
+          <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 style="font-size:22px;font-weight:700;margin-bottom:4px">Your Progress</h2>
+              <p>Keep going to unlock more achievements!</p>
+            </div>
+            <div class="text-right">
+              <div style="font-size:48px;font-weight:800;font-family:Sora" id="total-badges">0</div>
+              <p style="font-size:13px;color:rgba(255,255,255,.8)">Total Badges Earned</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROFILE ── -->
+    <div class="page" id="page-Profile">
+      <div class="container">
+        <div class="profile-hero mb-6">
+          <div class="flex items-start justify-between flex-wrap gap-4">
+            <div class="flex items-start gap-4">
+              <div class="avatar-lg" id="profile-avatar">E</div>
+              <div>
+                <h1 style="font-size:26px;font-weight:800;margin-bottom:4px" id="profile-name">Erica Shao</h1>
+                <p style="color:rgba(255,255,255,.75);margin-bottom:14px" id="profile-email">erica@example.com</p>
+                <div class="flex flex-wrap gap-2" style="gap:8px">
+                  <span class="badge badge-white">🏆 <span id="profile-ach-count">0</span> Achievements</span>
+                  <span class="badge badge-white">🎯 <span id="profile-part-rate">0</span>% Participation</span>
+                  <span class="badge badge-white">⭐ <span id="profile-avg-sat">0</span>/5 Avg Satisfaction</span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:white" onclick="logout()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Log Out
+            </button>
+          </div>
+        </div>
+
+        <!-- Join classroom (students) -->
+        <div id="join-classroom-section" class="card mb-6">
+          <div class="card-body">
+            <div class="flex items-start gap-3 mb-3">
+              <div style="width:40px;height:40px;background:var(--blue-100);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <div>
+                <p style="font-weight:700;color:var(--slate-900)">Join a Classroom</p>
+                <p style="font-size:13px;color:var(--slate-500)">Enter the invite code from your teacher to sync class materials</p>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <input type="text" id="invite-code-input" placeholder="Enter invite code (e.g. AB12CD)" maxlength="8" style="flex:1;font-family:monospace;letter-spacing:.1em;text-transform:uppercase">
+              <button class="btn btn-indigo" onclick="joinClassroom()">Join</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid-4 mb-6">
+          <div class="card stat-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:36px;height:36px;background:var(--violet-100);border-radius:9px;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="stat-label">Preparations</span></div><div class="stat-num" id="st-preps">0</div></div>
+          <div class="card stat-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:36px;height:36px;background:var(--blue-100);border-radius:9px;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="stat-label">Rehearsals</span></div><div class="stat-num" id="st-rehearsals" style="color:var(--blue-600)">0</div></div>
+          <div class="card stat-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:36px;height:36px;background:var(--emerald-100);border-radius:9px;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><span class="stat-label">Times Spoken</span></div><div class="stat-num" id="st-spoken" style="color:var(--emerald-600)">0</div></div>
+          <div class="card stat-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:36px;height:36px;background:#fef3c7;border-radius:9px;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span class="stat-label">Reflections</span></div><div class="stat-num" id="st-reflections" style="color:var(--amber-600)">0</div></div>
+        </div>
+
+        <!-- Confidence level -->
+        <div class="card mb-4">
+          <div class="card-header"><div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Confidence Level
+          </div></div>
+          <div class="card-body" id="conf-detail">
+            <div id="conf-detail-content"></div>
+          </div>
+        </div>
+
+        <!-- Progress tracking -->
+        <div class="card mb-4">
+          <div class="card-header"><div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Learning Progress
+          </div></div>
+          <div class="card-body" style="padding-top:14px">
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-1"><span style="font-size:13px;font-weight:600;color:var(--slate-700)">Class Participation Rate</span><span id="part-rate-pct" style="font-weight:700;color:var(--violet-600)">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="part-rate-bar" style="width:0%"></div></div>
+            </div>
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-1"><span style="font-size:13px;font-weight:600;color:var(--slate-700)">Rehearsal Completion</span><span id="rehearsal-pct" style="font-weight:700;color:var(--blue-600)">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="rehearsal-pct-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TEACHER DASHBOARD ── -->
+    <div class="page" id="page-TeacherDashboard">
+      <div class="container-lg">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <div>
+            <h1 style="font-size:28px;font-weight:800">Teacher Dashboard</h1>
+            <p style="color:var(--slate-500)">Manage your classroom and track student progress</p>
+          </div>
+          <button class="btn btn-indigo" onclick="openModal('share-material-modal')">+ Share Material</button>
+        </div>
+
+        <!-- Classroom banner -->
+        <div class="hero-card p-6 mb-6" style="background:linear-gradient(135deg,var(--indigo-600),#7c3aed)">
+          <div class="flex items-start justify-between flex-wrap gap-4">
+            <div>
+              <h2 style="font-size:22px;font-weight:700;margin-bottom:4px">My Classroom</h2>
+              <p style="color:rgba(255,255,255,.8);margin-bottom:12px">Spring 2026 — EDUC 302</p>
+              <div class="flex gap-2 flex-wrap">
+                <span class="badge badge-white">👥 12 students</span>
+                <span class="badge badge-white">📄 5 materials</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <p style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px">Invite Code</p>
+              <div class="flex items-center gap-2">
+                <code style="font-size:22px;font-weight:800;background:rgba(255,255,255,.2);padding:6px 14px;border-radius:9px;letter-spacing:.12em;color:white">EDUC26</code>
+                <button class="btn btn-icon" style="background:rgba(255,255,255,.2);color:white" onclick="copyCode()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs mb-4" style="max-width:400px">
+          <button class="tab active" onclick="switchTeacherTab('materials',this)">📄 Shared Materials (5)</button>
+          <button class="tab" onclick="switchTeacherTab('students',this)">👥 Students (12)</button>
+        </div>
+
+        <div id="teacher-materials-tab">
+          <div id="teacher-materials-list"></div>
+        </div>
+
+        <div id="teacher-students-tab" class="hidden">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header"><div class="card-title">Students</div></div>
+              <div class="card-body" id="student-list" style="padding-top:12px"></div>
+            </div>
+            <div class="card" id="student-detail-card">
+              <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <h3>Select a Student</h3>
+                <p>Click on a student to view their progress</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══ ADD MATERIAL MODAL ══ -->
+<div class="modal-overlay" id="add-material-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="card-title">Add Class Material</h3>
+      <button class="close-btn" onclick="closeModal('add-material-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="label">Title *</label><input type="text" id="mat-title" placeholder="e.g., Chapter 5: Cognitive Psychology"></div>
+      <div class="form-group"><label class="label">Subject / Course</label><input type="text" id="mat-subject" placeholder="e.g., Psychology 101"></div>
+      <div class="form-group"><label class="label">Class Date</label><input type="date" id="mat-date"></div>
+      <div class="form-group"><label class="label">Content / Notes</label><textarea id="mat-content" rows="4" placeholder="Paste key excerpts or notes..."></textarea></div>
+      <button class="btn btn-primary w-full" onclick="addMaterial()">Add Material</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHARE MATERIAL MODAL (teacher) ══ -->
+<div class="modal-overlay" id="share-material-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="card-title">Share Material with Class</h3>
+      <button class="close-btn" onclick="closeModal('share-material-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="label">Title *</label><input type="text" id="share-title" placeholder="e.g., Chapter 5: Cognitive Psychology"></div>
+      <div class="form-group"><label class="label">Subject / Course</label><input type="text" id="share-subject" placeholder="e.g., Psychology 101"></div>
+      <div class="form-group"><label class="label">Class Date</label><input type="date" id="share-date"></div>
+      <div class="form-group"><label class="label">Content / Notes</label><textarea id="share-content" rows="3" placeholder="Paste key excerpts..."></textarea></div>
+      <div style="display:flex;align-items:center;gap:8px;background:var(--blue-50);border-radius:10px;padding:12px;font-size:13px;color:var(--blue-700);margin-bottom:14px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Will be shared with all <strong style="margin:0 3px">12</strong> students
+      </div>
+      <button class="btn btn-indigo w-full" onclick="shareTeacherMaterial()">Share with Class</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════
+const STATE = {
+  user: { name: 'Erica Shao', email: 'erica@unc.edu', role: 'student', avatar: 'E' },
+  currentPage: '',
+  materials: [
+    { id: 'm1', title: 'Chapter 5: Cognitive Development', subject: 'EDUC 302', class_date: '2026-03-12', status: 'ready', content: 'Piaget stages, Vygotsky ZPD, scaffolding in learning', key_concepts: ['Zone of Proximal Development','Scaffolding','Constructivism','Schema','Assimilation','Accommodation'] },
+    { id: 'm2', title: 'Week 8: Language Acquisition', subject: 'LING 201', class_date: '2026-03-15', status: 'preparing', content: 'Critical period hypothesis, Chomsky, Krashen input hypothesis', key_concepts: ['Critical Period Hypothesis','Innateness','Input Hypothesis','Language Acquisition Device'] },
+    { id: 'm3', title: 'Seminar: AI in Education', subject: 'INLS 845', class_date: '2026-03-18', status: 'uploaded', content: 'EdTech tools, adaptive learning, AI tutors', key_concepts: ['Adaptive Learning','Personalized Learning','AI Tutoring','EdTech'] },
+  ],
+  preparations: [],
+  reflections: [],
+  translations: [],
+  phrases: {},
+  satisfaction: 3,
+  didSpeak: null,
+  usedSentences: null,
+  currentPhraseTab: 'start',
+  rehearsalSession: { active: false, timeLeft: 300, timerInterval: null, isRecording: false },
+  currentTranslation: null,
+};
+
+const SITUATION_CATEGORIES = [
+  { id: 'start', label: 'Starting Discussion', examples: ["I'd like to add a perspective on this...", "Building on what we've covered, I think...", "One thing that stood out to me was..."] },
+  { id: 'build', label: 'Building on Ideas', examples: ["I agree with that point, and I'd like to expand on it...", "That's interesting. To add to that...", "That connects to..."] },
+  { id: 'disagree', label: 'Respectful Disagreement', examples: ["I see it a bit differently because...", "That's a valid point, though I wonder if...", "I'd like to offer an alternative view..."] },
+  { id: 'clarify', label: 'Asking Questions', examples: ["Could you elaborate on what you mean by...?", "I'm curious about how that relates to...", "What would be an example of that?"] },
+  { id: 'connect', label: 'Making Connections', examples: ["This reminds me of...", "I see a connection to what we learned about...", "In my experience, I've noticed that..."] },
+];
+
+const ACHIEVEMENT_TYPES = [
+  { type: 'first_prep', name: 'Preparation Journey', icon: '📚', levels: [
+    { level: 1, title: 'First Steps', desc: 'Complete your first preparation', req: 1, color: '#7c3aed' },
+    { level: 2, title: 'Getting Started', desc: 'Complete 5 preparations', req: 5, color: '#6d28d9' },
+    { level: 3, title: 'Preparation Pro', desc: 'Complete 10 preparations', req: 10, color: '#4c1d95' },
+  ]},
+  { type: 'first_rehearsal', name: 'Rehearsal Practice', icon: '🎤', levels: [
+    { level: 1, title: 'First Practice', desc: 'Complete your first rehearsal', req: 1, color: '#2563eb' },
+    { level: 2, title: 'Practice Makes Perfect', desc: 'Complete 5 rehearsals', req: 5, color: '#1d4ed8' },
+    { level: 3, title: 'Rehearsal Master', desc: 'Complete 10 rehearsals', req: 10, color: '#1e3a8a' },
+  ]},
+  { type: 'first_reflection', name: 'Reflection Journey', icon: '🎯', levels: [
+    { level: 1, title: 'First Reflection', desc: 'Complete your first reflection', req: 1, color: '#059669' },
+    { level: 2, title: 'Thoughtful Learner', desc: 'Complete 5 reflections', req: 5, color: '#047857' },
+    { level: 3, title: 'Reflection Expert', desc: 'Complete 10 reflections', req: 10, color: '#064e3b' },
+  ]},
+  { type: 'spoke_in_class', name: 'Class Participation', icon: '🏆', levels: [
+    { level: 1, title: 'First Voice', desc: 'Speak in class for the first time', req: 1, color: '#d97706' },
+    { level: 2, title: 'Active Participant', desc: 'Speak in 5 classes', req: 5, color: '#b45309' },
+    { level: 3, title: 'Discussion Leader', desc: 'Speak in 10 classes', req: 10, color: '#92400e' },
+  ]},
+  { type: 'milestone', name: 'Learning Milestones', icon: '⭐', levels: [
+    { level: 1, title: 'Rising Star', desc: 'Complete 10 total activities', req: 10, color: '#7c3aed' },
+    { level: 2, title: 'Dedicated Learner', desc: 'Complete 25 total activities', req: 25, color: '#6d28d9' },
+    { level: 3, title: 'Master Communicator', desc: 'Complete 50 total activities', req: 50, color: '#4c1d95' },
+  ]},
+];
+
+const CLASSMATES = [
+  { name: 'Alex', personality: 'analytical', color: '#a78bfa' },
+  { name: 'Maria', personality: 'supportive', color: '#f472b6' },
+  { name: 'James', personality: 'critical thinker', color: '#60a5fa' },
+  { name: 'Sophie', personality: 'creative', color: '#34d399' },
+  { name: 'David', personality: 'practical', color: '#fbbf24' },
+  { name: 'Emma', personality: 'inquisitive', color: '#f87171' },
+];
+
+// ══════════════════════════════════════════════════════════════
+//  NAV & ROUTING
+// ══════════════════════════════════════════════════════════════
+const NAV_STUDENT = [
+  { name: 'Home', page: 'Home', icon: 'home', dot: '#8b5cf6' },
+  { name: 'Materials', page: 'Materials', icon: 'file', dot: '#3b82f6' },
+  { name: 'Pre-Class Prep', page: 'PreClassPrep', icon: 'book', dot: '#7c3aed' },
+  { name: 'Rehearsal', page: 'Rehearsal', icon: 'mic', dot: '#0ea5e9' },
+  { name: 'Phrases', page: 'DiscussionPhrases', icon: 'msg', dot: '#10b981' },
+  { name: 'Reflection', page: 'Reflection', icon: 'pen', dot: '#f59e0b' },
+  { name: 'Language Helper', page: 'LanguageHelper', icon: 'lang', dot: '#14b8a6' },
+  { name: 'Achievements', page: 'Achievements', icon: 'trophy', dot: '#f59e0b' },
+  { name: 'Profile', page: 'Profile', icon: 'user', dot: '#f43f5e' },
+];
+const NAV_TEACHER = [
+  { name: 'Home', page: 'Home', icon: 'home', dot: '#8b5cf6' },
+  { name: 'My Dashboard', page: 'TeacherDashboard', icon: 'grad', dot: '#4f46e5' },
+  { name: 'Materials', page: 'Materials', icon: 'file', dot: '#3b82f6' },
+  { name: 'Profile', page: 'Profile', icon: 'user', dot: '#f43f5e' },
+];
+
+const ICONS = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>',
+  msg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  lang: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  grad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+};
+
+function buildNav() {
+  const items = STATE.user.role === 'teacher' ? NAV_TEACHER : NAV_STUDENT;
+  const nl = document.getElementById('nav-list');
+  nl.innerHTML = items.map(item => `
+    <button class="nav-item ${STATE.currentPage === item.page ? 'active' : ''}" onclick="navigate('${item.page}')">
+      ${STATE.currentPage === item.page ? `<span class="nav-dot" style="background:${item.dot}"></span>` : ''}
+      ${ICONS[item.icon] || ''}
+      ${item.name}
+    </button>
+  `).join('');
+  document.getElementById('nav-avatar').textContent = STATE.user.avatar;
+  document.getElementById('nav-username').textContent = STATE.user.name;
+  document.getElementById('nav-role').textContent = STATE.user.role;
+}
+
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) { el.classList.add('active'); STATE.currentPage = page; buildNav(); onPageEnter(page); }
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobile-overlay').classList.remove('open');
+}
+
+function onPageEnter(page) {
+  if (page === 'Home') renderHome();
+  if (page === 'Materials') renderMaterials();
+  if (page === 'PreClassPrep') initPrep();
+  if (page === 'Rehearsal') initRehearsal();
+  if (page === 'DiscussionPhrases') initPhrases();
+  if (page === 'Reflection') initReflection();
+  if (page === 'Achievements') renderAchievements();
+  if (page === 'Profile') renderProfile();
+  if (page === 'TeacherDashboard') renderTeacherDashboard();
+  if (page === 'LanguageHelper') initLangHelper();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LANDING / AUTH
+// ══════════════════════════════════════════════════════════════
+function enterApp(role) {
+  if (role) STATE.user.role = role;
+  document.getElementById('landing-page').classList.add('hidden');
+  document.getElementById('main-app').classList.remove('hidden');
+  closeModal('role-modal');
+  navigate('Home');
+}
+function showRoleModal() { openModal('role-modal'); }
+function logout() {
+  document.getElementById('main-app').classList.add('hidden');
+  document.getElementById('landing-page').classList.remove('hidden');
+  toast('Logged out', 'success');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  HOME
+// ══════════════════════════════════════════════════════════════
+function renderHome() {
+  const upcoming = STATE.materials.find(m => m.status !== 'completed');
+  const upcomingEl = document.getElementById('home-upcoming');
+  if (upcoming) {
+    upcomingEl.classList.remove('hidden');
+    document.getElementById('home-upcoming-title').textContent = upcoming.title;
+    document.getElementById('home-upcoming-subject').textContent = upcoming.subject || '';
+  } else { upcomingEl.classList.add('hidden'); }
+
+  const totalPreps = STATE.preparations.length;
+  const totalRehearsals = STATE.preparations.filter(p => p.rehearsal_completed).length;
+  const totalReflections = STATE.reflections.length;
+  const timesSpoken = STATE.reflections.reduce((s, r) => s + (r.times_spoken || 0), 0);
+  const avgSat = totalReflections ? STATE.reflections.reduce((s, r) => s + (r.overall_satisfaction || 0), 0) / totalReflections : 0;
+
+  const score = Math.round(
+    Math.min(totalPreps, 5) / 5 * 20 +
+    Math.min(totalRehearsals, 5) / 5 * 25 +
+    Math.min(totalReflections, 5) / 5 * 20 +
+    Math.min(timesSpoken, 5) / 5 * 25 +
+    (avgSat / 5) * 10
+  );
+  const tier = score >= 80 ? { label: 'Highly Confident', emoji: '🏆', color: '#d97706' } :
+               score >= 60 ? { label: 'Growing Confident', emoji: '🔥', color: '#059669' } :
+               score >= 40 ? { label: 'Gaining Momentum', emoji: '⚡', color: '#7c3aed' } :
+               score >= 20 ? { label: 'Building Up', emoji: '💧', color: '#2563eb' } :
+               { label: 'Getting Started', emoji: '🌱', color: '#64748b' };
+
+  document.getElementById('conf-emoji').textContent = tier.emoji;
+  document.getElementById('conf-label').textContent = tier.label;
+  document.getElementById('conf-label').style.color = tier.color;
+  document.getElementById('conf-score').textContent = score;
+  document.getElementById('conf-score').style.color = tier.color;
+  document.getElementById('conf-progress').style.width = score + '%';
+
+  document.getElementById('stat-materials').textContent = STATE.materials.length;
+  document.getElementById('stat-rehearsals').textContent = totalRehearsals;
+  document.getElementById('stat-preps').textContent = totalPreps;
+}
+
+function continuePrep() {
+  const upcoming = STATE.materials.find(m => m.status !== 'completed');
+  if (upcoming) navigate('PreClassPrep');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MATERIALS
+// ══════════════════════════════════════════════════════════════
+const STATUS_COLORS = { uploaded: 'badge-slate', preparing: 'badge-blue', ready: 'badge-emerald', completed: 'badge-violet' };
+
+function renderMaterials() {
+  const list = document.getElementById('materials-list');
+  if (!STATE.materials.length) {
+    list.innerHTML = `<div class="card"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><h3>No materials yet</h3><p>Add your first class material to start preparing</p></div></div>`;
+    return;
+  }
+  list.innerHTML = `<div class="card">${STATE.materials.map(m => `
+    <div class="material-item">
+      <div style="width:42px;height:42px;background:var(--violet-50);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px">
+          <span style="font-weight:700;color:var(--slate-900)">${m.title}</span>
+          <span class="badge ${STATUS_COLORS[m.status || 'uploaded']}">${m.status || 'uploaded'}</span>
+        </div>
+        ${m.subject ? `<p style="font-size:13px;color:var(--slate-500)">${m.subject}</p>` : ''}
+        ${m.class_date ? `<p style="font-size:12px;color:var(--slate-400);margin-top:2px">📅 ${m.class_date}</p>` : ''}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <button class="btn btn-outline btn-sm" onclick="prepMaterial('${m.id}')">Prepare →</button>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="deleteMaterial('${m.id}')" title="Delete">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('')}</div>`;
+  populateMaterialSelects();
+}
+
+function addMaterial() {
+  const title = document.getElementById('mat-title').value.trim();
+  if (!title) { toast('Please enter a title', 'error'); return; }
+  const m = {
+    id: 'm' + Date.now(),
+    title,
+    subject: document.getElementById('mat-subject').value,
+    class_date: document.getElementById('mat-date').value,
+    content: document.getElementById('mat-content').value,
+    status: 'uploaded',
+    key_concepts: []
+  };
+  STATE.materials.unshift(m);
+  closeModal('add-material-modal');
+  ['mat-title','mat-subject','mat-date','mat-content'].forEach(id => document.getElementById(id).value = '');
+  renderMaterials();
+  toast('Material added!', 'success');
+}
+
+function deleteMaterial(id) {
+  STATE.materials = STATE.materials.filter(m => m.id !== id);
+  renderMaterials();
+  toast('Material deleted');
+}
+
+function prepMaterial(id) {
+  STATE._prepMaterialId = id;
+  navigate('PreClassPrep');
+  setTimeout(() => {
+    const sel = document.getElementById('prep-material-select');
+    sel.value = id;
+    loadPrepMaterial();
+  }, 50);
+}
+
+function populateMaterialSelects() {
+  ['prep-material-select','rehearsal-material-select','phrases-material-select','reflection-material-select'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const cur = el.value;
+    el.innerHTML = '<option value="">Choose material...</option>' + STATE.materials.map(m => `<option value="${m.id}"${m.id === cur ? ' selected' : ''}>${m.title}</option>`).join('');
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PRE-CLASS PREP
+// ══════════════════════════════════════════════════════════════
+let prepExpandedIdx = 0;
+
+function initPrep() {
+  populateMaterialSelects();
+  if (STATE._prepMaterialId) {
+    document.getElementById('prep-material-select').value = STATE._prepMaterialId;
+    loadPrepMaterial();
+    STATE._prepMaterialId = null;
+  }
+}
+
+function loadPrepMaterial() {
+  const id = document.getElementById('prep-material-select').value;
+  if (!id) { document.getElementById('prep-content').classList.add('hidden'); return; }
+  const mat = STATE.materials.find(m => m.id === id);
+  if (!mat) return;
+  document.getElementById('prep-content').classList.remove('hidden');
+  const concepts = (mat.key_concepts || []).map(c => ({ concept: c, my_explanation: '', connection_to_previous: '' }));
+  renderConceptCards(concepts);
+}
+
+function renderConceptCards(concepts) {
+  const container = document.getElementById('concept-cards');
+  if (!concepts.length) {
+    container.innerHTML = `<div class="card mb-4 text-center" style="padding:32px">
+      <p style="font-size:32px;margin-bottom:8px">✨</p>
+      <h3 style="margin-bottom:6px">No key concepts yet</h3>
+      <p style="color:var(--slate-500);font-size:13px">Key concepts will be auto-generated from this material's content.</p>
+    </div>`;
+    updatePrepProgress(0, 0);
+    return;
+  }
+  container.innerHTML = concepts.map((c, i) => `
+    <div class="card concept-card">
+      <div class="concept-header" onclick="toggleConcept(${i})">
+        <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0">
+          <div class="concept-num ${c.my_explanation && c.my_explanation.length > 20 ? 'done' : ''}" id="cnum-${i}">
+            ${c.my_explanation && c.my_explanation.length > 20 ? '✓' : i + 1}
+          </div>
+          <span style="font-weight:700;font-size:15px">${c.concept}</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" id="carrow-${i}" style="transition:transform .2s">
+          ${prepExpandedIdx === i ? '<path d="m18 15-6-6-6 6"/>' : '<path d="m6 9 6 6 6-6"/>'}
+        </svg>
+      </div>
+      <div class="concept-body" id="cbody-${i}" style="${prepExpandedIdx === i ? '' : 'display:none'}">
+        <div class="form-group mt-3">
+          <label class="label">💡 Explain in your own words</label>
+          <textarea rows="3" placeholder="What does this concept mean to you?" id="exp-${i}" oninput="updateConceptExp(${i},this.value)">${c.my_explanation || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="label">🔗 Connect to what you know</label>
+          <textarea rows="2" placeholder="How does this relate to previous topics or your experience?" id="conn-${i}" oninput="updateConceptConn(${i},this.value)">${c.connection_to_previous || ''}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  updatePrepProgress(concepts.filter(c => c.my_explanation && c.my_explanation.length > 20).length, concepts.length);
+  STATE._prepConcepts = concepts;
+}
+
+function toggleConcept(i) {
+  prepExpandedIdx = prepExpandedIdx === i ? -1 : i;
+  const id = document.getElementById('prep-material-select').value;
+  const mat = STATE.materials.find(m => m.id === id);
+  const concepts = STATE._prepConcepts || [];
+  renderConceptCards(concepts);
+}
+
+function updateConceptExp(i, val) {
+  if (!STATE._prepConcepts) return;
+  STATE._prepConcepts[i].my_explanation = val;
+  const num = document.getElementById('cnum-' + i);
+  if (num) { num.className = 'concept-num ' + (val.length > 20 ? 'done' : ''); num.textContent = val.length > 20 ? '✓' : i + 1; }
+  updatePrepProgress(STATE._prepConcepts.filter(c => c.my_explanation && c.my_explanation.length > 20).length, STATE._prepConcepts.length);
+}
+function updateConceptConn(i, val) { if (STATE._prepConcepts) STATE._prepConcepts[i].connection_to_previous = val; }
+
+function updatePrepProgress(done, total) {
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('prep-progress-pct').textContent = pct + '%';
+  document.getElementById('prep-progress-bar').style.width = pct + '%';
+  document.getElementById('prep-progress-text').textContent = `${done} of ${total} concepts explained`;
+}
+
+function savePrepProgress() {
+  const id = document.getElementById('prep-material-select').value;
+  if (!id) return;
+  const existing = STATE.preparations.find(p => p.material_id === id);
+  const data = { material_id: id, concept_explanations: STATE._prepConcepts || [], discussion_position: document.getElementById('discussion-position').value };
+  if (existing) Object.assign(existing, data);
+  else STATE.preparations.push({ id: 'prep' + Date.now(), ...data, rehearsal_completed: false });
+  toast('Progress saved!', 'success');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REHEARSAL
+// ══════════════════════════════════════════════════════════════
+let sessionSelected = null;
+
+function initRehearsal() {
+  populateMaterialSelects();
+  renderClassmatePreview(3);
+  document.getElementById('rehearsal-num-participants').onchange = function() { renderClassmatePreview(parseInt(this.value)); };
+}
+
+function renderClassmatePreview(n) {
+  const shuffled = [...CLASSMATES].sort(() => .5 - Math.random()).slice(0, n);
+  sessionSelected = shuffled;
+  document.getElementById('classmate-preview').innerHTML = `
+    <div style="margin-bottom:6px"><span class="label">Your Classmates</span></div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">${shuffled.map(c => `
+      <div style="text-align:center">
+        <div style="width:52px;height:52px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;margin:0 auto 4px">${c.name[0]}</div>
+        <div style="font-size:12px;font-weight:600;color:var(--slate-700)">${c.name}</div>
+        <div style="font-size:11px;color:var(--slate-400);font-style:italic">${c.personality}</div>
+      </div>
+    `).join('')}</div>`;
+}
+
+function startRehearsal() {
+  const matId = document.getElementById('rehearsal-material-select').value;
+  if (!matId) { toast('Please select a material', 'error'); return; }
+  const mat = STATE.materials.find(m => m.id === matId);
+  document.getElementById('rehearsal-setup').classList.add('hidden');
+  document.getElementById('rehearsal-session').classList.remove('hidden');
+  document.getElementById('session-title').textContent = mat.title;
+
+  STATE.rehearsalSession = { active: true, timeLeft: 300, isRecording: false, matId };
+  updateTimer();
+  STATE.rehearsalSession.timerInterval = setInterval(() => {
+    STATE.rehearsalSession.timeLeft--;
+    updateTimer();
+    if (STATE.rehearsalSession.timeLeft <= 0) endSession();
+  }, 1000);
+
+  const opener = sessionSelected[0];
+  const openers = [
+    `Hey everyone! I've been thinking about ${mat.title}. What's everyone's take on the main argument?`,
+    `I read through the material and I'm curious — how do you think this connects to real-world applications?`,
+    `Starting us off: I found the concept of ${(mat.key_concepts || ['this topic'])[0]} particularly interesting. Thoughts?`,
+  ];
+  const chatArea = document.getElementById('chat-area');
+  chatArea.innerHTML = '';
+  addMessage(opener, openers[Math.floor(Math.random() * openers.length)], false);
+}
+
+function updateTimer() {
+  const t = STATE.rehearsalSession.timeLeft;
+  const m = String(Math.floor(t / 60)).padStart(2, '0');
+  const s = String(t % 60).padStart(2, '0');
+  const el = document.getElementById('session-timer');
+  el.textContent = `${m}:${s}`;
+  el.className = 'timer-badge ' + (t <= 60 ? 'timer-urgent' : 'timer-normal');
+}
+
+function addMessage(speaker, text, isUser) {
+  const chat = document.getElementById('chat-area');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (isUser ? 'user' : '');
+  const avatarBg = isUser ? 'user' : 'ai';
+  const avatarText = isUser ? 'You' : speaker.name[0];
+  div.innerHTML = `
+    <div class="msg-avatar ${avatarBg}" style="${!isUser ? 'background:' + (speaker.color || '#a78bfa') : ''}">${avatarText}</div>
+    <div>
+      <div style="font-size:11.5px;color:var(--slate-400);margin-bottom:4px;${isUser ? 'text-align:right' : ''}">${speaker.name || 'You'}</div>
+      <div class="msg-bubble ${isUser ? 'user' : 'ai'}">${text}</div>
+    </div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+let isMicOn = false;
+function toggleMic() {
+  if (!isMicOn) {
+    isMicOn = true;
+    const btn = document.getElementById('mic-btn');
+    btn.className = 'btn btn-lg flex-1' + ' recording-pulse';
+    btn.style.background = '#ef4444';
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V5a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Stop & Send`;
+    document.getElementById('mic-hint').textContent = '🔴 Recording… click Stop & Send when done';
+    toast('Recording started — speak now!');
+  } else {
+    isMicOn = false;
+    const btn = document.getElementById('mic-btn');
+    btn.className = 'btn btn-blue btn-lg flex-1';
+    btn.style.background = '';
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Speak English`;
+    document.getElementById('mic-hint').textContent = 'Click to start, click again when finished speaking';
+
+    // Simulate AI response
+    const mat = STATE.materials.find(m => m.id === STATE.rehearsalSession.matId);
+    const responder = sessionSelected[Math.floor(Math.random() * sessionSelected.length)];
+    const sampleUserTexts = [
+      "I think the key insight here is that scaffolding helps students build confidence over time.",
+      "What interests me most is how this connects to language learning in diverse classrooms.",
+      "I'd argue that the constructivist approach really changes how we think about assessment.",
+    ];
+    const userText = sampleUserTexts[Math.floor(Math.random() * sampleUserTexts.length)];
+    addMessage({ name: 'You' }, userText, true);
+
+    setTimeout(() => {
+      const responses = [
+        `That's a really insightful point. I hadn't considered it that way. How do you think it applies to ${(mat?.key_concepts || ['this topic'])[0]}?`,
+        `I see what you mean. Building on that — do you think the same applies when students have different learning styles?`,
+        `Interesting perspective! I actually think there might be some tension between that idea and what the text says about assessment. Can you say more?`,
+      ];
+      addMessage(responder, responses[Math.floor(Math.random() * responses.length)], false);
+    }, 1200);
+  }
+}
+
+function endSession() {
+  clearInterval(STATE.rehearsalSession.timerInterval);
+  const last = sessionSelected[0];
+  addMessage(last, "Great discussion everyone! I really enjoyed hearing different perspectives on this topic. Let's carry these ideas into class.", false);
+  document.getElementById('session-active-controls').classList.add('hidden');
+  document.getElementById('session-done-controls').classList.remove('hidden');
+  toast("5 minutes up — great practice session!", 'success');
+}
+
+function finishRehearsalEarly() { endSession(); }
+function completeRehearsal() { navigate('DiscussionPhrases'); }
+function resetRehearsal() {
+  clearInterval(STATE.rehearsalSession.timerInterval);
+  isMicOn = false;
+  document.getElementById('rehearsal-setup').classList.remove('hidden');
+  document.getElementById('rehearsal-session').classList.add('hidden');
+  document.getElementById('session-active-controls').classList.remove('hidden');
+  document.getElementById('session-done-controls').classList.add('hidden');
+  initRehearsal();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DISCUSSION PHRASES
+// ══════════════════════════════════════════════════════════════
+function initPhrases() {
+  populateMaterialSelects();
+}
+function loadPhrases() {
+  const id = document.getElementById('phrases-material-select').value;
+  if (!id) { document.getElementById('phrases-content').classList.add('hidden'); return; }
+  document.getElementById('phrases-content').classList.remove('hidden');
+  if (!STATE.phrases[id]) STATE.phrases[id] = {};
+  renderPhraseTabs();
+  switchPhraseTab(STATE.currentPhraseTab);
+}
+function renderPhraseTabs() {
+  document.getElementById('phrase-tabs').innerHTML = SITUATION_CATEGORIES.map(cat => `
+    <button class="phrase-tab ${STATE.currentPhraseTab === cat.id ? 'active' : ''}" onclick="switchPhraseTab('${cat.id}')">
+      ${cat.label}
+      ${getPhrases(cat.id).length ? `<span style="background:rgba(124,58,237,.15);color:var(--violet-700);padding:1px 7px;border-radius:99px;font-size:11px;margin-left:4px">${getPhrases(cat.id).length}</span>` : ''}
+    </button>
+  `).join('');
+}
+function getPhrases(tab) {
+  const id = document.getElementById('phrases-material-select').value;
+  if (!id || !STATE.phrases[id]) return [];
+  return STATE.phrases[id][tab] || [];
+}
+function switchPhraseTab(tabId) {
+  STATE.currentPhraseTab = tabId;
+  const cat = SITUATION_CATEGORIES.find(c => c.id === tabId);
+  document.getElementById('phrase-tab-title').innerHTML = `<span class="badge badge-emerald">${cat.label}</span>`;
+  document.getElementById('phrase-examples').innerHTML = cat.examples.map(ex => `<span class="chip" onclick="document.getElementById('new-phrase-input').value='${ex.replace(/'/g, "\\'")}'">${ex}</span>`).join('');
+  renderPhraseList();
+  renderPhraseTabs();
+}
+function renderPhraseList() {
+  const phrases = getPhrases(STATE.currentPhraseTab);
+  const container = document.getElementById('phrases-list');
+  container.innerHTML = phrases.map((p, i) => `
+    <div class="phrase-item">
+      <p style="flex:1;font-size:14px;color:var(--slate-700)">${p}</p>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="copyPhrase('${p.replace(/'/g, "\\'")}')" title="Copy">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="deletePhrase(${i})" title="Remove">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+function addPhrase() {
+  const text = document.getElementById('new-phrase-input').value.trim();
+  if (!text) return;
+  const id = document.getElementById('phrases-material-select').value;
+  if (!STATE.phrases[id]) STATE.phrases[id] = {};
+  if (!STATE.phrases[id][STATE.currentPhraseTab]) STATE.phrases[id][STATE.currentPhraseTab] = [];
+  STATE.phrases[id][STATE.currentPhraseTab].push(text);
+  document.getElementById('new-phrase-input').value = '';
+  renderPhraseList();
+  renderPhraseTabs();
+}
+function deletePhrase(i) {
+  const id = document.getElementById('phrases-material-select').value;
+  STATE.phrases[id][STATE.currentPhraseTab].splice(i, 1);
+  renderPhraseList(); renderPhraseTabs();
+}
+function copyPhrase(text) {
+  navigator.clipboard.writeText(text).then(() => toast('Copied!', 'success'));
+}
+function savePhrases() { toast('Phrases saved!', 'success'); }
+
+// ══════════════════════════════════════════════════════════════
+//  REFLECTION
+// ══════════════════════════════════════════════════════════════
+function initReflection() { populateMaterialSelects(); }
+function loadReflection() {
+  const id = document.getElementById('reflection-material-select').value;
+  if (!id) { document.getElementById('reflection-content').classList.add('hidden'); return; }
+  document.getElementById('reflection-content').classList.remove('hidden');
+  document.getElementById('ai-insights-output').classList.add('hidden');
+}
+function setSpeak(val) {
+  STATE.didSpeak = val;
+  document.getElementById('speak-yes-btn').className = 'speak-btn speak-yes' + (val ? ' selected' : '');
+  document.getElementById('speak-no-btn').className = 'speak-btn speak-no' + (!val ? ' selected' : '');
+  document.getElementById('speak-details').classList.toggle('hidden', !val);
+}
+function setUsedSentences(val) {
+  STATE.usedSentences = val;
+  document.getElementById('used-yes').className = 'btn ' + (val ? 'btn-amber' : 'btn-secondary');
+  document.getElementById('used-no').className = 'btn ' + (!val ? 'btn-secondary active' : 'btn-secondary');
+}
+function setSatisfaction(val) {
+  STATE.satisfaction = val;
+  document.querySelectorAll('#satisfaction-stars .star').forEach((s, i) => {
+    s.className = 'star ' + (i < val ? 'filled' : 'empty');
+    s.querySelector('svg').setAttribute('stroke', i < val ? '#f59e0b' : '#94a3b8');
+    s.querySelector('polygon').setAttribute('fill', i < val ? '#f59e0b' : 'none');
+  });
+}
+function saveReflection() {
+  const id = document.getElementById('reflection-material-select').value;
+  if (!id) { toast('Please select a material', 'error'); return; }
+  const r = {
+    id: 'r' + Date.now(), material_id: id,
+    did_speak: STATE.didSpeak,
+    times_spoken: parseInt(document.getElementById('times-spoken').value) || 0,
+    what_worked: document.getElementById('what-worked').value,
+    challenges: document.getElementById('challenges').value,
+    improvement_notes: document.getElementById('improvement-notes').value,
+    used_prepared_sentences: STATE.usedSentences,
+    overall_satisfaction: STATE.satisfaction,
+  };
+  const existing = STATE.reflections.findIndex(x => x.material_id === id);
+  if (existing >= 0) STATE.reflections[existing] = r; else STATE.reflections.push(r);
+  toast('Reflection saved!', 'success');
+}
+function getAIInsights() {
+  document.getElementById('get-insights-btn').textContent = '⏳ Generating...';
+  document.getElementById('get-insights-btn').disabled = true;
+  setTimeout(() => {
+    const did = STATE.didSpeak;
+    document.getElementById('insight-recognition').innerHTML = `<p style="font-size:14px;color:var(--slate-700)">${did ? "Great job speaking up in class! Every contribution matters and builds your confidence." : "Not speaking this time is completely okay. Observing and listening is also a valuable form of participation."}</p>`;
+    document.getElementById('insight-text').textContent = did ? "You're building a consistent habit of participation. Notice how using prepared sentences makes it easier to jump in." : "Consider identifying one key moment in the next class where you can share your prepared thought.";
+    document.getElementById('insight-tip').textContent = "Try using 'I'd like to add to that...' as a low-stakes way to enter the conversation next time.";
+    document.getElementById('insight-motivation').textContent = "💪 Every small step builds your voice. You've got this!";
+    document.getElementById('ai-insights-output').classList.remove('hidden');
+    document.getElementById('get-insights-btn').textContent = '✨ Get AI Insights';
+    document.getElementById('get-insights-btn').disabled = false;
+  }, 1800);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LANGUAGE HELPER
+// ══════════════════════════════════════════════════════════════
+function initLangHelper() {}
+function switchLangTab(tab, btn) {
+  document.querySelectorAll('#page-LanguageHelper .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lang-translate-tab').classList.toggle('hidden', tab !== 'translate');
+  document.getElementById('lang-history-tab').classList.toggle('hidden', tab !== 'history');
+  if (tab === 'history') renderLangHistory();
+}
+function translateText() {
+  const text = document.getElementById('native-text').value.trim();
+  if (!text) { toast('Please enter text to translate', 'error'); return; }
+  const btn = document.querySelector('#lang-translate-tab .btn');
+  btn.textContent = '⏳ Translating…'; btn.disabled = true;
+  setTimeout(() => {
+    const samples = [
+      { en: "I think this concept connects to real-world learning because students need to feel supported as they take on new challenges.", tip: "Use 'I think' to soften your assertion and invite dialogue. Pause after your main point — it gives others space to respond.", keywords: ['concept', 'connects', 'supported', 'challenges'] },
+      { en: "From my perspective, scaffolding works best when teachers gradually reduce their support as students gain confidence.", tip: "The phrase 'from my perspective' is great for discussions — it signals your opinion while remaining open to other views.", keywords: ['perspective', 'scaffolding', 'gradually', 'confidence'] },
+      { en: "What strikes me most about this reading is how Zone of Proximal Development applies to language learning.", tip: "Starting with 'What strikes me' shows engagement with the material and invites curiosity from others.", keywords: ['strikes', 'reading', 'applies', 'language learning'] },
+    ];
+    const s = samples[Math.floor(Math.random() * samples.length)];
+    STATE.currentTranslation = { native: text, english: s.en, tip: s.tip, keywords: s.keywords };
+    document.getElementById('translation-text').textContent = s.en;
+    document.getElementById('learning-tip').textContent = s.tip;
+    document.getElementById('keywords-container').innerHTML = s.keywords.map(k => `<span class="kw-pill">${k}</span>`).join('');
+    document.getElementById('lang-result-placeholder').classList.add('hidden');
+    document.getElementById('lang-result').classList.remove('hidden');
+    btn.textContent = '✨ Translate to Spoken English'; btn.disabled = false;
+  }, 1600);
+}
+function speakTranslation() {
+  if (!STATE.currentTranslation) return;
+  const u = new SpeechSynthesisUtterance(STATE.currentTranslation.english);
+  u.lang = 'en-US'; u.rate = .92;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+  toast('Playing…');
+}
+function saveTranslation() {
+  if (!STATE.currentTranslation) return;
+  STATE.translations.unshift({ id: 't' + Date.now(), ...STATE.currentTranslation, date: new Date().toLocaleDateString() });
+  toast('Saved to history!', 'success');
+}
+function resetTranslation() {
+  STATE.currentTranslation = null;
+  document.getElementById('native-text').value = '';
+  document.getElementById('lang-result').classList.add('hidden');
+  document.getElementById('lang-result-placeholder').classList.remove('hidden');
+}
+function renderLangHistory() {
+  const el = document.getElementById('lang-history-list');
+  if (!STATE.translations.length) {
+    el.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg><p>No saved translations yet</p></div>`; return;
+  }
+  el.innerHTML = STATE.translations.map(t => `
+    <div class="history-item">
+      <div style="font-size:12px;color:var(--slate-400);margin-bottom:4px">${t.date || ''}</div>
+      <p style="font-size:13px;color:var(--slate-500);margin-bottom:4px">${t.native}</p>
+      <p style="font-size:15px;font-weight:600;color:var(--slate-800)">${t.english}</p>
+      <div style="margin-top:6px">${(t.keywords || []).map(k => `<span class="kw-pill">${k}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ACHIEVEMENTS
+// ══════════════════════════════════════════════════════════════
+function getAchievementProgress(type) {
+  switch(type) {
+    case 'first_prep': return STATE.preparations.length;
+    case 'first_rehearsal': return STATE.preparations.filter(p => p.rehearsal_completed).length;
+    case 'first_reflection': return STATE.reflections.length;
+    case 'spoke_in_class': return STATE.reflections.filter(r => r.did_speak).length;
+    case 'milestone': return STATE.preparations.length + STATE.reflections.length;
+    default: return 0;
+  }
+}
+function renderAchievements() {
+  let totalBadges = 0;
+  const grid = document.getElementById('achievements-grid');
+  grid.innerHTML = ACHIEVEMENT_TYPES.map(at => {
+    const progress = getAchievementProgress(at.type);
+    return `
+      <div class="card mb-6">
+        <div class="card-header"><div class="card-title">${at.icon} ${at.name}</div></div>
+        <div class="card-body">
+          <div class="grid-3" style="gap:14px">${at.levels.map(lv => {
+            const unlocked = progress >= lv.req;
+            if (unlocked) totalBadges++;
+            const pct = Math.min(Math.round(progress / lv.req * 100), 100);
+            return `
+              <div class="ach-badge ${unlocked ? 'unlocked' : 'locked'}" style="${unlocked ? 'background:' + lv.color : ''}">
+                <span class="ach-level-badge" style="${unlocked ? 'background:rgba(255,255,255,.2);color:white' : 'background:var(--slate-100);color:var(--slate-500)'}">Lv.${lv.level}</span>
+                <div class="ach-icon-wrap" style="${unlocked ? 'background:rgba(255,255,255,.2)' : 'background:var(--slate-100)'}">
+                  ${unlocked ? `<span style="font-size:30px">${at.icon}</span>` : `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`}
+                </div>
+                <h4 style="font-size:14px;font-weight:700;margin-bottom:4px;${unlocked ? 'color:white' : 'color:var(--slate-700)'}">${lv.title}</h4>
+                <p style="font-size:12px;${unlocked ? 'color:rgba(255,255,255,.85)' : 'color:var(--slate-500)'};margin-bottom:${unlocked ? '12px' : '8px'}">${lv.desc}</p>
+                ${unlocked ? '<p style="font-size:12px;color:rgba(255,255,255,.75)">✨ Unlocked!</p>' : `
+                  <div class="progress-bar" style="background:var(--slate-200)"><div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,#8b5cf6,#6366f1)"></div></div>
+                  <p style="font-size:11px;color:var(--slate-400);margin-top:4px">${progress} / ${lv.req}</p>`}
+              </div>`;
+          }).join('')}</div>
+        </div>
+      </div>`;
+  }).join('');
+  document.getElementById('total-badges').textContent = totalBadges;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PROFILE
+// ══════════════════════════════════════════════════════════════
+function renderProfile() {
+  const u = STATE.user;
+  document.getElementById('profile-avatar').textContent = u.avatar;
+  document.getElementById('profile-name').textContent = u.name;
+  document.getElementById('profile-email').textContent = u.email;
+
+  const totalPreps = STATE.preparations.length;
+  const totalRehearsals = STATE.preparations.filter(p => p.rehearsal_completed).length;
+  const totalReflections = STATE.reflections.length;
+  const timesSpoken = STATE.reflections.reduce((s, r) => s + (r.times_spoken || 0), 0);
+  const avgSat = totalReflections ? (STATE.reflections.reduce((s, r) => s + (r.overall_satisfaction || 0), 0) / totalReflections).toFixed(1) : '0.0';
+  const partRate = totalReflections ? Math.round(STATE.reflections.filter(r => r.did_speak).length / totalReflections * 100) : 0;
+  const rehearsalPct = totalPreps ? Math.round(totalRehearsals / totalPreps * 100) : 0;
+
+  document.getElementById('profile-ach-count').textContent = 0;
+  document.getElementById('profile-part-rate').textContent = partRate;
+  document.getElementById('profile-avg-sat').textContent = avgSat;
+  document.getElementById('st-preps').textContent = totalPreps;
+  document.getElementById('st-rehearsals').textContent = totalRehearsals;
+  document.getElementById('st-spoken').textContent = timesSpoken;
+  document.getElementById('st-reflections').textContent = totalReflections;
+  document.getElementById('part-rate-pct').textContent = partRate + '%';
+  document.getElementById('part-rate-bar').style.width = partRate + '%';
+  document.getElementById('rehearsal-pct').textContent = rehearsalPct + '%';
+  document.getElementById('rehearsal-pct-bar').style.width = rehearsalPct + '%';
+
+  // Confidence detail
+  const score = calcConfidenceScore();
+  const tier = getConfTier(score);
+  document.getElementById('conf-detail-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+      <span style="font-size:42px">${tier.emoji}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--slate-400)">Confidence Level</div>
+        <div style="font-size:22px;font-weight:800;color:${tier.color}">${tier.label}</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:44px;font-weight:800;font-family:Sora;color:${tier.color}">${score}</div>
+        <div style="font-size:12px;color:var(--slate-400)">/ 100</div>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${score}%"></div></div>`;
+
+  // Teacher vs student sections
+  document.getElementById('join-classroom-section').classList.toggle('hidden', u.role === 'teacher');
+}
+
+function calcConfidenceScore() {
+  const p = STATE.preparations.length;
+  const r = STATE.preparations.filter(x => x.rehearsal_completed).length;
+  const rf = STATE.reflections.length;
+  const ts = STATE.reflections.reduce((s, x) => s + (x.times_spoken || 0), 0);
+  const avg = rf ? STATE.reflections.reduce((s, x) => s + (x.overall_satisfaction || 0), 0) / rf : 0;
+  return Math.round(Math.min(p,5)/5*20 + Math.min(r,5)/5*25 + Math.min(rf,5)/5*20 + Math.min(ts,5)/5*25 + (avg/5)*10);
+}
+function getConfTier(score) {
+  return score >= 80 ? { label: 'Highly Confident', emoji: '🏆', color: '#d97706' } :
+         score >= 60 ? { label: 'Growing Confident', emoji: '🔥', color: '#059669' } :
+         score >= 40 ? { label: 'Gaining Momentum', emoji: '⚡', color: '#7c3aed' } :
+         score >= 20 ? { label: 'Building Up', emoji: '💧', color: '#2563eb' } :
+         { label: 'Getting Started', emoji: '🌱', color: '#64748b' };
+}
+
+function joinClassroom() {
+  const code = document.getElementById('invite-code-input').value.trim();
+  if (!code) return;
+  toast(`Joined classroom with code ${code}!`, 'success');
+  document.getElementById('invite-code-input').value = '';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TEACHER DASHBOARD
+// ══════════════════════════════════════════════════════════════
+const TEACHER_MATERIALS = [
+  { id: 'tm1', title: 'Chapter 5: Cognitive Development', subject: 'EDUC 302', date: '2026-03-12' },
+  { id: 'tm2', title: 'Week 8: Language Acquisition', subject: 'LING 201', date: '2026-03-15' },
+  { id: 'tm3', title: 'Seminar: AI in Education', subject: 'INLS 845', date: '2026-03-18' },
+  { id: 'tm4', title: 'Reading: Assessment Frameworks', subject: 'EDUC 302', date: '2026-03-22' },
+  { id: 'tm5', title: 'Discussion: Digital Literacy', subject: 'INLS 845', date: '2026-03-25' },
+];
+const STUDENTS = [
+  { id: 'st1', name: 'Alex Chen', email: 'alex@unc.edu', preps: 4, reflections: 3, did_speak: 2, sat: 4.0 },
+  { id: 'st2', name: 'Maria Rodriguez', email: 'maria@unc.edu', preps: 6, reflections: 5, did_speak: 4, sat: 4.3 },
+  { id: 'st3', name: 'Jin Park', email: 'jin@unc.edu', preps: 2, reflections: 2, did_speak: 1, sat: 3.5 },
+  { id: 'st4', name: 'Fatima Al-Hassan', email: 'fatima@unc.edu', preps: 7, reflections: 6, did_speak: 5, sat: 4.6 },
+  { id: 'st5', name: 'Lucas Oliveira', email: 'lucas@unc.edu', preps: 3, reflections: 2, did_speak: 2, sat: 3.8 },
+];
+
+function renderTeacherDashboard() {
+  renderTeacherMaterials();
+  renderStudentList();
+}
+function renderTeacherMaterials() {
+  document.getElementById('teacher-materials-list').innerHTML = `<div class="card">${TEACHER_MATERIALS.map(m => `
+    <div class="material-item">
+      <div style="width:42px;height:42px;background:#eef2ff;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div style="flex:1"><div style="font-weight:700;color:var(--slate-900)">${m.title}</div><p style="font-size:13px;color:var(--slate-500)">${m.subject}</p><p style="font-size:12px;color:var(--slate-400)">📅 ${m.date}</p></div>
+      <button class="btn btn-ghost btn-icon btn-sm" title="Delete"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+    </div>`).join('')}</div>`;
+}
+function renderStudentList() {
+  document.getElementById('student-list').innerHTML = STUDENTS.map(s => `
+    <div class="student-item" id="si-${s.id}" onclick="selectStudent('${s.id}')">
+      <div class="flex items-center justify-between">
+        <div style="font-weight:600">${s.name}</div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="student-sub">${s.preps} preps · ${s.reflections} reflections</div>
+    </div>`).join('');
+}
+function selectStudent(id) {
+  document.querySelectorAll('.student-item').forEach(el => el.classList.remove('selected'));
+  document.getElementById('si-' + id)?.classList.add('selected');
+  const s = STUDENTS.find(x => x.id === id);
+  const partRate = s.reflections ? Math.round(s.did_speak / s.reflections * 100) : 0;
+  document.getElementById('student-detail-card').innerHTML = `
+    <div class="card-header"><div class="card-title">${s.name}'s Progress</div></div>
+    <div class="card-body" style="padding-top:14px">
+      <div class="grid-2" style="gap:12px;margin-bottom:16px">
+        <div class="card" style="padding:14px"><div class="stat-label">Preparations</div><div class="stat-num">${s.preps}</div></div>
+        <div class="card" style="padding:14px"><div class="stat-label">Reflections</div><div class="stat-num">${s.reflections}</div></div>
+        <div class="card" style="padding:14px"><div class="stat-label">Participation Rate</div><div class="stat-num" style="color:var(--emerald-600)">${partRate}%</div></div>
+        <div class="card" style="padding:14px"><div class="stat-label">Avg Satisfaction</div><div class="stat-num" style="color:var(--violet-600)">${s.sat}/5</div></div>
+      </div>
+      <div style="background:var(--slate-50);border-radius:10px;padding:14px">
+        <div style="font-size:12px;font-weight:600;color:var(--emerald-600);margin-bottom:4px">Progress Note</div>
+        <p style="font-size:13.5px;color:var(--slate-700)">${s.name} has shown ${partRate > 60 ? 'strong' : 'growing'} engagement. Participation rate ${partRate > 50 ? 'is above' : 'is at'} ${partRate}% across ${s.reflections} sessions.</p>
+      </div>
+    </div>`;
+}
+function switchTeacherTab(tab, btn) {
+  document.querySelectorAll('#page-TeacherDashboard .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('teacher-materials-tab').classList.toggle('hidden', tab !== 'materials');
+  document.getElementById('teacher-students-tab').classList.toggle('hidden', tab !== 'students');
+}
+function shareTeacherMaterial() {
+  const title = document.getElementById('share-title').value.trim();
+  if (!title) { toast('Please enter a title', 'error'); return; }
+  closeModal('share-material-modal');
+  toast('Material shared with class!', 'success');
+}
+function copyCode() { navigator.clipboard.writeText('EDUC26').then(() => toast('Invite code copied!', 'success')); }
+
+// ══════════════════════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function toast(msg, type = '') {
+  const c = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = 'toast' + (type ? ' ' + type : '');
+  const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+  el.innerHTML = `<span>${icon}</span> ${msg}`;
+  c.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all .3s'; setTimeout(() => el.remove(), 300); }, 2800);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('mobile-overlay').classList.toggle('open');
+}
+
+// Click outside modal to close
+document.addEventListener('click', e => {
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // Show landing page on load (demo mode — click Sign In to enter)
+  // Nothing needed here, landing is visible by default
+});
+</script>
+</body>
+</html>
