@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -960,13 +962,41 @@ async function claudeChat(history, system, maxTok = 300) {
 let pendingFile = null;
 function handleDrop(e) { e.preventDefault(); document.getElementById('upload-zone').classList.remove('drag-over'); const f=e.dataTransfer.files[0]; if(f) processFile(f); }
 function handleFileSelect(e) { const f=e.target.files[0]; if(f) processFile(f); }
-function processFile(file) {
+async function processFile(file) {
   if (file.size > 10*1024*1024) { toast('File too large','error'); return; }
   pendingFile = file;
-  document.getElementById('file-preview').innerHTML = `<div class="file-preview-box"><div><div style="font-weight:600">${file.name}</div><div style="font-size:12px;color:var(--s500)">${(file.size/1024).toFixed(1)} KB</div></div></div>`;
+  document.getElementById('file-preview').innerHTML = `<div class="file-preview-box"><div><div style="font-weight:600">${file.name}</div><div style="font-size:12px;color:var(--s500)">${(file.size/1024).toFixed(1)} KB — Reading content…</div></div></div>`;
   document.getElementById('file-preview').classList.remove('hidden');
   const tf = document.getElementById('mat-title'); if (!tf.value) tf.value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g,' ');
-  if (file.name.endsWith('.txt')) { const r=new FileReader(); r.onload=ev=>{ pendingFile._text=ev.target.result; }; r.readAsText(file); }
+  const fname = file.name.toLowerCase();
+  try {
+    if (fname.endsWith('.txt')) {
+      pendingFile._text = await file.text();
+    } else if (fname.endsWith('.doc') || fname.endsWith('.docx')) {
+      const buf = await file.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer: buf });
+      pendingFile._text = result.value;
+    } else if (fname.endsWith('.pdf')) {
+      const buf = await file.arrayBuffer();
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const ct = await page.getTextContent();
+        text += ct.items.map(s => s.str).join(' ') + '\n';
+      }
+      pendingFile._text = text;
+    } else {
+      pendingFile._text = '';
+      toast('Unsupported format. Please use txt, doc, docx, or pdf.', 'error');
+    }
+    document.getElementById('file-preview').innerHTML = `<div class="file-preview-box"><div><div style="font-weight:600">${file.name}</div><div style="font-size:12px;color:var(--s500)">${(file.size/1024).toFixed(1)} KB — ${pendingFile._text?.length > 0 ? '✓ Content ready' : 'No text extracted'}</div></div></div>`;
+  } catch(err) {
+    console.error('File read error:', err);
+    pendingFile._text = '';
+    toast('Could not read file content.', 'error');
+  }
 }
 function addMaterial() {
   const title = document.getElementById('mat-title').value.trim();
