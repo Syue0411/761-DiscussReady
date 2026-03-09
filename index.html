@@ -1071,12 +1071,8 @@ async function loadPrepMaterial() {
     }, 1000);
     mat.ai_concepts = await extractConcepts(mat);
     if (mat.ai_concepts.length === 0) {
-      // Graceful fallback if API unavailable
-      mat.ai_concepts = [
-        {concept:'Main Theme', definition:'The central idea explored in this material.', why_important:'Understanding this anchors all other concepts.'},
-        {concept:'Key Argument', definition:'The primary claim the author makes.', why_important:'Knowing this helps you engage critically.'}
-      ];
-    }
+  toast('Could not extract concepts — check your material has text content.', 'error');
+}
     clearInterval(iv);
     prepExtracting.classList.add('hidden');
     renderMaterials(); // update badge count on materials page
@@ -1350,7 +1346,7 @@ async function aiRespond(interpreted){
   const t=types[Math.floor(Math.random()*types.length)];
   const instr={challenge:'Challenge the student\'s point using a specific detail. End with ONE question.',question:'Ask ONE probing question linking their point to a concept in the material.',agree_extend:'Briefly agree then extend. End with ONE question.',counterexample:'Offer one nuance from the material. End with ONE question.'};
   let reply='';
-  try{reply=await callClaude(`You are ${sp.name}, a student in a seminar.\nMaterial:\n${sessionMaterialContext}\n\nClassmate said: "${interpreted}"\n\nTask: ${instr[t]}\nRules: ONE question. Max 3 sentences. No bullets.`);}
+  try{reply=await callClaude(`You are ${sp.name}, a student in a seminar. You are speaking DIRECTLY to the user (the student using this app). Do NOT address or name any other classmates.\nMaterial:\n${sessionMaterialContext}\n\nThe user just said: "${interpreted}"\n\nTask: ${instr[t]}\nRules: ONE question directed at the user. Max 3 sentences. No bullets. Do not use any names.`);}
   catch(e){reply='Interesting point. How does the material support that view?';}
   td.remove();const mid='ai'+Date.now();chat.appendChild(createAIBubble(sp,reply,mid));scrollChat();
   setTimeout(()=>togglePlay(mid,reply),300);
@@ -1471,7 +1467,8 @@ function createAIBubble(classmate,text,msgId){
   </div></div>`;
   return d;
 }
-function togglePlay(msgId,text){
+  let _ttsUserCancelled = false;
+  function togglePlay(msgId,text){
   const g=msgGenderMap[msgId]||'m';
   const card=document.getElementById('apc-'+msgId),dur=document.getElementById('dur-'+msgId);
   const bars=document.querySelectorAll('#wave-'+msgId+' .wave-bar');
@@ -1480,9 +1477,9 @@ function togglePlay(msgId,text){
   const playI=`<svg width="14" height="14" viewBox="0 0 24 24" fill="${col}" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
   const pauseI=`<svg width="14" height="14" viewBox="0 0 24 24" fill="${col}" stroke="none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
   if(currentlyPlayingId===msgId){
+    _ttsUserCancelled = true;
     window.speechSynthesis.cancel();
     clearInterval(playIntervals[msgId]);
-    bars.forEach(b=>b.classList.remove('active'));
     card?.classList.remove('playing');
     if(pbtn)pbtn.innerHTML=playI;
     if(dur)dur.textContent='▶ Listen';
@@ -1557,7 +1554,7 @@ function speakText(text, gender, onEnd) {
     }
   }
 
-  u.onend = () => { if (onEnd) onEnd(); };
+  u.onend = () => { if (!_ttsUserCancelled && onEnd) onEnd(); _ttsUserCancelled = false; };
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);
 }
