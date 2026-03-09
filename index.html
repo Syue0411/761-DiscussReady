@@ -16,47 +16,41 @@
   --s50:#f8fafc;--s100:#f1f5f9;--s200:#e2e8f0;--s300:#cbd5e1;
   --s400:#94a3b8;--s500:#64748b;--s600:#475569;--s700:#334155;--s800:#1e293b;--s900:#0f172a;
   --i600:#4f46e5;--r500:#ef4444;
-  --nav:248px;--rad:12px;
+  --nav:240px;--rad:12px;
   --sh:0 2px 16px rgba(124,58,237,.08);--shl:0 8px 32px rgba(124,58,237,.14);
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--s800);min-height:100vh;font-size:15px;line-height:1.6}
 h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.25}
-
-/* ── SIDEBAR ── */
 .sidebar{width:var(--nav);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:22px 18px 16px;cursor:pointer;flex-shrink:0}
-.logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--v600),var(--b500));display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-icon svg{width:17px;height:17px;color:white}
-.logo-text h2{font-size:13.5px;font-weight:700;color:var(--s900)}
-.logo-text p{font-size:10.5px;color:var(--s400)}
-.nav-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--s300);padding:14px 18px 4px}
-.nav-list{flex:1;padding:4px 10px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;cursor:pointer;color:var(--s600);font-size:13px;font-weight:500;transition:background .15s,color .15s;margin-bottom:1px;border:none;background:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:22px 20px 18px;cursor:pointer;flex-shrink:0}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--v600),var(--b500));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-icon svg{width:18px;height:18px;color:white}
+.logo-text h2{font-size:14px;font-weight:700;color:var(--s900)}
+.logo-text p{font-size:11px;color:var(--s400)}
+.nav-list{flex:1;padding:6px 12px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;color:var(--s600);font-size:13.5px;font-weight:500;transition:background .15s,color .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
 .nav-item:hover{background:var(--s50);color:var(--s900)}
 .nav-item.active{background:var(--v50);color:var(--v700);font-weight:600}
-.nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:.7}
-.nav-item.active svg{opacity:1}
-.nav-stage-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:99px;margin-left:auto;flex-shrink:0}
-.sidebar-footer{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
-.av-sm{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--v500),var(--b500));display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
+.av-sm{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--v500),var(--b500));display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0}
 .main{margin-left:var(--nav);flex:1;min-width:0}
-.page{display:none;animation:fadeUp .3s ease}
+.page{display:none;animation:fadeUp .35s ease}
 .page.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.mob-header{display:none;position:fixed;top:0;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:200;padding:11px 16px;align-items:center;justify-content:space-between}
-.burger{background:none;border:none;cursor:pointer;padding:5px;border-radius:7px}
-.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mob-header{display:none;position:fixed;top:0;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:200;padding:12px 16px;align-items:center;justify-content:space-between}
+.burger{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
 .mob-overlay.open{display:block}
-@media(max-width:768px){.sidebar{transform:translateX(-100%);z-index:160}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding-top:52px}.mob-header{display:flex}}
-.container{max-width:860px;margin:0 auto;padding:28px 20px}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);z-index:160}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding-top:56px}.mob-header{display:flex}}
+.container{max-width:900px;margin:0 auto;padding:32px 20px}
 .card{background:var(--white);border-radius:var(--rad);box-shadow:var(--sh);border:1px solid var(--border)}
-.card-body{padding:22px}
-.card-header{padding:18px 22px 0}
-.card-title{font-size:15px;font-weight:700;color:var(--s800);display:flex;align-items:center;gap:8px}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 17px;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;border:none;transition:all .17s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.card-body{padding:24px}
+.card-header{padding:20px 24px 0}
+.card-title{font-size:16px;font-weight:700;color:var(--s800);display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s;white-space:nowrap;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--v600);color:white}.btn-primary:hover{background:var(--v700)}
 .btn-emerald{background:var(--e600);color:white}.btn-emerald:hover{background:#047857}
 .btn-blue{background:var(--b600);color:white}.btn-blue:hover{background:#1d4ed8}
@@ -64,330 +58,240 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.25}
 .btn-ghost{background:transparent;color:var(--s500)}.btn-ghost:hover{background:var(--s100);color:var(--s700)}
 .btn-amber{background:var(--a600);color:white}
 .btn-red{background:#ef4444;color:white}
-.btn:disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
-.btn-lg{padding:11px 24px;font-size:14.5px;border-radius:10px}
-.btn-sm{padding:5px 11px;font-size:12px;border-radius:7px}
+.btn:disabled{opacity:.55;cursor:not-allowed;pointer-events:none}
+.btn-lg{padding:12px 26px;font-size:15px;border-radius:11px}
+.btn-sm{padding:6px 12px;font-size:12.5px;border-radius:7px}
 .btn-icon{padding:7px;border-radius:8px}
-
-/* ── BADGES ── */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
 .badge-violet{background:var(--v100);color:var(--v700)}
 .badge-blue{background:var(--b100);color:var(--b600)}
 .badge-emerald{background:var(--e100);color:var(--e600)}
 .badge-slate{background:var(--s100);color:var(--s600)}
-.badge-amber{background:var(--a100);color:var(--a600)}
 .badge-white{background:rgba(255,255,255,.25);color:white;border:1px solid rgba(255,255,255,.3)}
-
-/* ── FORMS ── */
-.form-group{margin-bottom:15px}
-.label{display:block;font-size:12.5px;font-weight:600;color:var(--s700);margin-bottom:5px}
-input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{width:100%;padding:8px 12px;border-radius:9px;border:1.5px solid var(--border);background:var(--white);font-size:13.5px;color:var(--s800);font-family:'DM Sans',sans-serif;transition:border .15s,box-shadow .15s;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--v500);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
-textarea{resize:vertical;min-height:72px}
-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:34px}
-
-/* ── PROGRESS ── */
-.progress-bar{height:7px;background:var(--s100);border-radius:99px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--v500),var(--b500));border-radius:99px;transition:width .5s ease}
-
-/* ── GRIDS ── */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:640px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
-
-/* ── TOAST ── */
-#toast-container{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:7px}
-.toast{background:var(--s900);color:white;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:toastIn .3s ease;display:flex;align-items:center;gap:8px}
+.badge-amber{background:var(--a100);color:var(--a600)}
+.form-group{margin-bottom:16px}
+.label{display:block;font-size:13px;font-weight:600;color:var(--s700);margin-bottom:6px}
+input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{width:100%;padding:9px 13px;border-radius:9px;border:1.5px solid var(--border);background:var(--white);font-size:14px;color:var(--s800);font-family:'DM Sans',sans-serif;transition:border .15s,box-shadow .15s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--v500);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+textarea{resize:vertical;min-height:80px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.progress-bar{height:8px;background:var(--s100);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--v500),var(--b500));border-radius:99px;transition:width .6s ease}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:680px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--s900);color:white;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:toastIn .3s ease;display:flex;align-items:center;gap:8px}
 .toast.success{background:#064e3b}.toast.error{background:#7f1d1d}
-@keyframes toastIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── MODAL ── */
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:16px;width:90%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:modalIn .25s ease;max-height:90vh;overflow-y:auto}
-.modal-lg{max-width:600px}
+.modal{background:var(--white);border-radius:16px;width:90%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:modalIn .25s ease;max-height:90vh;overflow-y:auto}
+.modal-lg{max-width:640px}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-header{padding:20px 22px 0;display:flex;align-items:center;justify-content:space-between}
-.modal-body{padding:18px 22px 22px}
-.close-btn{background:none;border:none;cursor:pointer;padding:5px;border-radius:7px;color:var(--s400)}
+.modal-header{padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px 24px 24px}
+.close-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:7px;color:var(--s400)}
 .close-btn:hover{background:var(--s100)}
-.close-btn svg{width:17px;height:17px}
-
-/* ── UTILS ── */
+.close-btn svg{width:18px;height:18px}
 .flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.items-start{align-items:flex-start}
 .justify-between{justify-content:space-between}.justify-center{justify-content:center}
 .gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
 .flex-1{flex:1}.flex-wrap{flex-wrap:wrap}
-.text-center{text-align:center}
+.text-center{text-align:center}.text-right{text-align:right}
 .mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-6{margin-top:24px}
 .mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}.mb-6{margin-bottom:24px}
-.w-full{width:100%}.hidden{display:none!important}.min-w-0{min-width:0}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.spinner{width:32px;height:32px;border:3px solid var(--v100);border-top-color:var(--v600);border-radius:50%;animation:spin .7s linear infinite}
+.w-full{width:100%}.hidden{display:none!important}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.min-w-0{min-width:0}
+.spinner{width:36px;height:36px;border:4px solid var(--v100);border-top-color:var(--v600);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-center{display:flex;align-items:center;justify-content:center;padding:50px}
-.empty-state{text-align:center;padding:48px 22px}
-.empty-state svg{width:50px;height:50px;stroke:var(--s200);margin-bottom:12px}
-.empty-state h3{font-size:16px;color:var(--s600);margin-bottom:5px}
-.empty-state p{font-size:13px;color:var(--s400)}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--s200);border-radius:99px}
-
-/* ── AUTH ── */
+.loading-center{display:flex;align-items:center;justify-content:center;padding:60px}
+.empty-state{text-align:center;padding:56px 24px}
+.empty-state svg{width:56px;height:56px;stroke:var(--s200);margin-bottom:14px}
+.empty-state h3{font-size:17px;color:var(--s600);margin-bottom:6px}
+.empty-state p{font-size:13.5px;color:var(--s400)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--s200);border-radius:99px}
+/* AUTH */
 .auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#f8f7ff 0%,#fff 50%,#f0fdf4 100%);padding:20px}
-.auth-box{background:white;border-radius:20px;padding:36px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(124,58,237,.12);border:1px solid var(--border)}
-.auth-logo{text-align:center;margin-bottom:24px}
-.auth-logo .logo-icon{width:52px;height:52px;border-radius:15px;margin:0 auto 10px}
-.auth-logo .logo-icon svg{width:24px;height:24px}
-.auth-switch{text-align:center;margin-top:16px;font-size:13px;color:var(--s500)}
+.auth-box{background:white;border-radius:20px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(124,58,237,.12);border:1px solid var(--border)}
+.auth-logo{text-align:center;margin-bottom:28px}
+.auth-logo .logo-icon{width:56px;height:56px;border-radius:16px;margin:0 auto 12px}
+.auth-logo .logo-icon svg{width:26px;height:26px}
+.auth-switch{text-align:center;margin-top:18px;font-size:13px;color:var(--s500)}
 .auth-switch span{color:var(--v600);font-weight:600;cursor:pointer}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
-.role-opt{padding:13px 10px;border-radius:11px;border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .18s;background:white;font-family:'DM Sans',sans-serif}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.role-opt{padding:14px 12px;border-radius:12px;border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .18s;background:white;font-family:'DM Sans',sans-serif}
 .role-opt.selected{border-color:var(--v500);background:var(--v50)}
-.role-emoji{font-size:24px;display:block;margin-bottom:5px}
-.role-name{font-size:12.5px;font-weight:700;color:var(--s800)}
-.role-sub{font-size:10.5px;color:var(--s400);margin-top:2px}
-
-/* ── LANDING ── */
-.landing-header{max-width:1060px;margin:0 auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
-.landing-hero{max-width:720px;margin:0 auto;padding:52px 22px 36px;text-align:center}
-.pill-tag{display:inline-flex;align-items:center;gap:6px;background:var(--v100);color:var(--v700);padding:5px 13px;border-radius:99px;font-size:12.5px;font-weight:600;margin-bottom:18px}
-.features-grid{max-width:860px;margin:16px auto 0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 22px 50px}
-@media(max-width:580px){.features-grid{grid-template-columns:1fr}}
-.feature-card{background:white;border-radius:13px;padding:20px;border:1px solid var(--border);display:flex;align-items:flex-start;gap:13px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.feature-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* ── STAGE CARDS (home nav) ── */
-.stage-nav-card{display:flex;align-items:flex-start;gap:13px;padding:18px;cursor:pointer;transition:box-shadow .2s,transform .2s;border-radius:var(--rad)}
-.stage-nav-card:hover{box-shadow:var(--shl);transform:translateY(-2px)}
-.stage-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* ── FLOW STEPPER ── */
-.flow-stepper{display:flex;align-items:center;gap:0;margin-bottom:28px;overflow-x:auto;padding-bottom:4px}
-.step-item{display:flex;align-items:center;gap:0;flex-shrink:0}
-.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;cursor:pointer;transition:all .2s}
-.step-dot.done{background:var(--e600);color:white}
-.step-dot.active{background:var(--v600);color:white;box-shadow:0 0 0 4px rgba(124,58,237,.18)}
-.step-dot.upcoming{background:var(--s100);color:var(--s400)}
-.step-label{font-size:11px;font-weight:600;margin-top:4px;text-align:center;width:70px;line-height:1.3}
-.step-label.active{color:var(--v700)}
-.step-label.done{color:var(--e600)}
-.step-label.upcoming{color:var(--s400)}
-.step-connector{width:28px;height:2px;background:var(--s200);flex-shrink:0}
-.step-connector.done{background:var(--e600)}
-.step-item-wrap{display:flex;flex-direction:column;align-items:center}
-
-/* ── MATERIALS ── */
-.material-item{display:flex;align-items:flex-start;gap:13px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.role-emoji{font-size:26px;display:block;margin-bottom:6px}
+.role-name{font-size:13px;font-weight:700;color:var(--s800)}
+.role-sub{font-size:11px;color:var(--s400);margin-top:2px}
+/* LANDING */
+.landing-header{max-width:1100px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+.landing-hero{max-width:780px;margin:0 auto;padding:60px 24px 40px;text-align:center}
+.pill-tag{display:inline-flex;align-items:center;gap:6px;background:var(--v100);color:var(--v700);padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;margin-bottom:20px}
+.features-grid{max-width:900px;margin:20px auto 0;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:0 24px 60px}
+@media(max-width:600px){.features-grid{grid-template-columns:1fr}}
+.feature-card{background:white;border-radius:14px;padding:22px;border:1px solid var(--border);display:flex;align-items:flex-start;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* STAGE CARDS */
+.stage-card{display:flex;align-items:flex-start;gap:14px;padding:20px;cursor:pointer;transition:box-shadow .2s,transform .2s}
+.stage-card:hover{box-shadow:var(--shl);transform:translateY(-2px)}
+.stage-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.material-item{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;border-bottom:1px solid var(--border)}
 .material-item:last-child{border-bottom:none}
 .material-item:hover{background:var(--s50)}
-
-/* ── PRE-CLASS PREP ── */
-.icap-banner{background:linear-gradient(135deg,var(--v50),var(--b50));border:1.5px solid var(--v200);border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px}
-.concept-card{margin-bottom:10px}
-.concept-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer}
-.concept-body{padding:0 18px 18px;border-top:1px solid var(--border)}
-.concept-num{width:28px;height:28px;border-radius:50%;background:var(--s100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.concept-card{margin-bottom:12px}
+.concept-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer}
+.concept-body{padding:0 20px 20px;border-top:1px solid var(--border)}
+.concept-num{width:32px;height:32px;border-radius:50%;background:var(--s100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
 .concept-num.done{background:var(--e100);color:var(--e600)}
-.self-explain-prompt{background:var(--a50);border:1px solid var(--a100);border-radius:9px;padding:10px 13px;font-size:12.5px;color:var(--a600);margin-bottom:10px;display:flex;align-items:flex-start;gap:8px}
 
-/* ── REHEARSAL / CHAT ── */
-.chat-area{max-height:460px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:14px}
-.msg{display:flex;gap:9px}
+/* ── REHEARSAL CHAT ── */
+.chat-area{max-height:500px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.msg{display:flex;gap:10px}
 .msg.user{flex-direction:row-reverse}
-.msg-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.msg-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .msg-avatar.ai-av{color:white}
 .msg-avatar.user-av{background:linear-gradient(135deg,var(--i600),#3b82f6);color:white}
-.msg-bubble{max-width:72%;padding:11px 14px;border-radius:13px;font-size:13.5px;line-height:1.6}
-.msg-bubble.ai{background:white;border:1px solid var(--border);color:var(--s700);border-radius:4px 13px 13px 13px}
-.msg-bubble.user{background:linear-gradient(135deg,var(--i600),#3b82f6);color:white;border-radius:13px 4px 13px 13px}
-.voice-bubble{background:white;border:1.5px solid var(--v200);border-radius:4px 13px 13px 13px;padding:9px 13px;max-width:72%;cursor:pointer;transition:all .18s;user-select:none}
+.msg-bubble{max-width:72%;padding:12px 15px;border-radius:14px;font-size:14px;line-height:1.6}
+.msg-bubble.ai{background:white;border:1px solid var(--border);color:var(--s700);border-radius:4px 14px 14px 14px}
+.msg-bubble.user{background:linear-gradient(135deg,var(--i600),#3b82f6);color:white;border-radius:14px 4px 14px 14px}
+
+/* AI voice bubble pending */
+.voice-bubble{background:white;border:1.5px solid var(--v200);border-radius:4px 14px 14px 14px;padding:10px 14px;max-width:72%;cursor:pointer;transition:all .18s;user-select:none}
 .voice-bubble:hover{border-color:var(--v400);background:var(--v50)}
-.voice-wave{display:flex;align-items:center;gap:3px;height:20px}
+.voice-wave{display:flex;align-items:center;gap:3px;height:22px}
 .wave-bar{width:3px;border-radius:2px;background:var(--v500);animation:waveAnim 1s ease-in-out infinite}
-.wave-bar:nth-child(1){height:7px;animation-delay:0s}.wave-bar:nth-child(2){height:14px;animation-delay:.1s}
-.wave-bar:nth-child(3){height:10px;animation-delay:.2s}.wave-bar:nth-child(4){height:16px;animation-delay:.3s}
-.wave-bar:nth-child(5){height:9px;animation-delay:.4s}.wave-bar:nth-child(6){height:13px;animation-delay:.5s}
+.wave-bar:nth-child(1){height:8px;animation-delay:0s}
+.wave-bar:nth-child(2){height:16px;animation-delay:.1s}
+.wave-bar:nth-child(3){height:12px;animation-delay:.2s}
+.wave-bar:nth-child(4){height:18px;animation-delay:.3s}
+.wave-bar:nth-child(5){height:10px;animation-delay:.4s}
+.wave-bar:nth-child(6){height:14px;animation-delay:.5s}
 @keyframes waveAnim{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.6)}}
-.voice-bubble-label{font-size:11.5px;color:var(--v600);font-weight:600;margin-top:4px}
-.thinking-dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--s300);animation:dotBounce 1.2s ease-in-out infinite}
+.voice-bubble-label{font-size:12px;color:var(--v600);font-weight:600;margin-top:5px}
+.thinking-dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--s300);animation:dotBounce 1.2s ease-in-out infinite}
 .thinking-dots span:nth-child(2){animation-delay:.2s}
 .thinking-dots span:nth-child(3){animation-delay:.4s}
-@keyframes dotBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+@keyframes dotBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 
-/* ── SCAFFOLD STARTERS ── */
-.scaffold-bar{background:var(--v50);border:1.5px solid var(--v200);border-radius:11px;padding:11px 13px;margin-bottom:9px}
-.scaffold-label{font-size:11px;font-weight:700;color:var(--v700);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
-.stab-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
-.stab{padding:4px 11px;border-radius:99px;font-size:12px;font-weight:500;background:white;border:1.5px solid var(--v200);color:var(--v700);cursor:pointer;transition:all .14s;white-space:nowrap}
-.stab:hover,.stab.active{background:var(--v100);border-color:var(--v500)}
-.starter-chip{display:inline-block;padding:5px 11px;border-radius:8px;font-size:12.5px;background:white;border:1.5px solid var(--border);color:var(--s600);cursor:pointer;margin:3px;transition:all .14s}
-.starter-chip:hover{border-color:var(--v400);color:var(--v700);background:var(--v50)}
-
-/* ── INPUT ROW ── */
-.input-row{display:flex;gap:7px;align-items:flex-end}
-.input-row textarea{flex:1;border-radius:10px;padding:9px 12px;font-size:13.5px;min-height:42px;max-height:110px;resize:none;border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;transition:border .15s}
-.input-row textarea:focus{border-color:var(--v500);outline:none;box-shadow:0 0 0 3px rgba(139,92,246,.09)}
-.icon-btn{width:42px;height:42px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
-.icon-btn.mic{background:var(--b600)}.icon-btn.mic:hover{background:#1d4ed8}
-.icon-btn.mic.listening{background:#ef4444;animation:pulse 1.2s infinite}
-.icon-btn.send{background:var(--v600)}.icon-btn.send:hover{background:var(--v700)}
-.icon-btn:disabled{opacity:.4;cursor:not-allowed}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-/* ── TIMER ── */
-.timer-badge{font-family:'Sora',monospace;font-weight:700;font-size:15px;padding:5px 13px;border-radius:99px}
+.recording-pulse{animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.timer-badge{font-family:'Sora',monospace;font-weight:700;font-size:16px;padding:6px 14px;border-radius:99px}
 .timer-normal{background:var(--s100);color:var(--s700)}
 .timer-urgent{background:#fee2e2;color:var(--r500);animation:timerUrgent .8s ease infinite alternate}
-@keyframes timerUrgent{from{opacity:1}to{opacity:.5}}
-
-/* ── IN-CLASS PARTICIPATION ── */
-.situation-card{border:2px solid var(--border);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all .18s;margin-bottom:10px}
-.situation-card:hover{border-color:var(--v400);background:var(--v50)}
-.situation-card.selected{border-color:var(--v600);background:var(--v50)}
-.phrase-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:9px;font-size:13px;background:var(--s50);border:1.5px solid var(--border);color:var(--s700);cursor:pointer;margin:4px;transition:all .16s}
-.phrase-chip:hover{border-color:var(--v400);background:var(--v50);color:var(--v700)}
-.phrase-chip.ready{background:var(--e50);border-color:var(--e100);color:var(--e600)}
-.copied-flash{background:var(--v600)!important;color:white!important;border-color:var(--v600)!important}
-
-/* ── QUESTIONNAIRE ── */
-.q-item{margin-bottom:20px}
-.q-label{font-size:14px;font-weight:600;color:var(--s800);margin-bottom:8px}
-.q-sub{font-size:12.5px;color:var(--s500);margin-bottom:8px}
-.likert-row{display:flex;gap:6px;flex-wrap:wrap}
-.likert-opt{width:40px;height:40px;border-radius:8px;border:2px solid var(--border);background:white;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Sans',sans-serif;color:var(--s600)}
-.likert-opt:hover{border-color:var(--v400);color:var(--v700)}
-.likert-opt.selected{background:var(--v600);color:white;border-color:var(--v600)}
-.q-scale-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--s400);margin-top:4px}
-
-/* ── REFLECTION ── */
-.speak-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .18s;font-family:'DM Sans',sans-serif}
+@keyframes timerUrgent{from{opacity:1}to{opacity:.6}}
+.phrase-tab{padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .18s;background:var(--s100);color:var(--s600)}
+.phrase-tab.active{background:var(--v100);color:var(--v700);border-color:var(--v300)}
+.speak-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .18s;font-family:'DM Sans',sans-serif}
 .speak-yes{background:var(--e50);color:var(--e600);border-color:var(--e100)}.speak-yes.selected{background:var(--e600);color:white}
 .speak-no{background:var(--s50);color:var(--s600);border-color:var(--s200)}.speak-no.selected{background:var(--s700);color:white}
-.insight-box{background:linear-gradient(135deg,#fffbeb,#fff7ed);border:1px solid #fde68a;border-radius:11px;padding:15px 17px}
-.scaffold-fade-note{background:var(--e50);border:1px solid var(--e100);border-radius:10px;padding:12px 15px;font-size:13px;color:var(--e600);margin-bottom:14px}
-
-/* ── PROFILE ── */
-.profile-hero{padding:28px;border-radius:var(--rad);color:white;background:linear-gradient(135deg,var(--v700),#5b21b6,var(--i600))}
-.av-lg{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white}
-.stat-card{padding:16px 18px}
-.stat-num{font-size:28px;font-weight:800;font-family:'Sora',sans-serif}
-
-/* ── DATE PICKER ── */
+.profile-hero{padding:32px;border-radius:var(--rad);color:white;background:linear-gradient(135deg,var(--v700),#5b21b6,var(--i600))}
+.av-lg{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:white}
+.stat-card{padding:18px 20px}
+.stat-num{font-size:30px;font-weight:800;font-family:'Sora',sans-serif}
+.stat-label{font-size:12px;color:var(--s500);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.conf-tier{border-radius:14px;padding:20px 22px;cursor:pointer}
+.insight-box{background:linear-gradient(135deg,#fffbeb,#fff7ed);border:1px solid #fde68a;border-radius:12px;padding:16px 18px;margin-bottom:10px}
+.chip{display:inline-block;background:white;border:1px solid var(--border);padding:6px 12px;border-radius:8px;font-size:13px;color:var(--s600);margin:3px;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:#6ee7b7;color:var(--e600);background:var(--e50)}
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s50)}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--v500);background:var(--v50)}
+.upload-zone svg{width:40px;height:40px;stroke:var(--s300);margin-bottom:10px}
+.file-preview-box{background:var(--e50);border:1px solid var(--e100);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.lang-btn{padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--s600);transition:all .18s;font-family:'DM Sans',sans-serif}
+.lang-btn.selected{border-color:var(--v500);background:var(--v50);color:var(--v700)}
+.translate-output{background:linear-gradient(135deg,var(--v50),var(--b50));border:1.5px solid var(--v200);border-radius:14px;padding:20px;min-height:80px}
+.class-card{background:white;border-radius:14px;border:1.5px solid var(--border);padding:20px 22px;box-shadow:var(--sh);transition:box-shadow .2s,transform .2s}
+.class-card:hover{box-shadow:var(--shl);transform:translateY(-2px)}
+.class-code{font-family:'Sora',monospace;font-size:22px;font-weight:800;letter-spacing:.12em;color:var(--v700);background:var(--v50);border:1.5px dashed var(--v300);border-radius:10px;padding:8px 16px;display:inline-block;cursor:pointer}
+.mic-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;position:relative;margin:0 auto}
+.mic-ring.idle{background:var(--v100);border:3px solid var(--v300)}
+.mic-ring.listening{background:#fee2e2;border:3px solid #f87171;animation:micPulse 1s infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 12px rgba(239,68,68,0)}}
+.transcript-box{background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px;min-height:56px;font-size:14px;color:var(--s700);line-height:1.6}
+.transcript-box.listening{border-color:var(--v400);background:var(--v50)}
+/* DATE PICKER */
 .dr-wrap{position:relative}
-.dr-trigger{width:100%;padding:8px 12px;border-radius:9px;border:1.5px solid var(--border);background:var(--white);font-size:13.5px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;color:var(--s400)}
+.dr-trigger{width:100%;padding:9px 13px;border-radius:9px;border:1.5px solid var(--border);background:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:border .15s;color:var(--s400)}
 .dr-trigger.has-value{color:var(--s800)}
-.dr-trigger.active{border-color:var(--v500);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
-.dr-popup{position:fixed;background:white;border-radius:15px;border:1.5px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.18);z-index:9000;width:290px;padding:14px}
+.dr-trigger.active{border-color:var(--v500);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+.dr-popup{position:fixed;background:white;border-radius:16px;border:1.5px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.18);z-index:9000;width:300px;padding:16px}
 .dr-popup[hidden]{display:none}
-.dr-col-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:7px}
-.dr-col-label{text-align:center;font-size:10.5px;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:.05em}
-.dr-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.dr-col{height:170px;overflow:hidden;position:relative;border-radius:9px;background:var(--s50)}
-.dr-col::before,.dr-col::after{content:'';position:absolute;left:0;right:0;height:65px;z-index:2;pointer-events:none}
+.dr-col-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.dr-col-label{text-align:center;font-size:11px;font-weight:700;color:var(--s400);text-transform:uppercase;letter-spacing:.05em}
+.dr-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dr-col{height:180px;overflow:hidden;position:relative;border-radius:10px;background:var(--s50)}
+.dr-col::before,.dr-col::after{content:'';position:absolute;left:0;right:0;height:70px;z-index:2;pointer-events:none}
 .dr-col::before{top:0;background:linear-gradient(to bottom,rgba(248,247,255,.95),rgba(248,247,255,0))}
 .dr-col::after{bottom:0;background:linear-gradient(to top,rgba(248,247,255,.95),rgba(248,247,255,0))}
-.dr-highlight{position:absolute;top:50%;left:3px;right:3px;height:38px;transform:translateY(-50%);background:var(--v50);border:1.5px solid var(--v200);border-radius:7px;pointer-events:none;z-index:3}
+.dr-highlight{position:absolute;top:50%;left:4px;right:4px;height:40px;transform:translateY(-50%);background:var(--v50);border:1.5px solid var(--v200);border-radius:8px;pointer-events:none;z-index:3}
 .dr-scroll{position:absolute;left:0;right:0;top:0;overflow-y:scroll;height:100%;scroll-snap-type:y mandatory;scrollbar-width:none}
 .dr-scroll::-webkit-scrollbar{display:none}
-.dr-item{height:38px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--s400);scroll-snap-align:center;font-family:'DM Sans',sans-serif;font-weight:500;position:relative;z-index:4}
-.dr-item.active{color:var(--v700);font-weight:700;font-size:15px}
-.dr-footer{margin-top:11px;display:flex;align-items:center;justify-content:space-between}
-
-/* ── UPLOAD ── */
-.upload-zone{border:2px dashed var(--border);border-radius:11px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s50)}
-.upload-zone:hover,.upload-zone.drag-over{border-color:var(--v500);background:var(--v50)}
-.upload-zone svg{width:38px;height:38px;stroke:var(--s300);margin-bottom:9px}
-.file-preview-box{background:var(--e50);border:1px solid var(--e100);border-radius:9px;padding:11px 14px;display:flex;align-items:center;gap:9px}
-
-/* ── CLASS CARDS ── */
-.class-card{background:white;border-radius:13px;border:1.5px solid var(--border);padding:18px 20px;box-shadow:var(--sh);margin-bottom:14px}
-.class-code{font-family:'Sora',monospace;font-size:20px;font-weight:800;letter-spacing:.12em;color:var(--v700);background:var(--v50);border:1.5px dashed var(--v300);border-radius:9px;padding:7px 14px;display:inline-block;cursor:pointer}
+.dr-item{height:40px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--s400);scroll-snap-align:center;font-family:'DM Sans',sans-serif;font-weight:500;position:relative;z-index:4}
+.dr-item.active{color:var(--v700);font-weight:700;font-size:16px}
+.dr-footer{margin-top:12px;display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
 <body>
 
-<!-- ══ LANDING ══ -->
+<!-- LANDING -->
 <div id="view-landing">
   <header class="landing-header">
     <div class="flex items-center gap-2">
       <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <div><div style="font-family:Sora;font-weight:700;font-size:15px;color:var(--s900)">DiscussReady</div></div>
-    </div>
-    <div class="flex gap-2">
-      <button class="btn btn-outline btn-sm" onclick="showView('login')">Sign In</button>
-      <button class="btn btn-primary btn-sm" onclick="showView('register')">Get Started</button>
+      <div><div style="font-family:Sora;font-weight:700;font-size:16px;color:var(--s900)">DiscussReady</div><div style="font-size:11px;color:var(--s400)">AI Discussion Coach</div></div>
     </div>
   </header>
   <section class="landing-hero">
-    <div class="pill-tag">✨ ICAP + SToG Framework</div>
-    <h1 style="font-size:clamp(28px,4.5vw,46px);margin:12px 0 0;line-height:1.15">
-      <span style="color:var(--s900)">From passive reader<br>to </span>
-      <span style="background:linear-gradient(90deg,var(--v600),var(--b500));-webkit-background-clip:text;-webkit-text-fill-color:transparent">confident participant.</span>
+    <div class="pill-tag">✨ AI-Powered Discussion Preparation</div>
+    <h1 style="font-size:clamp(30px,4.5vw,48px);margin:14px 0 0;line-height:1.15">
+      <span style="color:var(--s900)">Prepare. Practice.<br></span>
+      <span style="background:linear-gradient(90deg,var(--v600),var(--b500));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Participate.</span>
     </h1>
-    <p style="color:var(--s500);font-size:15px;max-width:500px;margin:14px auto 24px;line-height:1.65">A structured four-stage system that guides students from constructive pre-class preparation to interactive in-class discussion.</p>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-primary btn-lg" onclick="showView('register')">Start Free →</button>
+    <p style="color:var(--s500);font-size:15.5px;max-width:520px;margin:16px auto 28px;line-height:1.65">Transform passive reading into confident classroom discussion through structured preparation and AI-guided rehearsal.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" onclick="showView('register')">Create Free Account →</button>
       <button class="btn btn-outline btn-lg" onclick="showView('login')">Sign In</button>
     </div>
   </section>
-  <!-- 4-stage flow -->
-  <div style="max-width:860px;margin:0 auto;padding:0 22px 50px">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-      <div class="feature-card" style="flex-direction:column;align-items:flex-start">
-        <div class="feature-icon" style="background:#ede9fe;margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-        <div class="badge badge-violet mb-2">Stage 1 · ICAP Constructive</div>
-        <div style="font-weight:700;font-size:14px;margin-bottom:4px">Pre-Class Prep</div>
-        <div style="font-size:12.5px;color:var(--s500)">Self-explain concepts, connect ideas, form a position</div>
-      </div>
-      <div class="feature-card" style="flex-direction:column;align-items:flex-start">
-        <div class="feature-icon" style="background:#dbeafe;margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
-        <div class="badge badge-blue mb-2">Stage 2 · SToG Rehearsal</div>
-        <div style="font-weight:700;font-size:14px;margin-bottom:4px">AI Rehearsal</div>
-        <div style="font-size:12.5px;color:var(--s500)">Practice aloud with AI classmates using sentence starters</div>
-      </div>
-      <div class="feature-card" style="flex-direction:column;align-items:flex-start">
-        <div class="feature-icon" style="background:#d1fae5;margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="badge badge-emerald mb-2">Stage 3 · ICAP Interactive</div>
-        <div style="font-weight:700;font-size:14px;margin-bottom:4px">In-Class</div>
-        <div style="font-size:12.5px;color:var(--s500)">Ready-to-use situational phrases for live discussion</div>
-      </div>
-      <div class="feature-card" style="flex-direction:column;align-items:flex-start">
-        <div class="feature-icon" style="background:#fef3c7;margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <div class="badge badge-amber mb-2">Stage 4 · Reflect</div>
-        <div style="font-weight:700;font-size:14px;margin-bottom:4px">Questionnaire</div>
-        <div style="font-size:12.5px;color:var(--s500)">Structured reflection + scaffold fading over time</div>
-      </div>
-    </div>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon" style="background:#ede9fe"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div><div style="font-weight:700;margin-bottom:4px">Pre-Class Prep</div><div style="font-size:13px;color:var(--s500)">Understand concepts deeply before class</div></div></div>
+    <div class="feature-card"><div class="feature-icon" style="background:#dbeafe"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div><div><div style="font-weight:700;margin-bottom:4px">AI Voice Rehearsal</div><div style="font-size:13px;color:var(--s500)">Classmates analyze your material & respond intelligently</div></div></div>
+    <div class="feature-card"><div class="feature-icon" style="background:#d1fae5"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div style="font-weight:700;margin-bottom:4px">Discussion Phrases</div><div style="font-size:13px;color:var(--s500)">Build a ready-to-use toolkit</div></div></div>
+    <div class="feature-card"><div class="feature-icon" style="background:#fef3c7"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div><div style="font-weight:700;margin-bottom:4px">Reflection</div><div style="font-size:13px;color:var(--s500)">Review participation and improve</div></div></div>
   </div>
 </div>
 
-<!-- ══ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="view-login" class="hidden">
   <div class="auth-page"><div class="auth-box">
     <div class="auth-logo">
       <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <h2 style="font-size:21px;font-weight:800">Welcome back</h2>
+      <h2 style="font-size:22px;font-weight:800">Welcome back</h2>
     </div>
     <div class="form-group"><label class="label">Email</label><input type="email" id="login-email" placeholder="you@example.com"></div>
     <div class="form-group"><label class="label">Password</label><input type="password" id="login-password" placeholder="••••••••"></div>
-    <div id="login-error" class="hidden" style="background:#fee2e2;border-radius:8px;padding:9px 13px;font-size:12.5px;color:#b91c1c;margin-bottom:11px"></div>
+    <div id="login-error" class="hidden" style="background:#fee2e2;border-radius:8px;padding:10px 14px;font-size:13px;color:#b91c1c;margin-bottom:12px"></div>
     <button class="btn btn-primary w-full btn-lg" onclick="doLogin()">Sign In</button>
     <div class="auth-switch">No account? <span onclick="showView('register')">Create one free</span></div>
     <div class="auth-switch mt-2"><span onclick="showView('landing')">← Back</span></div>
-    <div style="margin-top:18px;background:var(--v50);border-radius:9px;padding:12px;font-size:12px;color:var(--s600)">
-      <div style="font-weight:700;color:var(--v700);margin-bottom:5px">✨ Demo accounts</div>
-      <div style="cursor:pointer;margin-bottom:5px" onclick="fillDemo('student@demo.com','demo1234')">🎓 <code style="background:white;padding:2px 5px;border-radius:4px">student@demo.com</code> / <code style="background:white;padding:2px 5px;border-radius:4px">demo1234</code></div>
-      <div style="cursor:pointer" onclick="fillDemo('teacher@demo.com','demo1234')">📋 <code style="background:white;padding:2px 5px;border-radius:4px">teacher@demo.com</code> / <code style="background:white;padding:2px 5px;border-radius:4px">demo1234</code></div>
+    <div style="margin-top:20px;background:var(--v50);border-radius:10px;padding:14px;font-size:12.5px;color:var(--s600)">
+      <div style="font-weight:700;color:var(--v700);margin-bottom:6px">✨ Demo accounts</div>
+      <div style="cursor:pointer;margin-bottom:6px" onclick="fillDemo('student@demo.com','demo1234')">🎓 <code style="background:white;padding:2px 6px;border-radius:4px">student@demo.com</code> / <code style="background:white;padding:2px 6px;border-radius:4px">demo1234</code></div>
+      <div style="cursor:pointer" onclick="fillDemo('teacher@demo.com','demo1234')">📋 <code style="background:white;padding:2px 6px;border-radius:4px">teacher@demo.com</code> / <code style="background:white;padding:2px 6px;border-radius:4px">demo1234</code></div>
     </div>
   </div></div>
 </div>
 
-<!-- ══ REGISTER ══ -->
+<!-- REGISTER -->
 <div id="view-register" class="hidden">
   <div class="auth-page"><div class="auth-box">
     <div class="auth-logo">
       <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <h2 style="font-size:21px;font-weight:800">Create your account</h2>
+      <h2 style="font-size:22px;font-weight:800">Create your account</h2>
     </div>
     <div class="form-group"><label class="label">Full Name *</label><input type="text" id="reg-name" placeholder="Your name"></div>
     <div class="form-group"><label class="label">Email *</label><input type="email" id="reg-email" placeholder="you@example.com"></div>
@@ -395,17 +299,17 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <div class="form-group"><label class="label">I am a...</label>
       <div class="role-grid">
         <button class="role-opt selected" id="role-student" onclick="selectRole('student')"><span class="role-emoji">🎓</span><div class="role-name">Student</div><div class="role-sub">Practice participating</div></button>
-        <button class="role-opt" id="role-teacher" onclick="selectRole('teacher')"><span class="role-emoji">📋</span><div class="role-name">Teacher</div><div class="role-sub">Manage classroom</div></button>
+        <button class="role-opt" id="role-teacher" onclick="selectRole('teacher')"><span class="role-emoji">📋</span><div class="role-name">Teacher</div><div class="role-sub">Manage a classroom</div></button>
       </div>
     </div>
-    <div id="reg-error" class="hidden" style="background:#fee2e2;border-radius:8px;padding:9px 13px;font-size:12.5px;color:#b91c1c;margin-bottom:11px"></div>
+    <div id="reg-error" class="hidden" style="background:#fee2e2;border-radius:8px;padding:10px 14px;font-size:13px;color:#b91c1c;margin-bottom:12px"></div>
     <button class="btn btn-primary w-full btn-lg" onclick="doRegister()">Create Account</button>
     <div class="auth-switch">Have an account? <span onclick="showView('login')">Sign in</span></div>
     <div class="auth-switch mt-2"><span onclick="showView('landing')">← Back</span></div>
   </div></div>
 </div>
 
-<!-- ══ MAIN APP ══ -->
+<!-- MAIN APP -->
 <div id="view-app" class="hidden">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo" onclick="navigate('Home')">
@@ -417,275 +321,172 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       <div class="av-sm" id="nav-avatar">?</div>
       <div class="min-w-0">
         <div style="font-size:12px;font-weight:600;color:var(--s700)" class="truncate" id="nav-username">User</div>
-        <div style="font-size:10.5px;color:var(--s400)" id="nav-role">student</div>
+        <div style="font-size:11px;color:var(--s400)" id="nav-role">student</div>
       </div>
     </div>
   </aside>
   <header class="mob-header">
     <div class="flex items-center gap-2">
-      <div class="logo-icon" style="width:30px;height:30px;border-radius:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <span style="font-family:Sora;font-weight:700;color:var(--s900);font-size:14px">DiscussReady</span>
+      <div class="logo-icon" style="width:32px;height:32px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <span style="font-family:Sora;font-weight:700;color:var(--s900)">DiscussReady</span>
     </div>
-    <button class="burger" onclick="toggleSidebar()"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <button class="burger" onclick="toggleSidebar()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   </header>
   <div class="mob-overlay" id="mob-overlay" onclick="toggleSidebar()"></div>
 
   <main class="main">
 
-    <!-- ── HOME ── -->
+    <!-- HOME -->
     <div class="page" id="page-Home">
       <div class="container">
-        <!-- Flow stepper -->
-        <div style="margin-bottom:28px">
-          <h1 style="font-size:26px;font-weight:800;margin-bottom:4px">Your Discussion Journey</h1>
-          <p style="color:var(--s500);font-size:13.5px;margin-bottom:20px">Four stages from passive reading to confident participation</p>
-          <div class="flow-stepper" id="home-stepper"></div>
+        <div style="text-align:center;margin-bottom:32px">
+          <div class="pill-tag">✨ AI-Powered Discussion Preparation</div>
+          <h1 style="font-size:clamp(28px,4vw,44px);margin:14px 0 16px;line-height:1.15"><span style="color:var(--s900)">Prepare. Practice.<br></span><span style="background:linear-gradient(90deg,var(--v600),var(--b500));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Participate.</span></h1>
         </div>
         <div class="grid-2 mb-6">
-          <div class="card stage-nav-card" onclick="navigate('Materials')">
-            <div class="stage-icon" style="background:var(--b50)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            <div class="flex-1 min-w-0"><div style="font-size:10.5px;font-weight:700;color:var(--b600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Prep</div><h3 style="font-size:14.5px;font-weight:700;margin-bottom:3px">Materials + Pre-Class</h3><p style="font-size:12.5px;color:var(--s500)">Upload materials & explain concepts (ICAP Constructive)</p></div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-          <div class="card stage-nav-card" onclick="navigate('Rehearsal')">
-            <div class="stage-icon" style="background:var(--v50)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
-            <div class="flex-1 min-w-0"><div style="font-size:10.5px;font-weight:700;color:var(--v600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Stage 2</div><h3 style="font-size:14.5px;font-weight:700;margin-bottom:3px">AI Rehearsal</h3><p style="font-size:12.5px;color:var(--s500)">Practice aloud with AI simulation (SToG external script)</p></div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-          <div class="card stage-nav-card" onclick="navigate('InClass')">
-            <div class="stage-icon" style="background:var(--e50)"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-            <div class="flex-1 min-w-0"><div style="font-size:10.5px;font-weight:700;color:var(--e600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Stage 3</div><h3 style="font-size:14.5px;font-weight:700;margin-bottom:3px">In-Class Participation</h3><p style="font-size:12.5px;color:var(--s500)">Prepared phrases for live discussion (ICAP Interactive)</p></div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-          <div class="card stage-nav-card" onclick="navigate('Questionnaire')">
-            <div class="stage-icon" style="background:var(--a50)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-            <div class="flex-1 min-w-0"><div style="font-size:10.5px;font-weight:700;color:var(--a600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Stage 4</div><h3 style="font-size:14.5px;font-weight:700;margin-bottom:3px">Questionnaire</h3><p style="font-size:12.5px;color:var(--s500)">Reflect & track scaffold fading over time</p></div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
+          <div class="card stage-card" onclick="navigate('Materials')"><div class="stage-icon" style="background:var(--b50)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="flex-1"><h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Materials</h3><p style="font-size:13px;color:var(--s500)">Upload readings & slides</p></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          <div class="card stage-card" onclick="navigate('PreClassPrep')"><div class="stage-icon" style="background:var(--v50)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="flex-1"><h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Pre-Class Prep</h3><p style="font-size:13px;color:var(--s500)">Explain concepts in your words</p></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          <div class="card stage-card" onclick="navigate('Rehearsal')"><div class="stage-icon" style="background:var(--b50)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div><div class="flex-1"><h3 style="font-size:15px;font-weight:700;margin-bottom:4px">AI Rehearsal</h3><p style="font-size:13px;color:var(--s500)">Classmates discuss your material</p></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          <div class="card stage-card" onclick="navigate('Reflection')"><div class="stage-icon" style="background:var(--a50)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div class="flex-1"><h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Reflection</h3><p style="font-size:13px;color:var(--s500)">Review & improve</p></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </div>
-        <div class="card"><div class="card-body grid-3" style="text-align:center;padding:20px">
-          <div><div class="stat-num" id="stat-materials">0</div><div style="font-size:12px;color:var(--s500)">Materials</div></div>
-          <div><div class="stat-num" style="color:var(--v600)" id="stat-rehearsals">0</div><div style="font-size:12px;color:var(--s500)">Rehearsals</div></div>
-          <div><div class="stat-num" style="color:var(--e600)" id="stat-reflections">0</div><div style="font-size:12px;color:var(--s500)">Reflections</div></div>
+        <div class="card"><div class="card-body grid-3" style="text-align:center;padding:24px">
+          <div><div class="stat-num" id="stat-materials">0</div><div style="font-size:13px;color:var(--s500)">Materials</div></div>
+          <div><div class="stat-num" style="color:var(--v600)" id="stat-rehearsals">0</div><div style="font-size:13px;color:var(--s500)">Rehearsals</div></div>
+          <div><div class="stat-num" style="color:var(--e600)" id="stat-preps">0</div><div style="font-size:13px;color:var(--s500)">Preparations</div></div>
         </div></div>
       </div>
     </div>
 
-    <!-- ── TEACHER HOME ── -->
+    <!-- TEACHER HOME -->
     <div class="page" id="page-TeacherHome">
       <div class="container">
         <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-          <div><div style="color:var(--v600);font-size:12.5px;font-weight:600;margin-bottom:3px">📋 Teacher Dashboard</div><h1 style="font-size:26px;font-weight:800">My Classes</h1></div>
+          <div><div style="color:var(--v600);font-size:13px;font-weight:600;margin-bottom:4px">📋 Teacher Dashboard</div><h1 style="font-size:28px;font-weight:800">My Classes</h1></div>
           <button class="btn btn-primary" onclick="openModal('create-class-modal')">+ Create Class</button>
         </div>
         <div id="teacher-classes-list"></div>
       </div>
     </div>
 
-    <!-- ── MATERIALS ── -->
+    <!-- MY CLASS (student) -->
+    <div class="page" id="page-MyClass">
+      <div class="container">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <div><div style="color:var(--b600);font-size:13px;font-weight:600;margin-bottom:4px">🏫 My Class</div><h1 style="font-size:28px;font-weight:800" id="my-class-name">—</h1></div>
+          <button class="btn btn-outline btn-sm" onclick="openModal('join-class-modal')">+ Join Another Class</button>
+        </div>
+        <div id="my-class-content"></div>
+      </div>
+    </div>
+
+    <!-- MATERIALS -->
     <div class="page" id="page-Materials">
       <div class="container">
-        <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
-          <div><div style="color:var(--b600);font-size:12.5px;font-weight:600;margin-bottom:3px">📄 Prep · Upload</div><h1 style="font-size:26px;font-weight:800">Class Materials</h1></div>
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <div><h1 style="font-size:28px;font-weight:800">Class Materials</h1><p style="color:var(--s500);margin-top:2px">Upload your readings, notes, and slides</p></div>
           <button class="btn btn-primary" onclick="openModal('add-material-modal')">+ Upload Material</button>
         </div>
-        <div id="materials-list"></div>
-        <!-- Proceed prompt -->
-        <div id="mat-proceed" class="hidden mt-4 card"><div class="card-body flex items-center justify-between flex-wrap gap-3">
-          <div><div style="font-weight:700;margin-bottom:2px">Ready to prepare?</div><div style="font-size:13px;color:var(--s500)">Move on to Stage 1: Pre-Class Preparation</div></div>
-          <button class="btn btn-primary" onclick="navigate('PreClassPrep')">Go to Pre-Class Prep →</button>
-        </div></div>
+        <div id="materials-list"><div class="loading-center"><div class="spinner"></div></div></div>
       </div>
     </div>
 
-    <!-- ── PRE-CLASS PREP (Stage 1 · ICAP Constructive) ── -->
+    <!-- PRE-CLASS PREP -->
     <div class="page" id="page-PreClassPrep">
       <div class="container">
-        <div class="mb-5">
-          <div style="color:var(--v600);font-size:12.5px;font-weight:600;margin-bottom:3px">📚 Stage 1 · ICAP Constructive</div>
-          <h1 style="font-size:26px;font-weight:800">Pre-Class Preparation</h1>
-        </div>
-        <div class="icap-banner">
-          <div style="font-size:22px;flex-shrink:0">🧠</div>
-          <div><div style="font-weight:700;color:var(--v700);margin-bottom:3px">Constructive Engagement</div><div style="font-size:13px;color:var(--s600)">Instead of passively re-reading, you will <strong>explain concepts in your own words</strong>, <strong>connect ideas</strong> to prior knowledge, and <strong>form a discussion position</strong>. This transforms passive reading into constructive understanding.</div></div>
-        </div>
+        <div class="mb-6"><div style="color:var(--v600);font-size:13px;font-weight:600;margin-bottom:6px">📚 Stage 1</div><h1 style="font-size:28px;font-weight:800">Pre-Class Preparation</h1></div>
         <div class="card mb-4"><div class="card-body"><label class="label">Select Class Material</label><select id="prep-material-select" onchange="loadPrepMaterial()"><option value="">Choose material...</option></select></div></div>
         <div id="prep-content" class="hidden">
-          <div class="card mb-4"><div class="card-body">
-            <div class="flex items-center justify-between mb-2"><span style="font-weight:600;color:var(--s700);font-size:13.5px">Completion</span><span style="font-weight:700;color:var(--v600)" id="prep-pct">0%</span></div>
-            <div class="progress-bar"><div class="progress-fill" id="prep-bar" style="width:0%"></div></div>
-            <p style="font-size:12px;color:var(--s500);margin-top:5px" id="prep-text">0 of 0 concepts explained</p>
-          </div></div>
+          <div class="card mb-4" style="background:linear-gradient(135deg,var(--v50),var(--b50))"><div class="card-body"><div class="flex items-center justify-between mb-2"><span style="font-weight:600;color:var(--s700)">Progress</span><span style="font-weight:700;color:var(--v600)" id="prep-pct">0%</span></div><div class="progress-bar"><div class="progress-fill" id="prep-bar" style="width:0%"></div></div><p style="font-size:12.5px;color:var(--s500);margin-top:6px" id="prep-text">0 of 0 concepts explained</p></div></div>
           <div id="concept-cards"></div>
-          <!-- Discussion position -->
-          <div class="card mb-4">
-            <div class="card-header"><div class="card-title">💬 Your Discussion Position</div></div>
-            <div class="card-body" style="padding-top:10px">
-              <div class="self-explain-prompt"><span>🎯</span><span>Based on the material, form a clear stance or perspective you could share in class. Complete the sentence: <strong>"I think / I believe / I would argue that…"</strong></span></div>
-              <textarea id="discussion-position" placeholder="I think… / I believe… / I would argue that…" rows="3"></textarea>
-            </div>
-          </div>
-          <div class="flex items-center justify-between flex-wrap gap-3">
-            <button class="btn btn-outline" onclick="savePrepProgress()">💾 Save Progress</button>
-            <button class="btn btn-primary" onclick="navigate('Rehearsal')">Continue to Rehearsal →</button>
-          </div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">💬 Your Discussion Position</div></div><div class="card-body" style="padding-top:12px"><textarea id="discussion-position" placeholder="I think… / I believe… / I would argue that…" rows="3"></textarea></div></div>
+          <div class="flex items-center justify-between flex-wrap gap-3"><button class="btn btn-outline" onclick="savePrepProgress()">Save Progress</button><button class="btn btn-primary" onclick="navigate('Rehearsal')">Continue to Rehearsal →</button></div>
         </div>
       </div>
     </div>
 
-    <!-- ── REHEARSAL (Stage 2 · SToG) ── -->
+    <!-- REHEARSAL -->
     <div class="page" id="page-Rehearsal">
       <div class="container">
-        <!-- Setup -->
+        <!-- Setup screen -->
         <div id="rehearsal-setup">
-          <div class="mb-5">
-            <div style="color:var(--b600);font-size:12.5px;font-weight:600;margin-bottom:3px">🎤 Stage 2 · SToG External Script</div>
-            <h1 style="font-size:26px;font-weight:800">AI Rehearsal</h1>
-            <p style="color:var(--s500);margin-top:5px;font-size:13.5px">Simulate a classroom discussion using sentence starter scaffolds. Practice articulating your ideas aloud before the real class.</p>
-          </div>
-          <div class="icap-banner">
-            <div style="font-size:22px;flex-shrink:0">🗣</div>
-            <div><div style="font-weight:700;color:var(--v700);margin-bottom:3px">External Script Support (SToG)</div><div style="font-size:13px;color:var(--s600)">Sentence starters reduce real-time cognitive load. As you rehearse more, you'll need them less — <strong>scaffolds fade as confidence grows</strong>.</div></div>
-          </div>
-          <div class="card mb-4"><div class="card-header"><div class="card-title">Setup</div></div><div class="card-body" style="padding-top:12px">
-            <div class="form-group"><label class="label">Select Material</label><select id="rehearsal-material-select"><option value="">Choose material…</option></select></div>
-            <div class="form-group"><label class="label">AI Classmates</label><select id="rehearsal-num" onchange="renderClassmates(parseInt(this.value))"><option value="2">2 classmates</option><option value="3" selected>3 classmates</option><option value="4">4 classmates</option></select></div>
+          <div class="mb-6"><div style="color:var(--b600);font-size:13px;font-weight:600;margin-bottom:6px">🎤 Stage 2</div><h1 style="font-size:28px;font-weight:800">Practice with AI Classmates</h1><p style="color:var(--s500);margin-top:6px">Your AI classmates will have read your material and engage in a real discussion with you.</p></div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">Setup</div></div><div class="card-body" style="padding-top:14px">
+            <div class="form-group"><label class="label">Select Material to Discuss</label><select id="rehearsal-material-select"><option value="">Choose material…</option></select><p style="font-size:12px;color:var(--s500);margin-top:5px">AI classmates will analyze this material and ask targeted questions.</p></div>
+            <div class="form-group"><label class="label">Classmates</label><select id="rehearsal-num" onchange="renderClassmates(parseInt(this.value))"><option value="2">2 classmates</option><option value="3" selected>3 classmates</option><option value="4">4 classmates</option></select></div>
             <div id="classmate-preview" class="mb-4"></div>
-            <button class="btn btn-blue btn-lg w-full" onclick="startRehearsal()">▶ Start Rehearsal Session</button>
+            <button class="btn btn-blue btn-lg w-full" onclick="startRehearsal()">▶ Start Discussion</button>
           </div></div>
         </div>
-        <!-- Session -->
+        <!-- Session screen -->
         <div id="rehearsal-session" class="hidden">
-          <div class="flex items-center justify-between mb-3 flex-wrap gap-3">
-            <div><h2 style="font-size:16px;font-weight:700" id="session-title">Topic</h2>
-            <p style="font-size:11px;color:var(--s400);margin-top:2px">Click 🔊 to hear · then 💬 to reveal text</p></div>
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+            <div>
+              <h2 style="font-size:17px;font-weight:700" id="session-title">Topic</h2>
+              <p style="font-size:12px;color:var(--s500);margin-top:2px">Tap 🔊 on any classmate message to hear — then tap the text icon to reveal what they said</p>
+            </div>
             <div class="flex items-center gap-2">
               <div class="timer-badge timer-normal" id="session-timer">05:00</div>
-              <button class="btn btn-ghost btn-icon" onclick="resetRehearsal()" title="Reset"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+              <button class="btn btn-ghost btn-icon" onclick="resetRehearsal()" title="Reset"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
             </div>
           </div>
           <div class="card mb-3"><div class="chat-area" id="chat-area"></div></div>
-          <!-- Done banner -->
-          <div id="session-done" class="hidden card mb-3"><div class="card-body text-center"><p style="font-size:16px;font-weight:700;margin-bottom:5px">🎉 Rehearsal complete!</p><p style="color:var(--s500);font-size:13px;margin-bottom:14px">Your preparation carries forward to in-class participation.</p><button class="btn btn-emerald btn-lg" onclick="navigate('InClass')">Continue to In-Class →</button></div></div>
-          <!-- Input -->
-          <div id="session-input-area" class="card">
-            <div class="card-body" style="padding-bottom:11px">
-              <div class="scaffold-bar">
-                <div class="scaffold-label">💡 Sentence Starters (SToG scaffold)</div>
-                <div class="stab-row" id="scaffold-tabs"></div>
-                <div id="scaffold-chips"></div>
-              </div>
-              <div class="input-row">
-                <textarea id="user-msg-input" placeholder="Type your response, or pick a starter above…" rows="2" onkeydown="handleInputKey(event)"></textarea>
-                <button class="icon-btn mic" id="mic-toggle-btn" onclick="toggleMic()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></button>
-                <button class="icon-btn send" id="send-btn" onclick="sendUserMsg()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-              </div>
-              <div class="flex items-center justify-between mt-2">
-                <p style="font-size:11px;color:var(--s400)" id="mic-hint">🎤 Click mic to record · click again to send</p>
-                <button class="btn btn-ghost btn-sm" onclick="finishEarly()">Finish Early</button>
-              </div>
-            </div>
+          <!-- Live transcript -->
+          <div class="card mb-3">
+            <div style="padding:12px 16px 0;display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg><span style="font-size:13px;font-weight:700;color:var(--s700)">Your live transcript</span></div>
+            <div style="padding:8px 16px 14px"><div class="transcript-box" id="rehearsal-transcript">Your spoken words will appear here as you speak…</div></div>
           </div>
+          <div class="card"><div class="card-body">
+            <div id="session-active">
+              <div class="flex items-center gap-3 flex-wrap">
+                <button class="btn btn-blue btn-lg flex-1" id="mic-btn" onclick="toggleMic()">🎙 Speak</button>
+                <button class="btn btn-outline" onclick="finishEarly()">Finish Early</button>
+              </div>
+              <p style="font-size:12px;color:var(--s400);margin-top:6px" id="mic-hint">Click to start speaking, click again when done</p>
+            </div>
+            <div id="session-done" class="hidden text-center"><p style="color:var(--s600);font-weight:600;margin-bottom:12px">Session complete — great work!</p><button class="btn btn-emerald btn-lg" onclick="navigate('Reflection')">Continue to Reflection →</button></div>
+          </div></div>
         </div>
       </div>
     </div>
 
-    <!-- ── IN-CLASS PARTICIPATION (Stage 3 · ICAP Interactive) ── -->
-    <div class="page" id="page-InClass">
+    <!-- DISCUSSION PHRASES -->
+    <div class="page" id="page-DiscussionPhrases">
       <div class="container">
-        <div class="mb-5">
-          <div style="color:var(--e600);font-size:12.5px;font-weight:600;margin-bottom:3px">💬 Stage 3 · ICAP Interactive</div>
-          <h1 style="font-size:26px;font-weight:800">In-Class Participation</h1>
-          <p style="color:var(--s500);margin-top:4px;font-size:13.5px">You've prepared and rehearsed. Here are your ready-to-use phrases organized by discussion situation.</p>
-        </div>
-        <div class="icap-banner" style="background:linear-gradient(135deg,#ecfdf5,#eff6ff);border-color:#a7f3d0">
-          <div style="font-size:22px;flex-shrink:0">🔥</div>
-          <div><div style="font-weight:700;color:#047857;margin-bottom:3px">Interactive Engagement (ICAP)</div><div style="font-size:13px;color:var(--s600)">Interactive engagement—responding to and building on others' ideas—produces deeper learning than passive or even constructive activities alone. Your preparations make this possible.</div></div>
-        </div>
-        <!-- Material selector -->
-        <div class="card mb-4"><div class="card-body"><label class="label">Select material to pull prepared phrases</label><select id="inclass-material-select" onchange="loadInclassPhrases()"><option value="">Choose material…</option></select></div></div>
-        <div id="inclass-content" class="hidden">
-          <!-- Situational phrase banks -->
-          <div id="situation-banks"></div>
-          <!-- Custom phrase builder -->
+        <div class="mb-6"><div style="color:var(--e600);font-size:13px;font-weight:600;margin-bottom:6px">💬 Stage 3</div><h1 style="font-size:28px;font-weight:800">Discussion Phrases</h1></div>
+        <div class="card mb-4"><div class="card-body"><label class="label">Select Material</label><select id="phrases-material-select" onchange="loadPhrases()"><option value="">Choose material...</option></select></div></div>
+        <div id="phrases-content" class="hidden">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;padding-bottom:4px;margin-bottom:16px" id="phrase-tabs"></div>
           <div class="card mb-4">
-            <div class="card-header"><div class="card-title">✏️ Add Your Own Phrase</div></div>
-            <div class="card-body" style="padding-top:12px">
-              <div class="flex gap-2 items-start">
-                <select id="custom-phrase-situation" style="width:180px;flex-shrink:0">
-                  <option value="start">Starting</option>
-                  <option value="build">Building On</option>
-                  <option value="disagree">Disagreeing</option>
-                  <option value="clarify">Asking</option>
-                </select>
-                <textarea id="custom-phrase-input" rows="2" style="flex:1;resize:none" placeholder="Write your own discussion phrase…"></textarea>
-                <button class="btn btn-emerald btn-sm" style="height:42px;margin-top:1px;flex-shrink:0" onclick="addCustomPhrase()">Add</button>
-              </div>
+            <div class="card-header"><div class="card-title" id="phrase-tab-title">Starting Discussion</div></div>
+            <div class="card-body" style="padding-top:14px">
+              <div style="background:var(--s50);border-radius:10px;padding:14px;margin-bottom:16px"><p style="font-size:12.5px;font-weight:600;color:var(--s600);margin-bottom:8px">Example starters:</p><div id="phrase-examples"></div></div>
+              <div id="phrases-list" class="mb-3"></div>
+              <div class="flex gap-2 items-start"><textarea id="new-phrase-input" rows="2" placeholder="Write your own or click an example above..." style="flex:1;resize:none"></textarea><button class="btn btn-emerald btn-icon" style="padding:10px;height:44px;margin-top:2px" onclick="addPhrase()">→</button></div>
             </div>
           </div>
-          <div class="flex gap-3 flex-wrap">
-            <button class="btn btn-outline" onclick="navigate('Questionnaire')">Continue to Questionnaire →</button>
-          </div>
+          <div class="flex items-center justify-between flex-wrap gap-3"><button class="btn btn-outline" onclick="toast('Saved!','success')">💾 Save</button><button class="btn btn-emerald" onclick="navigate('Reflection')">Continue to Reflection →</button></div>
         </div>
       </div>
     </div>
 
-    <!-- ── QUESTIONNAIRE (Stage 4 · Reflection) ── -->
-    <div class="page" id="page-Questionnaire">
+    <!-- REFLECTION -->
+    <div class="page" id="page-Reflection">
       <div class="container">
-        <div class="mb-5">
-          <div style="color:var(--a600);font-size:12.5px;font-weight:600;margin-bottom:3px">📝 Stage 4 · Reflection</div>
-          <h1 style="font-size:26px;font-weight:800">Post-Class Questionnaire</h1>
-          <p style="color:var(--s500);margin-top:4px;font-size:13.5px">A short structured reflection. Over time, your answers guide scaffold fading.</p>
-        </div>
-        <div class="card mb-4"><div class="card-body"><label class="label">Which class?</label><select id="q-material-select" onchange="loadQuestionnaire()"><option value="">Choose material…</option></select></div></div>
-        <div id="q-content" class="hidden">
-          <!-- Q1: Participation -->
-          <div class="card mb-4"><div class="card-body">
-            <div class="q-item"><div class="q-label">1. Did you participate in today's discussion?</div>
-              <div class="flex gap-3 flex-wrap mb-3">
-                <button class="speak-btn speak-yes" id="q-yes-btn" onclick="setParticipated(true)">✓ Yes, I spoke</button>
-                <button class="speak-btn speak-no" id="q-no-btn" onclick="setParticipated(false)">✕ Not this time</button>
-              </div>
-              <div id="q-spoke-detail" class="hidden">
-                <label class="label" style="font-size:12px">How many times did you contribute?</label>
-                <input type="number" id="q-times" min="1" max="20" value="1" style="width:70px">
-              </div>
-            </div>
-          </div></div>
-          <!-- Q2: Scaffold usage -->
-          <div class="card mb-4"><div class="card-body">
-            <div class="q-item"><div class="q-label">2. How much did you rely on the sentence starter scaffolds?</div>
-            <div class="q-sub">1 = Did not use them at all · 5 = Used them heavily</div>
-            <div class="likert-row" id="q-scaffold-likert"></div>
-            <div class="q-scale-labels"><span>Not at all</span><span>Heavily</span></div></div>
-            <div class="q-item mt-4"><div class="q-label">3. How prepared did you feel entering today's class?</div>
-            <div class="q-sub">1 = Not prepared · 5 = Very prepared</div>
-            <div class="likert-row" id="q-prepared-likert"></div></div>
-            <div class="q-item mt-4"><div class="q-label">4. How confident did you feel speaking up?</div>
-            <div class="q-sub">1 = Not confident · 5 = Very confident</div>
-            <div class="likert-row" id="q-confident-likert"></div></div>
-          </div></div>
-          <!-- Q3: Open ended -->
-          <div class="card mb-4"><div class="card-body">
-            <div class="q-item"><div class="q-label">5. What helped you participate (or what held you back)?</div>
-              <textarea id="q-what-helped" rows="2" placeholder="e.g. I used the 'I'd like to add...' starter and it felt natural"></textarea></div>
-            <div class="q-item mt-3"><div class="q-label">6. What will you do differently next time?</div>
-              <textarea id="q-improve" rows="2" placeholder="e.g. I'll speak earlier in the discussion next time"></textarea></div>
-          </div></div>
-          <!-- Scaffold fading indicator -->
-          <div id="scaffold-fading-box" class="hidden mb-4"></div>
-          <!-- AI Insights -->
-          <div id="q-insights-out" class="hidden mb-4"><div class="insight-box"><p id="q-insight-text" style="font-size:13.5px;color:var(--s700);line-height:1.65"></p></div></div>
-          <div class="flex gap-3 flex-wrap">
-            <button class="btn btn-amber" onclick="saveQuestionnaire()">Submit Reflection</button>
-            <button class="btn btn-outline" id="q-insights-btn" onclick="getQInsights()">✨ Get AI Feedback</button>
-          </div>
+        <div class="mb-6"><div style="color:var(--a600);font-size:13px;font-weight:600;margin-bottom:6px">✍️ Stage 4</div><h1 style="font-size:28px;font-weight:800">Reflect & Improve</h1></div>
+        <div class="card mb-4"><div class="card-body"><label class="label">Which class?</label><select id="reflection-material-select" onchange="loadReflection()"><option value="">Choose material...</option></select></div></div>
+        <div id="reflection-content" class="hidden">
+          <div class="card mb-4"><div class="card-header"><div class="card-title">Did you participate?</div></div><div class="card-body" style="padding-top:14px"><div class="flex gap-3 mb-4 flex-wrap"><button class="speak-btn speak-yes" id="speak-yes-btn" onclick="setSpeak(true)">✓ Yes, I spoke</button><button class="speak-btn speak-no" id="speak-no-btn" onclick="setSpeak(false)">✕ Not this time</button></div><div id="speak-details" class="hidden"><div class="form-group"><label class="label">How many times?</label><input type="number" id="times-spoken" min="1" max="20" value="1" style="width:80px"></div></div></div></div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">What worked well?</div></div><div class="card-body" style="padding-top:12px"><textarea id="what-worked" rows="3" placeholder="What strategies helped?"></textarea></div></div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">Challenges?</div></div><div class="card-body" style="padding-top:12px"><textarea id="challenges" rows="3" placeholder="What barriers did you face?"></textarea></div></div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">What will you do differently?</div></div><div class="card-body" style="padding-top:12px"><textarea id="improvement-notes" rows="3" placeholder="One small change to try next time..."></textarea></div></div>
+          <div class="card mb-4"><div class="card-header"><div class="card-title">Satisfaction</div></div><div class="card-body" style="padding-top:12px;text-align:center"><div class="flex justify-center gap-2" id="satisfaction-stars"><div onclick="setSatisfaction(1)" style="cursor:pointer;font-size:28px">⭐</div><div onclick="setSatisfaction(2)" style="cursor:pointer;font-size:28px">⭐</div><div onclick="setSatisfaction(3)" style="cursor:pointer;font-size:28px">⭐</div><div onclick="setSatisfaction(4)" style="cursor:pointer;font-size:28px">⭐</div><div onclick="setSatisfaction(5)" style="cursor:pointer;font-size:28px">⭐</div></div><p id="sat-label" style="font-size:13px;color:var(--s500);margin-top:6px">Click to rate</p></div></div>
+          <div id="ai-insights-output" class="hidden mb-4"><div class="insight-box"><p id="insight-text" style="font-size:14px;color:var(--s700)"></p></div></div>
+          <div class="flex gap-3 flex-wrap"><button class="btn btn-amber" onclick="saveReflection()">Save Reflection</button><button class="btn btn-outline" id="get-insights-btn" onclick="getAIInsights()">✨ Get AI Insights</button><button class="btn btn-ghost" onclick="navigate('Home')">← Back</button></div>
         </div>
       </div>
     </div>
 
-    <!-- ── PROFILE ── -->
+    <!-- PROFILE -->
     <div class="page" id="page-Profile">
       <div class="container" id="profile-container"></div>
     </div>
@@ -693,30 +494,34 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   </main>
 </div>
 
-<!-- ══ MODALS ══ -->
-<!-- Upload Material -->
+<!-- MODALS -->
+<!-- Upload Material (file only) -->
 <div class="modal-overlay" id="add-material-modal">
   <div class="modal modal-lg">
     <div class="modal-header"><h3 class="card-title">Upload Material</h3><button class="close-btn" onclick="closeModal('add-material-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body">
-      <div class="form-group"><label class="label">Title *</label><input type="text" id="mat-title" placeholder="e.g., Week 8 Readings"></div>
-      <div class="form-group"><label class="label">Subject / Course</label><input type="text" id="mat-subject" placeholder="e.g., LING 201"></div>
+      <div class="form-group"><label class="label">Title *</label><input type="text" id="mat-file-title" placeholder="e.g., Week 8 Readings"></div>
+      <div class="form-group"><label class="label">Subject / Course</label><input type="text" id="mat-file-subject" placeholder="e.g., LING 201"></div>
       <div class="form-group"><label class="label">Class Date</label>
-        <div class="dr-wrap" id="dr-mat">
-          <div class="dr-trigger" id="dr-mat-trigger" onclick="drToggle('dr-mat')"><span id="dr-mat-display">DD / MM / YY</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div class="dr-popup" id="dr-mat-popup" hidden><div class="dr-col-labels"><div class="dr-col-label">Day</div><div class="dr-col-label">Month</div><div class="dr-col-label">Year</div></div><div class="dr-cols"><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-mat-d"></div></div><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-mat-m"></div></div><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-mat-y"></div></div></div><div class="dr-footer"><span id="dr-mat-preview" style="font-size:12.5px;color:var(--s600);font-weight:600">—</span><button class="btn btn-primary btn-sm" onclick="drConfirm('dr-mat','mat-date-val')">Done</button></div></div>
-        </div><input type="hidden" id="mat-date-val">
+        <div class="dr-wrap" id="dr-file">
+          <div class="dr-trigger" id="dr-file-trigger" onclick="drToggle('dr-file')"><span id="dr-file-display">DD / MM / YY</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="dr-popup" id="dr-file-popup" hidden><div class="dr-col-labels"><div class="dr-col-label">Day</div><div class="dr-col-label">Month</div><div class="dr-col-label">Year</div></div><div class="dr-cols"><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-file-d"></div></div><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-file-m"></div></div><div class="dr-col"><div class="dr-highlight"></div><div class="dr-scroll" id="dr-file-y"></div></div></div><div class="dr-footer"><span id="dr-file-preview" style="font-size:13px;color:var(--s600);font-weight:600">—</span><button class="btn btn-primary btn-sm" onclick="drConfirm('dr-file','mat-file-date-val')">Done</button></div></div>
+        </div><input type="hidden" id="mat-file-date-val">
       </div>
       <div class="form-group"><label class="label">Upload File *</label>
         <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <p><strong>Click to upload</strong> or drag & drop</p><p style="margin-top:3px;font-size:11.5px">PDF, TXT, DOC — max 10MB</p>
+          <p><strong>Click to upload</strong> or drag & drop</p><p style="margin-top:4px;font-size:12px">PDF, TXT, DOC — max 10MB</p>
         </div>
         <input type="file" id="file-input" class="hidden" accept=".pdf,.txt,.doc,.docx" onchange="handleFileSelect(event)">
         <div id="file-preview" class="hidden mt-3"></div>
       </div>
-      <div class="form-group"><label class="label">Key Concepts (comma-separated)</label><input type="text" id="mat-concepts" placeholder="e.g., Scaffolding, ZPD, Constructivism"></div>
-      <div class="form-group"><label class="label">Summary / Notes</label><textarea id="mat-notes" rows="3" placeholder="Paste a brief summary for AI classmates to reference…"></textarea></div>
+      <div class="form-group"><label class="label">Key Concepts (comma-separated)</label><input type="text" id="mat-file-concepts" placeholder="e.g., Scaffolding, ZPD, Constructivism"></div>
+      <div class="form-group"><label class="label">Additional Notes / Summary</label><textarea id="mat-file-notes" rows="3" placeholder="Paste a summary or key points for AI classmates to reference..."></textarea></div>
+      <div class="form-group" id="mat-file-share-group" style="display:none">
+        <label class="label">Share to Class (optional)</label>
+        <select id="mat-file-share-class"><option value="">Don't share (personal only)</option></select>
+      </div>
       <button class="btn btn-primary w-full mt-2" onclick="addMaterial()">Add Material</button>
     </div>
   </div>
@@ -728,13 +533,26 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <div class="modal-header"><h3 class="card-title">Create a New Class</h3><button class="close-btn" onclick="closeModal('create-class-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body">
       <div class="form-group"><label class="label">Class Name *</label><input type="text" id="new-class-name" placeholder="e.g., PSYC 101 – Fall 2025"></div>
-      <div class="form-group"><label class="label">Description</label><textarea id="new-class-desc" rows="2" placeholder="Optional…"></textarea></div>
+      <div class="form-group"><label class="label">Description</label><textarea id="new-class-desc" rows="2" placeholder="Optional description..."></textarea></div>
       <button class="btn btn-primary w-full" onclick="createClass()">Create Class</button>
     </div>
   </div>
 </div>
 
-<!-- Students modal -->
+<!-- Join Class -->
+<div class="modal-overlay" id="join-class-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="card-title">Join a Class</h3><button class="close-btn" onclick="closeModal('join-class-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="modal-body">
+      <p style="font-size:13.5px;color:var(--s500);margin-bottom:16px">Enter the 6-character class code from your teacher.</p>
+      <div class="form-group"><label class="label">Class Code</label><input type="text" id="join-code-input" placeholder="e.g., ABC123" maxlength="6" style="text-transform:uppercase;font-size:20px;font-weight:800;letter-spacing:.1em;text-align:center" oninput="this.value=this.value.toUpperCase()"></div>
+      <div id="join-error" class="hidden" style="background:#fee2e2;border-radius:8px;padding:10px 14px;font-size:13px;color:#b91c1c;margin-bottom:12px"></div>
+      <button class="btn btn-primary w-full" onclick="joinClass()">Join Class</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Students -->
 <div class="modal-overlay" id="class-students-modal">
   <div class="modal modal-lg">
     <div class="modal-header"><h3 class="card-title" id="students-modal-title">Students</h3><button class="close-btn" onclick="closeModal('class-students-modal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
@@ -745,573 +563,431 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <div id="toast-container"></div>
 
 <script>
-// ════════════════════════════════════════
-// DATA
-// ════════════════════════════════════════
+// ══ DATA STORES ══
 const CLASS_DB={};
-const USERS_DB={
-  'student@demo.com':{password:'demo1234',name:'Demo Student',role:'student'},
-  'teacher@demo.com':{password:'demo1234',name:'Demo Teacher',role:'teacher'}
-};
+const USERS_DB={'student@demo.com':{password:'demo1234',name:'Demo Student',role:'student'},'teacher@demo.com':{password:'demo1234',name:'Demo Teacher',role:'teacher'}};
 const USER_DATA={};
-function ud(){return USER_DATA[SESSION.email]||(USER_DATA[SESSION.email]={materials:[],preparations:[],inclass:{},questionnaires:[]});}
+function ud(){return USER_DATA[SESSION.email]||(USER_DATA[SESSION.email]={materials:[],preparations:[],reflections:[],phrases:{},joinedClasses:[]});}
 let SESSION={loggedIn:false,email:'',name:'',role:'student'};
-let selectedRole='student',currentPage='',pendingFile=null;
-
-// Prep state
-let prepExpandedIdx=-1;
-
-// Rehearsal state
-const CLASSMATES=[
-  {name:'Alex',color:'#8b5cf6',emoji:'👩‍💻',gender:'female'},
-  {name:'Maria',color:'#f472b6',emoji:'👩‍🎓',gender:'female'},
-  {name:'James',color:'#60a5fa',emoji:'👨‍💼',gender:'male'},
-  {name:'Sophie',color:'#34d399',emoji:'👩‍🔬',gender:'female'},
-  {name:'David',color:'#fbbf24',emoji:'👨‍🎨',gender:'male'},
-  {name:'Emma',color:'#f87171',emoji:'👩‍💻',gender:'female'}
-];
-const SCAFFOLD_CATS=[
-  {id:'start',label:'🗣 Starting',starters:["I think the key point here is…","One thing that stood out to me was…","I'd like to open by noting that…","My main takeaway was…"]},
-  {id:'build',label:'➕ Building On',starters:["Building on what you said, I'd add…","That connects to the idea that…","I agree, and I'd also point out…","To extend that argument…"]},
-  {id:'disagree',label:'🤔 Disagreeing',starters:["I see it differently because…","That's valid, though I wonder if…","I'd push back slightly and argue…","An alternative perspective might be…"]},
-  {id:'clarify',label:'❓ Asking',starters:["Could you say more about…?","I'm curious how that relates to…","What would be an example of that?","How does that connect to the reading?"]}
-];
-
-// In-class phrase bank (same structure, shown as tap-to-copy chips)
-const SITUATION_BANKS=[
-  {id:'start',label:'Starting a Discussion',color:'var(--v600)',bg:'var(--v50)',emoji:'🗣',phrases:['I think the key point here is…','I'd like to share a thought about…','One thing the reading made me consider was…','I have a perspective on this—']},
-  {id:'build',label:'Building On Someone's Idea',color:'var(--b600)',bg:'var(--b50)',emoji:'➕',phrases:['Building on what you just said…','I agree, and I would also add…','That connects to something else I noticed—','To extend that idea further…']},
-  {id:'disagree',label:'Disagreeing Respectfully',color:'#dc2626',bg:'#fef2f2',emoji:'🤔',phrases:['I see it a bit differently because…','That's a fair point, though I wonder if…','I'd like to offer a counterpoint—','I respectfully disagree, and here's why…']},
-  {id:'clarify',label:'Asking for Clarification',color:'var(--a600)',bg:'var(--a50)',emoji:'❓',phrases:['Could you elaborate on that a bit?','I'm curious — how does that connect to…?','What would be an example of that?','Could you say more about what you mean by…?']}
-];
-
-let sessionClassmates=[],lastSpeakerIdx=-1,rehearsalMatContext='';
-let aiReplyQueue=[],aiReplying=false,conversationHistory=[];
-let rehearsalRecognizer=null,rehearsalListening=false;
+let selectedRole='student',currentPage='',prepExpandedIdx=0,sessionClassmates=[],currentPhraseTab='start',reflectionSat=3,reflectionDidSpeak=null,pendingFile=null;
+let rehearsalRecognizer=null,rehearsalListening=false,fullTranscript='';
 let rehearsalTimer=null,rehearsalTimeLeft=300;
-let scaffoldTab='start';
+// Track who spoke last to avoid repetition
+let lastSpeakerIdx=-1;
+// Material context cache for AI
+let rehearsalMatContext='';
 
-// Questionnaire state
-let qParticipated=null;
-const qLikerts={scaffold:0,prepared:0,confident:0};
+// ══ CLASSMATES ══
+const CLASSMATES=[
+  {name:'Alex',color:'#8b5cf6',emoji:'👩‍💻'},
+  {name:'Maria',color:'#f472b6',emoji:'👩‍🎓'},
+  {name:'James',color:'#60a5fa',emoji:'👨‍💼'},
+  {name:'Sophie',color:'#34d399',emoji:'👩‍🔬'},
+  {name:'David',color:'#fbbf24',emoji:'👨‍🎨'},
+  {name:'Emma',color:'#f87171',emoji:'👩‍💻'}
+];
 
-// ════════════════════════════════════════
-// VOICE
-// ════════════════════════════════════════
-let cachedVoices=[];
-function loadVoices(){cachedVoices=window.speechSynthesis?.getVoices()||[];}
-if(window.speechSynthesis){loadVoices();window.speechSynthesis.onvoiceschanged=loadVoices;}
+// ══ ANTHROPIC API ══
+async function callClaude(systemPrompt, userMessage, maxTokens=300){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:maxTokens,
+      system:systemPrompt,
+      messages:[{role:'user',content:userMessage}]
+    })
+  });
+  const data=await res.json();
+  return data.content?.[0]?.text||'';
+}
 
-function speakText(text,gender='female'){
+// ══ SPEECH SYNTHESIS ══
+function speakText(text, color){
   return new Promise(resolve=>{
     if(!window.speechSynthesis){resolve();return;}
     window.speechSynthesis.cancel();
     const utt=new SpeechSynthesisUtterance(text);
-    utt.rate=0.93;utt.pitch=gender==='female'?1.12:0.86;utt.volume=1;
-    const voices=cachedVoices.length?cachedVoices:window.speechSynthesis.getVoices();
-    const en=voices.filter(v=>v.lang.startsWith('en'));
-    if(en.length){
-      const fKw=['female','woman','zira','samantha','victoria','karen','moira','tessa','fiona','allison','ava'];
-      const mKw=['male','man','david','mark','daniel','fred','lee','tom','james','george'];
-      const kw=gender==='female'?fKw:mKw;
-      const matched=en.filter(v=>kw.some(k=>v.name.toLowerCase().includes(k)));
-      utt.voice=(matched.length?matched:en)[Math.floor(Math.random()*(matched.length||en.length))];
+    utt.rate=0.95;utt.pitch=1;utt.volume=1;
+    // pick a voice variety
+    const voices=window.speechSynthesis.getVoices();
+    if(voices.length>0){
+      const englishVoices=voices.filter(v=>v.lang.startsWith('en'));
+      if(englishVoices.length>0)utt.voice=englishVoices[Math.floor(Math.random()*englishVoices.length)];
     }
     utt.onend=resolve;utt.onerror=resolve;
     window.speechSynthesis.speak(utt);
   });
 }
 
-// ════════════════════════════════════════
-// CLAUDE API
-// ════════════════════════════════════════
-async function callClaude(sys,user,maxT=250){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxT,system:sys,messages:[{role:'user',content:user}]})
-  });
-  const d=await res.json();
-  return d.content?.[0]?.text||'';
-}
-
-// ════════════════════════════════════════
-// AUTH
-// ════════════════════════════════════════
-function showView(v){['landing','login','register','app'].forEach(id=>document.getElementById('view-'+id).classList.add('hidden'));document.getElementById('view-'+v).classList.remove('hidden');}
-function selectRole(r){selectedRole=r;document.getElementById('role-student').className='role-opt'+(r==='student'?' selected':'');document.getElementById('role-teacher').className='role-opt'+(r==='teacher'?' selected':'');}
-function fillDemo(e,p){document.getElementById('login-email').value=e;document.getElementById('login-password').value=p;}
-function doLogin(){const e=document.getElementById('login-email').value.trim().toLowerCase(),p=document.getElementById('login-password').value,err=document.getElementById('login-error');err.classList.add('hidden');const u=USERS_DB[e];if(!u||u.password!==p){err.textContent='Incorrect email or password.';err.classList.remove('hidden');return;}loginUser(e,u.name,u.role);}
-function doRegister(){const n=document.getElementById('reg-name').value.trim(),e=document.getElementById('reg-email').value.trim().toLowerCase(),p=document.getElementById('reg-password').value,err=document.getElementById('reg-error');err.classList.add('hidden');if(!n||!e||!p){err.textContent='Please fill in all fields.';err.classList.remove('hidden');return;}if(p.length<6){err.textContent='Password must be ≥6 characters.';err.classList.remove('hidden');return;}if(USERS_DB[e]){err.textContent='Account already exists.';err.classList.remove('hidden');return;}USERS_DB[e]={password:p,name:n,role:selectedRole};loginUser(e,n,selectedRole);}
-function loginUser(e,n,r){SESSION={loggedIn:true,email:e,name:n,role:r};document.getElementById('nav-avatar').textContent=n[0].toUpperCase();document.getElementById('nav-username').textContent=n;document.getElementById('nav-role').textContent=r;document.getElementById('nav-role-label').textContent=r==='teacher'?'📋 Teacher':'🎓 Student';buildNav();showView('app');navigate(r==='teacher'?'TeacherHome':'Home');}
-function logout(){SESSION={loggedIn:false,email:'',name:'',role:'student'};showView('landing');}
-
-// ════════════════════════════════════════
-// NAV
-// ════════════════════════════════════════
-const IC={home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,file:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>`,book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,mic:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>`,msg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,user:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,classes:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`};
-
-const STUDENT_NAV=[
-  {name:'Home',page:'Home',icon:'home'},
-  {name:'Materials',page:'Materials',icon:'file',badge:'Prep',badgeColor:'var(--b100)',badgeText:'var(--b600)'},
-  {name:'Pre-Class Prep',page:'PreClassPrep',icon:'book',badge:'Stage 1',badgeColor:'var(--v100)',badgeText:'var(--v700)'},
-  {name:'AI Rehearsal',page:'Rehearsal',icon:'mic',badge:'Stage 2',badgeColor:'var(--b100)',badgeText:'var(--b600)'},
-  {name:'In-Class',page:'InClass',icon:'msg',badge:'Stage 3',badgeColor:'var(--e100)',badgeText:'var(--e600)'},
-  {name:'Questionnaire',page:'Questionnaire',icon:'check',badge:'Stage 4',badgeColor:'var(--a100)',badgeText:'var(--a600)'},
-  {name:'Profile',page:'Profile',icon:'user'},
-];
-const TEACHER_NAV=[{name:'My Classes',page:'TeacherHome',icon:'classes'},{name:'Materials',page:'Materials',icon:'file'},{name:'Profile',page:'Profile',icon:'user'}];
-
-function buildNav(){
-  const items=SESSION.role==='teacher'?TEACHER_NAV:STUDENT_NAV;
-  document.getElementById('nav-list').innerHTML=items.map(it=>`
-    <button class="nav-item ${currentPage===it.page?'active':''}" onclick="navigate('${it.page}')">
-      ${IC[it.icon]||''}
-      <span style="flex:1;text-align:left">${it.name}</span>
-      ${it.badge?`<span style="font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:99px;background:${it.badgeColor};color:${it.badgeText};flex-shrink:0">${it.badge}</span>`:''}
-    </button>`).join('');
-}
-
-function navigate(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const el=document.getElementById('page-'+page);
-  if(el){el.classList.add('active');currentPage=page;buildNav();onPageEnter(page);}
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('mob-overlay').classList.remove('open');
-}
-function onPageEnter(p){
-  if(p==='Home')renderHome();
-  if(p==='TeacherHome')renderTeacherClasses();
-  if(p==='Materials')renderMaterials();
-  if(p==='PreClassPrep')initPrep();
-  if(p==='Rehearsal')initRehearsal();
-  if(p==='InClass')initInClass();
-  if(p==='Questionnaire')initQuestionnaire();
-  if(p==='Profile')renderProfile();
-}
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('mob-overlay').classList.toggle('open');}
-
-// ════════════════════════════════════════
-// HOME
-// ════════════════════════════════════════
-function renderHome(){
-  const d=ud();
-  document.getElementById('stat-materials').textContent=d.materials.length;
-  document.getElementById('stat-rehearsals').textContent=d.preparations?.filter(p=>p.rehearsal_completed)?.length||0;
-  document.getElementById('stat-reflections').textContent=d.questionnaires?.length||0;
-  // stepper
-  const stages=[
-    {label:'Materials',done:d.materials.length>0,page:'Materials'},
-    {label:'Pre-Class\nPrep',done:(d.preparations?.length||0)>0,page:'PreClassPrep'},
-    {label:'Rehearsal',done:(d.preparations?.filter(p=>p.rehearsal_completed)?.length||0)>0,page:'Rehearsal'},
-    {label:'In-Class',done:Object.keys(d.inclass||{}).length>0,page:'InClass'},
-    {label:'Questionnaire',done:(d.questionnaires?.length||0)>0,page:'Questionnaire'},
-  ];
-  let firstActive=-1;
-  stages.forEach((s,i)=>{if(!s.done&&firstActive===-1)firstActive=i;});
-  if(firstActive===-1)firstActive=stages.length-1;
-  const el=document.getElementById('home-stepper');
-  el.innerHTML=stages.map((s,i)=>{
-    const state=s.done?'done':(i===firstActive?'active':'upcoming');
-    const connector=i<stages.length-1?`<div class="step-connector ${s.done?'done':''}"></div>`:'';
-    return `<div class="step-item"><div class="step-item-wrap" onclick="navigate('${s.page}')"><div class="step-dot ${state}">${s.done?'✓':i+1}</div><div class="step-label ${state}" style="white-space:pre-line">${s.label}</div></div>${connector}</div>`;
-  }).join('');
-}
-
-// ════════════════════════════════════════
-// TEACHER CLASSES
-// ════════════════════════════════════════
-function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase();}
-function createClass(){const n=document.getElementById('new-class-name').value.trim();if(!n){toast('Please enter a class name','error');return;}const code=genCode();CLASS_DB[code]={id:'cls'+Date.now(),code,name:n,desc:document.getElementById('new-class-desc').value.trim(),teacherEmail:SESSION.email,students:[]};document.getElementById('new-class-name').value='';document.getElementById('new-class-desc').value='';closeModal('create-class-modal');renderTeacherClasses();toast(`Class created! Code: ${code}`,'success');}
-function renderTeacherClasses(){const myCls=Object.values(CLASS_DB).filter(c=>c.teacherEmail===SESSION.email);const el=document.getElementById('teacher-classes-list');if(!myCls.length){el.innerHTML=`<div class="card"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><h3>No classes yet</h3><p>Create your first class</p></div></div>`;return;}el.innerHTML=myCls.map(cls=>`<div class="class-card"><div class="flex items-start justify-between flex-wrap gap-3 mb-3"><div><h2 style="font-size:19px;font-weight:800">${cls.name}</h2>${cls.desc?`<p style="font-size:13px;color:var(--s500)">${cls.desc}</p>`:''}</div><button class="btn btn-red btn-sm" onclick="deleteClass('${cls.code}')">Delete</button></div><div class="flex items-center gap-4 flex-wrap mb-3"><div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--s400);margin-bottom:5px">Class Code</div><div class="class-code" onclick="copyCode('${cls.code}')" title="Click to copy">${cls.code} 📋</div></div><div style="margin-left:auto;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--v600)">${cls.students.length}</div><div style="font-size:12px;color:var(--s500)">Students</div></div></div><button class="btn btn-outline btn-sm" onclick="viewStudents('${cls.code}')">👥 View Students</button></div>`).join('');}
-function copyCode(c){navigator.clipboard.writeText(c).then(()=>toast(`Code "${c}" copied!`,'success')).catch(()=>toast(c));}
-function deleteClass(c){if(!confirm('Delete this class?'))return;delete CLASS_DB[c];renderTeacherClasses();}
-function viewStudents(code){const cls=CLASS_DB[code];if(!cls)return;document.getElementById('students-modal-title').textContent=`👥 ${cls.name}`;document.getElementById('students-modal-list').innerHTML=cls.students.length?cls.students.map(e=>{const u=USERS_DB[e]||{name:e};return`<div style="display:flex;align-items:center;gap:11px;padding:11px;background:var(--s50);border-radius:9px;margin-bottom:7px"><div class="av-sm">${u.name[0]}</div><div><div style="font-weight:700">${u.name}</div><div style="font-size:12px;color:var(--s400)">${e}</div></div></div>`;}).join(''):`<div class="empty-state" style="padding:28px"><h3>No students yet</h3></div>`;openModal('class-students-modal');}
-
-// ════════════════════════════════════════
-// MATERIALS
-// ════════════════════════════════════════
-function handleDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag-over');}
-function handleDragLeave(){document.getElementById('upload-zone').classList.remove('drag-over');}
-function handleDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)processFile(f);}
-function handleFileSelect(e){const f=e.target.files[0];if(f)processFile(f);}
-function processFile(f){if(f.size>10*1024*1024){toast('File too large','error');return;}pendingFile=f;document.getElementById('file-preview').innerHTML=`<div class="file-preview-box"><span style="font-size:26px">📄</span><div><div style="font-weight:600">${f.name}</div><div style="font-size:12px;color:var(--s500)">${(f.size/1024).toFixed(1)} KB</div></div></div>`;document.getElementById('file-preview').classList.remove('hidden');const t=document.getElementById('mat-title');if(!t.value)t.value=f.name.replace(/\.[^/.]+$/,'').replace(/[-_]/g,' ');}
-
-function addMaterial(){
-  const title=document.getElementById('mat-title').value.trim();
-  if(!title){toast('Please enter a title','error');return;}
-  if(!pendingFile){toast('Please select a file','error');return;}
-  const kc=document.getElementById('mat-concepts').value;
-  const mat={id:'m'+Date.now(),title,subject:document.getElementById('mat-subject').value,class_date:document.getElementById('mat-date-val').value,content:document.getElementById('mat-notes').value,key_concepts:kc?kc.split(',').map(s=>s.trim()).filter(Boolean):[],fileName:pendingFile.name,source:'file'};
-  ud().materials.unshift(mat);
-  ['mat-title','mat-subject','mat-notes','mat-concepts'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('mat-date-val').value='';
-  document.getElementById('dr-mat-display').textContent='DD / MM / YY';
-  document.getElementById('dr-mat-trigger').classList.remove('has-value');
-  pendingFile=null;document.getElementById('file-preview').classList.add('hidden');document.getElementById('file-input').value='';
-  closeModal('add-material-modal');populateSelects();renderMaterials();toast('Material added!','success');
-}
-
-const DR_MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DR_IH=38;
-function drInit(id){const now=new Date();window['_dr_'+id]={d:{items:Array.from({length:31},(_,i)=>String(i+1).padStart(2,'0')),idx:now.getDate()-1},m:{items:DR_MONTHS.slice(),idx:now.getMonth()},y:{items:Array.from({length:8},(_,i)=>String(now.getFullYear()-1+i)),idx:1}}; ['d','m','y'].forEach(c=>drBuildCol(id,c));}
-function drBuildCol(id,col){const s=window['_dr_'+id][col];const el=document.getElementById(id+'-'+col);if(!el)return;el.innerHTML='<div style="height:66px"></div>'+s.items.map((v,i)=>`<div class="dr-item" data-i="${i}">${v}</div>`).join('')+'<div style="height:66px"></div>';el.scrollTop=s.idx*DR_IH;el.addEventListener('scroll',()=>{s.idx=Math.max(0,Math.min(s.items.length-1,Math.round(el.scrollTop/DR_IH)));drHighlight(id,col);drRefreshPreview(id);},{passive:true});}
-function drHighlight(id,col){const s=window['_dr_'+id][col];document.getElementById(id+'-'+col).querySelectorAll('.dr-item').forEach((item,i)=>item.classList.toggle('active',i===s.idx));}
-function drRefreshPreview(id){const st=window['_dr_'+id];document.getElementById(id+'-preview').textContent=`${st.d.items[st.d.idx]} / ${st.m.items[st.m.idx]} / ${(st.y.items[st.y.idx]||'').slice(2)}`;}
-function drToggle(id){const popup=document.getElementById(id+'-popup');const trigger=document.getElementById(id+'-trigger');const opening=popup.hidden;document.querySelectorAll('.dr-popup').forEach(p=>{p.hidden=true;});document.querySelectorAll('.dr-trigger').forEach(t=>t.classList.remove('active'));if(opening){if(!window['_dr_'+id])drInit(id);popup.hidden=false;trigger.classList.add('active');const rect=trigger.getBoundingClientRect();popup.style.left=rect.left+'px';popup.style.top=(rect.bottom+5)+'px';popup.style.width=Math.max(rect.width,270)+'px';const st=window['_dr_'+id];['d','m','y'].forEach(c=>{const el=document.getElementById(id+'-'+c);if(el){el.scrollTop=st[c].idx*DR_IH;drHighlight(id,c);}});drRefreshPreview(id);}}
-function drConfirm(id,hiddenId){const st=window['_dr_'+id];['d','m','y'].forEach(c=>{const el=document.getElementById(id+'-'+c);if(el)st[c].idx=Math.max(0,Math.min(st[c].items.length-1,Math.round(el.scrollTop/DR_IH)));});const dd=st.d.items[st.d.idx],mm=String(DR_MONTHS.indexOf(st.m.items[st.m.idx])+1).padStart(2,'0'),yyyy=st.y.items[st.y.idx];document.getElementById(hiddenId).value=`${yyyy}-${mm}-${dd}`;document.getElementById(id+'-display').textContent=`${dd} / ${st.m.items[st.m.idx]} / ${yyyy.slice(2)}`;document.getElementById(id+'-trigger').classList.add('has-value');document.getElementById(id+'-popup').hidden=true;document.getElementById(id+'-trigger').classList.remove('active');}
-document.addEventListener('click',e=>{document.querySelectorAll('.dr-popup:not([hidden])').forEach(popup=>{const id=popup.id.replace('-popup','');const t=document.getElementById(id+'-trigger');if(!popup.contains(e.target)&&t&&!t.contains(e.target)){popup.hidden=true;t.classList.remove('active');}});});
-
-function formatDate(iso){if(!iso)return'';const[y,m,dd]=iso.split('-');return`${dd} ${DR_MONTHS[parseInt(m)-1]||m} ${y.slice(2)}`;}
-
-function renderMaterials(){
-  const d=ud();const seen=new Set();const mats=d.materials.filter(m=>{if(seen.has(m.id))return false;seen.add(m.id);return true;});
-  const list=document.getElementById('materials-list');
-  if(!mats.length){list.innerHTML=`<div class="card"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg><h3>No materials yet</h3><p>Upload your first file to begin</p></div></div>`;document.getElementById('mat-proceed').classList.add('hidden');return;}
-  list.innerHTML=`<div class="card">${mats.map(m=>`<div class="material-item"><div style="width:40px;height:40px;background:var(--b50);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="font-weight:700;margin-bottom:1px">${m.title}</div>${m.subject?`<p style="font-size:12.5px;color:var(--s500)">${m.subject}</p>`:''}${m.fileName?`<p style="font-size:11.5px;color:var(--s400)">📎 ${m.fileName}</p>`:''}${m.class_date?`<p style="font-size:11.5px;color:var(--s400)">📅 ${formatDate(m.class_date)}</p>`:''}</div><div class="flex gap-2 items-center flex-shrink:0"><button class="btn btn-outline btn-sm" onclick="prepMaterial('${m.id}')">Prepare →</button><button class="btn btn-ghost btn-icon btn-sm" onclick="deleteMaterial('${m.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button></div></div>`).join('')}</div>`;
-  document.getElementById('mat-proceed').classList.remove('hidden');
-}
-function deleteMaterial(id){const d=ud();d.materials=d.materials.filter(m=>m.id!==id);renderMaterials();populateSelects();}
-function prepMaterial(id){navigate('PreClassPrep');setTimeout(()=>{document.getElementById('prep-material-select').value=id;loadPrepMaterial();},60);}
-function populateSelects(){
-  const d=ud();
-  ['prep-material-select','rehearsal-material-select','inclass-material-select','q-material-select'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    const cur=el.value;el.innerHTML='<option value="">Choose material...</option>'+d.materials.map(m=>`<option value="${m.id}">${m.title}</option>`).join('');
-    if(d.materials.find(m=>m.id===cur))el.value=cur;
-  });
-}
-
-// ════════════════════════════════════════
-// STAGE 1 · PRE-CLASS PREP
-// ════════════════════════════════════════
-function initPrep(){populateSelects();}
-
-function loadPrepMaterial(){
-  const d=ud();const id=document.getElementById('prep-material-select').value;
-  if(!id){document.getElementById('prep-content').classList.add('hidden');return;}
-  const mat=d.materials.find(m=>m.id===id);if(!mat)return;
-  document.getElementById('prep-content').classList.remove('hidden');
-  if(!d.preparations)d.preparations=[];
-  const saved=d.preparations.find(p=>p.material_id===id);
-  const concepts=(mat.key_concepts||[]).map((c,i)=>({concept:c,my_explanation:saved?.concept_explanations?.[i]?.my_explanation||'',connection:saved?.concept_explanations?.[i]?.connection||''}));
-  if(saved?.discussion_position)document.getElementById('discussion-position').value=saved.discussion_position;
-  else document.getElementById('discussion-position').value='';
-  d._prepConcepts=concepts;
-  prepExpandedIdx=concepts.length>0?0:-1;
-  renderConceptCards(concepts);
-}
-
-function renderConceptCards(concepts){
-  const container=document.getElementById('concept-cards');
-  if(!concepts.length){container.innerHTML=`<div class="card mb-4 text-center" style="padding:28px"><p style="font-size:28px;margin-bottom:7px">✏️</p><h3>No key concepts found</h3><p style="color:var(--s500);font-size:13px">Add comma-separated concepts when uploading the material.</p></div>`;updatePrepProgress(0,0);return;}
-  container.innerHTML=concepts.map((c,i)=>`<div class="card concept-card mb-3"><div class="concept-header" onclick="toggleConcept(${i})"><div style="display:flex;align-items:center;gap:11px;flex:1;min-width:0"><div class="concept-num ${c.my_explanation&&c.my_explanation.length>20?'done':''}" id="cnum-${i}">${c.my_explanation&&c.my_explanation.length>20?'✓':i+1}</div><span style="font-weight:700;font-size:14.5px">${c.concept}</span></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2">${prepExpandedIdx===i?'<path d="m18 15-6-6-6 6"/>':'<path d="m6 9 6 6 6-6"/>'}</svg></div><div class="concept-body" id="cbody-${i}" style="${prepExpandedIdx===i?'':'display:none'}"><div class="self-explain-prompt mt-3"><span>💡</span><span>Explain this in your own words — as if teaching it to a classmate. Don't copy the textbook definition.</span></div><div class="form-group"><label class="label">My explanation</label><textarea rows="3" placeholder="In my own words, this means…" id="exp-${i}" oninput="updateConceptExp(${i},this.value)">${c.my_explanation||''}</textarea></div><div class="form-group"><label class="label">How it connects</label><textarea rows="2" placeholder="This reminds me of… / This is similar to…" id="conn-${i}" oninput="updateConceptConn(${i},this.value)">${c.connection||''}</textarea></div></div></div>`).join('');
-  updatePrepProgress(concepts.filter(c=>c.my_explanation&&c.my_explanation.length>20).length,concepts.length);
-}
-function toggleConcept(i){prepExpandedIdx=prepExpandedIdx===i?-1:i;renderConceptCards(ud()._prepConcepts||[]);}
-function updateConceptExp(i,val){const d=ud();if(!d._prepConcepts)return;d._prepConcepts[i].my_explanation=val;const n=document.getElementById('cnum-'+i);if(n){n.className='concept-num'+(val.length>20?' done':'');n.textContent=val.length>20?'✓':i+1;}updatePrepProgress(d._prepConcepts.filter(c=>c.my_explanation&&c.my_explanation.length>20).length,d._prepConcepts.length);}
-function updateConceptConn(i,val){const d=ud();if(d._prepConcepts)d._prepConcepts[i].connection=val;}
-function updatePrepProgress(done,total){const pct=total>0?Math.round(done/total*100):0;document.getElementById('prep-pct').textContent=pct+'%';document.getElementById('prep-bar').style.width=pct+'%';document.getElementById('prep-text').textContent=`${done} of ${total} concepts explained`;}
-function savePrepProgress(){
-  const d=ud();const id=document.getElementById('prep-material-select').value;if(!id)return;
-  if(!d.preparations)d.preparations=[];
-  const ei=d.preparations.findIndex(p=>p.material_id===id);
-  const data={material_id:id,concept_explanations:d._prepConcepts||[],discussion_position:document.getElementById('discussion-position').value,rehearsal_completed:false};
-  if(ei>=0)Object.assign(d.preparations[ei],data);else d.preparations.push({id:'prep'+Date.now(),...data});
-  toast('Progress saved!','success');
-}
-
-// ════════════════════════════════════════
-// STAGE 2 · REHEARSAL
-// ════════════════════════════════════════
-function initRehearsal(){populateSelects();renderClassmates(3);conversationHistory=[];aiReplyQueue=[];aiReplying=false;lastSpeakerIdx=-1;rehearsalMatContext='';renderScaffold();}
-
-function renderScaffold(){
-  document.getElementById('scaffold-tabs').innerHTML=SCAFFOLD_CATS.map(c=>`<button class="stab ${scaffoldTab===c.id?'active':''}" onclick="setScaffoldTab('${c.id}')">${c.label}</button>`).join('');
-  const cat=SCAFFOLD_CATS.find(c=>c.id===scaffoldTab);
-  document.getElementById('scaffold-chips').innerHTML=cat.starters.map(s=>`<span class="starter-chip" onclick="useStarter(this.textContent)">${s}</span>`).join('');
-}
-function setScaffoldTab(id){scaffoldTab=id;renderScaffold();}
-function useStarter(text){const ta=document.getElementById('user-msg-input');ta.value=text;ta.focus();ta.setSelectionRange(text.length,text.length);}
+// ══ REHEARSAL CORE ══
+function initRehearsal(){populateSelects();renderClassmates(3);fullTranscript='';rehearsalListening=false;lastSpeakerIdx=-1;rehearsalMatContext='';}
 
 function renderClassmates(n){
   sessionClassmates=[...CLASSMATES].sort(()=>.5-Math.random()).slice(0,n);
-  document.getElementById('classmate-preview').innerHTML=`<div class="label" style="margin-bottom:8px">Your AI Classmates</div><div style="display:flex;gap:14px;flex-wrap:wrap">${sessionClassmates.map(c=>`<div style="text-align:center"><div style="width:48px;height:48px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 4px">${c.emoji}</div><div style="font-size:11.5px;font-weight:600;color:var(--s700)">${c.name}</div><div style="font-size:10px;color:var(--s400)">${c.gender}</div></div>`).join('')}</div>`;
+  document.getElementById('classmate-preview').innerHTML=`<div style="margin-bottom:6px"><span class="label">Your Classmates</span></div><div style="display:flex;gap:14px;flex-wrap:wrap">${sessionClassmates.map(c=>`<div style="text-align:center"><div style="width:52px;height:52px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 4px">${c.emoji}</div><div style="font-size:12px;font-weight:600;color:var(--s700)">${c.name}</div></div>`).join('')}</div>`;
 }
 
 async function startRehearsal(){
-  const d=ud();const matId=document.getElementById('rehearsal-material-select').value;
+  const d=ud();
+  const matId=document.getElementById('rehearsal-material-select').value;
   if(!matId){toast('Please select a material','error');return;}
   const mat=d.materials.find(m=>m.id===matId);
-  // Pull any prepared context
-  const prep=d.preparations?.find(p=>p.material_id===matId);
-  const prepContext=prep?`Student's prepared position: "${prep.discussion_position||'(not set)'}". Key concept explanations: ${(prep.concept_explanations||[]).map(c=>`${c.concept}: ${c.my_explanation}`).filter(c=>c.includes(': ')&&c.length>10).join(' | ')||'none'}.`:'';
 
+  // Build context from material
   rehearsalMatContext=`Material title: "${mat.title}"
 Subject: ${mat.subject||'General'}
 Key concepts: ${(mat.key_concepts||[]).join(', ')||'(not specified)'}
-Notes/Summary: ${mat.content||'(uploaded file)'}
-${prepContext}`;
+Notes/Summary: ${mat.content||mat.fileName||'(uploaded file - use the title and concepts to guide discussion)'}`;
 
-  conversationHistory=[];aiReplyQueue=[];aiReplying=false;lastSpeakerIdx=-1;
   document.getElementById('rehearsal-setup').classList.add('hidden');
   document.getElementById('rehearsal-session').classList.remove('hidden');
-  document.getElementById('session-done').classList.add('hidden');
-  document.getElementById('session-input-area').classList.remove('hidden');
   document.getElementById('session-title').textContent=mat.title;
-  rehearsalTimeLeft=300;updateTimer();
+  rehearsalTimeLeft=300;fullTranscript='';lastSpeakerIdx=-1;
+  updateTimer();
   rehearsalTimer=setInterval(()=>{rehearsalTimeLeft--;updateTimer();if(rehearsalTimeLeft<=0)endSession();},1000);
   document.getElementById('chat-area').innerHTML='';
-  renderScaffold();
-  await enqueueAIReply('opening');
+
+  // Opening message from a classmate
+  await addAIMsg(null, `opening`);
 }
 
-// Turn-taking queue
-async function enqueueAIReply(context,extra=0){
-  for(let i=0;i<1+extra;i++)aiReplyQueue.push({context});
-  if(!aiReplying)drainQueue();
+// Choose next speaker (not same as last)
+function pickSpeaker(){
+  if(sessionClassmates.length===1) return 0;
+  let idx;
+  do{ idx=Math.floor(Math.random()*sessionClassmates.length); }while(idx===lastSpeakerIdx);
+  lastSpeakerIdx=idx;
+  return idx;
 }
-async function drainQueue(){
-  if(aiReplying||aiReplyQueue.length===0)return;
-  aiReplying=true;
-  const job=aiReplyQueue.shift();
-  if(conversationHistory.length>1)await new Promise(r=>setTimeout(r,700));
-  await addAIMsg(null,job.context);
-  aiReplying=false;
-  if(aiReplyQueue.length>0)drainQueue();
-}
-function pickSpeaker(){if(sessionClassmates.length===1)return 0;let idx;do{idx=Math.floor(Math.random()*sessionClassmates.length);}while(idx===lastSpeakerIdx);lastSpeakerIdx=idx;return idx;}
 
-async function addAIMsg(speakerIdx,context){
-  if(speakerIdx===null)speakerIdx=pickSpeaker();else lastSpeakerIdx=speakerIdx;
+async function addAIMsg(speakerIdx, context){
+  // speakerIdx null → pick randomly
+  if(speakerIdx===null) speakerIdx=pickSpeaker();
+  else lastSpeakerIdx=speakerIdx;
   const speaker=sessionClassmates[speakerIdx];
+
+  // Show thinking bubble
   const chat=document.getElementById('chat-area');
-  const thinkId='tk'+Date.now();
-  const thinkDiv=document.createElement('div');thinkDiv.className='msg';thinkDiv.id=thinkId;
-  thinkDiv.innerHTML=`<div class="msg-avatar ai-av" style="background:${speaker.color}">${speaker.emoji}</div><div><div style="font-size:11px;color:var(--s400);margin-bottom:3px">${speaker.name}</div><div class="msg-bubble ai" style="padding:10px 13px"><div class="thinking-dots"><span></span><span></span><span></span></div></div></div>`;
-  chat.appendChild(thinkDiv);chat.scrollTop=chat.scrollHeight;
-  const histStr=conversationHistory.slice(-8).map(h=>`[${h.role==='user'?'Student':h.name}]: ${h.text}`).join('\n');
+  const thinkId='think-'+Date.now();
+  const thinkDiv=document.createElement('div');
+  thinkDiv.className='msg';thinkDiv.id=thinkId;
+  thinkDiv.innerHTML=`<div class="msg-avatar ai-av" style="background:${speaker.color}">${speaker.emoji}</div><div><div style="font-size:11.5px;color:var(--s400);margin-bottom:4px">${speaker.name}</div><div style="background:white;border:1px solid var(--border);border-radius:4px 14px 14px 14px;padding:12px 16px"><div class="thinking-dots"><span></span><span></span><span></span></div></div></div>`;
+  chat.appendChild(thinkDiv);
+  chat.scrollTop=chat.scrollHeight;
+
+  // Generate AI response
   let text='';
   try{
-    const sys=`You are ${speaker.name}, a thoughtful ${speaker.gender==='female'?'female':'male'} student in a university seminar. You have carefully studied the assigned material. Engage naturally and specifically—reference actual concepts from the material. Keep responses to 1–3 sentences. Vary your style: sometimes ask a question, sometimes agree and extend, sometimes push back respectfully. Sound like a real student.\n\n${rehearsalMatContext}`;
-    const uP=context==='opening'?`Open the discussion with a specific observation or question about something from this material. Be direct and engaging.`:`Recent discussion:\n${histStr}\n\nRespond to the latest student comment. Be specific and move the conversation forward.`;
-    text=await callClaude(sys,uP,220);
-    if(!text)text=`Interesting point — how does that connect to what the author argues?`;
-  }catch(e){text=`That's a great observation. What made you think of it in relation to the reading?`;}
-  conversationHistory.push({role:'ai',name:speaker.name,text});
-  const thinkEl=document.getElementById(thinkId);if(thinkEl)thinkEl.remove();
-  const msgDiv=document.createElement('div');msgDiv.className='msg';
-  const msgId='m'+Date.now()+Math.random().toString(36).slice(2,5);
-  msgDiv.dataset.text=text;msgDiv.dataset.gender=speaker.gender;
-  msgDiv.innerHTML=`<div class="msg-avatar ai-av" style="background:${speaker.color}">${speaker.emoji}</div><div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--s400);margin-bottom:3px">${speaker.name} <span style="opacity:.5">${speaker.gender==='female'?'♀':'♂'}</span></div><div id="${msgId}-vb" class="voice-bubble" onclick="playAndReveal('${msgId}',this)"><div class="voice-wave">${'<div class="wave-bar"></div>'.repeat(6)}</div><div class="voice-bubble-label">🔊 Click to hear (${speaker.gender} voice) · 💬 to read</div></div><div id="${msgId}-tb" class="hidden"><div class="msg-bubble ai">${text}</div><button onclick="document.getElementById('${msgId}-tb').classList.add('hidden');document.getElementById('${msgId}-vb').classList.remove('hidden')" style="font-size:11px;color:var(--s400);background:none;border:none;cursor:pointer;margin-top:3px">↩ Hide</button></div></div>`;
-  chat.appendChild(msgDiv);chat.scrollTop=chat.scrollHeight;
+    const systemP=`You are ${speaker.name}, a student in a university seminar. You have carefully read the assigned material and are participating in a discussion. Stay specific to this material — reference concepts, arguments, or ideas from it. Be intellectually curious, ask probing questions, agree/disagree with reasoning, and keep responses to 1-3 sentences. Vary your style: sometimes ask a question, sometimes make a claim, sometimes build on what was said.
+
+${rehearsalMatContext}`;
+
+    const userP=context==='opening'
+      ? `Start the discussion with an opening remark or question about this material. Be specific to the material.`
+      : `The student just said: "${context}". Respond thoughtfully and specifically to what they said, relating it to the material.`;
+
+    text=await callClaude(systemP, userP, 200);
+    if(!text)text=`That's an interesting point. How does it connect to the main ideas in ${sessionClassmates[0]?.name?'the material':''} we read?`;
+  }catch(e){
+    text=`Interesting — can you say more about how that connects to what we covered?`;
+  }
+
+  // Remove thinking bubble
+  const thinkEl=document.getElementById(thinkId);
+  if(thinkEl)thinkEl.remove();
+
+  // Add voice bubble (hidden text until clicked)
+  const msgDiv=document.createElement('div');
+  msgDiv.className='msg';
+  const msgId='msg-'+Date.now()+Math.random();
+  msgDiv.innerHTML=`
+    <div class="msg-avatar ai-av" style="background:${speaker.color}">${speaker.emoji}</div>
+    <div style="flex:1">
+      <div style="font-size:11.5px;color:var(--s400);margin-bottom:4px">${speaker.name}</div>
+      <div id="${msgId}-voice" class="voice-bubble" onclick="playAndReveal('${msgId}',this)" title="Click to play voice">
+        <div class="voice-wave"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
+        <div class="voice-bubble-label">🔊 Click to hear · then tap 💬 to read</div>
+      </div>
+      <div id="${msgId}-text" class="hidden">
+        <div class="msg-bubble ai">${text}</div>
+        <button onclick="document.getElementById('${msgId}-text').classList.add('hidden');document.getElementById('${msgId}-voice').classList.remove('hidden')" style="font-size:11px;color:var(--s400);background:none;border:none;cursor:pointer;margin-top:4px">↩ Hide text</button>
+      </div>
+    </div>`;
+  // Store text for playback
+  msgDiv.dataset.text=text;
+  msgDiv.dataset.color=speaker.color;
+  chat.appendChild(msgDiv);
+  chat.scrollTop=chat.scrollHeight;
 }
 
-async function playAndReveal(msgId,vb){
-  const pm=vb.closest('.msg');const text=pm?.dataset?.text||'';const gender=pm?.dataset?.gender||'female';
-  if(!text)return;vb.style.pointerEvents='none';vb.querySelector('.voice-bubble-label').textContent='🔊 Playing…';
-  await speakText(text,gender);
-  vb.querySelector('.voice-bubble-label').textContent='💬 Click to reveal text';vb.style.pointerEvents='auto';
-  vb.onclick=()=>{vb.classList.add('hidden');document.getElementById(msgId+'-tb').classList.remove('hidden');};
+async function playAndReveal(msgId, voiceBubbleEl){
+  // Get text from data attribute on parent
+  const parentMsg=voiceBubbleEl.closest('.msg');
+  const text=parentMsg?.dataset?.text||'';
+  if(!text)return;
+
+  // Play TTS
+  voiceBubbleEl.style.pointerEvents='none';
+  voiceBubbleEl.querySelector('.voice-bubble-label').textContent='🔊 Playing…';
+  await speakText(text);
+
+  // Show reveal button instead
+  voiceBubbleEl.querySelector('.voice-bubble-label').textContent='💬 Tap to reveal text';
+  voiceBubbleEl.style.pointerEvents='auto';
+  voiceBubbleEl.onclick=()=>{
+    voiceBubbleEl.classList.add('hidden');
+    document.getElementById(msgId+'-text').classList.remove('hidden');
+  };
 }
 
-function handleInputKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendUserMsg();}}
-async function sendUserMsg(){
-  const ta=document.getElementById('user-msg-input');const said=ta.value.trim();if(!said||aiReplying)return;ta.value='';
-  const chat=document.getElementById('chat-area');
-  const d=document.createElement('div');d.className='msg user';
-  d.innerHTML=`<div class="msg-avatar user-av">You</div><div style="text-align:right;min-width:0"><div style="font-size:11px;color:var(--s400);margin-bottom:3px">You</div><div class="msg-bubble user">${said}</div></div>`;
-  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
-  conversationHistory.push({role:'user',text:said});
-  const extra=sessionClassmates.length>=3&&Math.random()<0.3?1:0;
-  await enqueueAIReply(said,extra);
-}
-
+// ── MIC ──
 async function toggleMic(){
   if(!rehearsalListening){
-    rehearsalListening=true;document.getElementById('mic-toggle-btn').classList.add('listening');document.getElementById('mic-hint').textContent='🔴 Listening… click again to stop & send';
+    rehearsalListening=true;
+    document.getElementById('mic-btn').className='btn btn-red btn-lg flex-1 recording-pulse';
+    document.getElementById('mic-btn').textContent='⏹ Stop & Send';
+    document.getElementById('mic-hint').textContent='🔴 Recording… speak your thoughts now';
+    document.getElementById('rehearsal-transcript').classList.add('listening');
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-    if(!SR){toast('Speech recognition needs Chrome','error');rehearsalListening=false;resetMicUI();return;}
+    if(!SR){toast('Speech recognition not supported. Try Chrome.','error');rehearsalListening=false;resetMicUI();return;}
     rehearsalRecognizer=new SR();rehearsalRecognizer.lang='en-US';rehearsalRecognizer.continuous=true;rehearsalRecognizer.interimResults=true;
-    let final='';
-    rehearsalRecognizer.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript;}document.getElementById('user-msg-input').value=(final+interim).trim();};
-    rehearsalRecognizer.onend=()=>{if(rehearsalListening){rehearsalListening=false;resetMicUI();const v=document.getElementById('user-msg-input').value.trim();if(v)sendUserMsg();}};
-    rehearsalRecognizer.onerror=e=>{if(e.error!=='no-speech')toast('Mic: '+e.error,'error');rehearsalListening=false;resetMicUI();};
+    rehearsalRecognizer.onresult=e=>{
+      let interim='',final='';
+      for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript;}
+      if(final)fullTranscript+=final;
+      document.getElementById('rehearsal-transcript').textContent=(fullTranscript+interim)||'Listening…';
+    };
+    rehearsalRecognizer.onend=()=>{if(rehearsalListening)stopMicAndRespond();};
+    rehearsalRecognizer.onerror=e=>{if(e.error!=='no-speech')toast('Mic error: '+e.error,'error');rehearsalListening=false;resetMicUI();};
     try{rehearsalRecognizer.start();}catch(e){toast('Could not start mic','error');rehearsalListening=false;resetMicUI();}
-  } else {rehearsalListening=false;if(rehearsalRecognizer){try{rehearsalRecognizer.stop();}catch(e){}}resetMicUI();}
+  } else stopMicAndRespond();
 }
-function resetMicUI(){document.getElementById('mic-toggle-btn').classList.remove('listening');document.getElementById('mic-hint').textContent='🎤 Click mic to record · click again to send';}
-function updateTimer(){const m=String(Math.floor(rehearsalTimeLeft/60)).padStart(2,'0'),s=String(rehearsalTimeLeft%60).padStart(2,'0');const el=document.getElementById('session-timer');el.textContent=`${m}:${s}`;el.className='timer-badge '+(rehearsalTimeLeft<=60?'timer-urgent':'timer-normal');}
+
+function resetMicUI(){
+  const b=document.getElementById('mic-btn');if(b){b.className='btn btn-blue btn-lg flex-1';b.textContent='🎙 Speak';}
+  document.getElementById('mic-hint').textContent='Click to start speaking, click again when done';
+  const t=document.getElementById('rehearsal-transcript');if(t)t.classList.remove('listening');
+}
+
+async function stopMicAndRespond(){
+  rehearsalListening=false;
+  if(rehearsalRecognizer){try{rehearsalRecognizer.stop();}catch(e){}}
+  resetMicUI();
+  const said=fullTranscript.trim();
+  if(!said){toast('No speech detected','error');return;}
+
+  // Add user bubble
+  const chat=document.getElementById('chat-area');
+  const d=document.createElement('div');d.className='msg user';
+  d.innerHTML=`<div class="msg-avatar user-av">You</div><div style="text-align:right"><div style="font-size:11.5px;color:var(--s400);margin-bottom:4px">You</div><div class="msg-bubble user">${said}</div></div>`;
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+  fullTranscript='';
+  document.getElementById('rehearsal-transcript').textContent='Your spoken words will appear here as you speak…';
+
+  // Decide how many classmates respond (1 or 2 if ≥2 classmates)
+  const numResponders=sessionClassmates.length>=2&&Math.random()<0.4?2:1;
+  for(let i=0;i<numResponders;i++){
+    if(i>0)await new Promise(r=>setTimeout(r,600)); // brief pause between
+    await addAIMsg(null, said);
+  }
+}
+
+function updateTimer(){
+  const m=String(Math.floor(rehearsalTimeLeft/60)).padStart(2,'0'),s=String(rehearsalTimeLeft%60).padStart(2,'0');
+  const el=document.getElementById('session-timer');
+  el.textContent=`${m}:${s}`;
+  el.className='timer-badge '+(rehearsalTimeLeft<=60?'timer-urgent':'timer-normal');
+}
+
 function endSession(){
   clearInterval(rehearsalTimer);if(rehearsalListening){rehearsalListening=false;try{rehearsalRecognizer.stop();}catch(e){}resetMicUI();}
-  document.getElementById('session-input-area').classList.add('hidden');document.getElementById('session-done').classList.remove('hidden');
-  toast('Rehearsal complete!','success');
+  document.getElementById('session-active').classList.add('hidden');
+  document.getElementById('session-done').classList.remove('hidden');
+  toast('Session complete!','success');
   const d=ud();const matId=document.getElementById('rehearsal-material-select').value;
-  if(!d.preparations)d.preparations=[];
   const prep=d.preparations.find(p=>p.material_id===matId);if(prep)prep.rehearsal_completed=true;
 }
 function finishEarly(){endSession();}
 function resetRehearsal(){
   clearInterval(rehearsalTimer);if(rehearsalListening){rehearsalListening=false;try{rehearsalRecognizer.stop();}catch(e){}resetMicUI();}
-  aiReplyQueue=[];aiReplying=false;conversationHistory=[];
-  document.getElementById('rehearsal-setup').classList.remove('hidden');document.getElementById('rehearsal-session').classList.add('hidden');
-  document.getElementById('session-done').classList.add('hidden');document.getElementById('user-msg-input').value='';
+  rehearsalListening=false;fullTranscript='';lastSpeakerIdx=-1;
+  document.getElementById('rehearsal-setup').classList.remove('hidden');
+  document.getElementById('rehearsal-session').classList.add('hidden');
+  document.getElementById('session-active').classList.remove('hidden');
+  document.getElementById('session-done').classList.add('hidden');
+  document.getElementById('rehearsal-transcript').textContent='Your spoken words will appear here as you speak…';
   initRehearsal();
 }
 
-// ════════════════════════════════════════
-// STAGE 3 · IN-CLASS PARTICIPATION
-// ════════════════════════════════════════
-function initInClass(){populateSelects();}
+// ══ AUTH ══
+function showView(v){['landing','login','register','app'].forEach(id=>document.getElementById('view-'+id).classList.add('hidden'));document.getElementById('view-'+v).classList.remove('hidden');}
+function selectRole(r){selectedRole=r;document.getElementById('role-student').className='role-opt'+(r==='student'?' selected':'');document.getElementById('role-teacher').className='role-opt'+(r==='teacher'?' selected':'');}
+function fillDemo(e,p){document.getElementById('login-email').value=e;document.getElementById('login-password').value=p;}
+function doLogin(){const email=document.getElementById('login-email').value.trim().toLowerCase();const pw=document.getElementById('login-password').value;const err=document.getElementById('login-error');err.classList.add('hidden');if(!email||!pw){err.textContent='Please fill in all fields.';err.classList.remove('hidden');return;}const user=USERS_DB[email];if(!user||user.password!==pw){err.textContent='Incorrect email or password.';err.classList.remove('hidden');return;}loginUser(email,user.name,user.role);}
+function doRegister(){const name=document.getElementById('reg-name').value.trim();const email=document.getElementById('reg-email').value.trim().toLowerCase();const pw=document.getElementById('reg-password').value;const err=document.getElementById('reg-error');err.classList.add('hidden');if(!name||!email||!pw){err.textContent='Please fill in all fields.';err.classList.remove('hidden');return;}if(pw.length<6){err.textContent='Password must be at least 6 characters.';err.classList.remove('hidden');return;}if(!email.includes('@')){err.textContent='Please enter a valid email.';err.classList.remove('hidden');return;}if(USERS_DB[email]){err.textContent='Account already exists.';err.classList.remove('hidden');return;}USERS_DB[email]={password:pw,name,role:selectedRole};loginUser(email,name,selectedRole);}
+function loginUser(email,name,role){SESSION={loggedIn:true,email,name,role};document.getElementById('nav-avatar').textContent=name[0].toUpperCase();document.getElementById('nav-username').textContent=name;document.getElementById('nav-role').textContent=role;document.getElementById('nav-role-label').textContent=role==='teacher'?'📋 Teacher':'🎓 Student';buildNav();showView('app');navigate(role==='teacher'?'TeacherHome':'Home');}
+function logout(){SESSION={loggedIn:false,email:'',name:'',role:'student'};showView('landing');}
 
-function loadInclassPhrases(){
-  const id=document.getElementById('inclass-material-select').value;
-  if(!id){document.getElementById('inclass-content').classList.add('hidden');return;}
-  const d=ud();if(!d.inclass)d.inclass={};if(!d.inclass[id])d.inclass[id]={};
-  document.getElementById('inclass-content').classList.remove('hidden');
-  renderSituationBanks(id);
+// ══ NAV ══
+const ICONS={
+  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  classes:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  file:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+  book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  mic:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>`,
+  msg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  pen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`,
+  user:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+};
+const STUDENT_NAV=[
+  {name:'Home',page:'Home',icon:'home'},{name:'Materials',page:'Materials',icon:'file'},
+  {name:'Pre-Class Prep',page:'PreClassPrep',icon:'book'},{name:'Rehearsal',page:'Rehearsal',icon:'mic'},
+  {name:'Phrases',page:'DiscussionPhrases',icon:'msg'},{name:'Reflection',page:'Reflection',icon:'pen'},
+  {name:'Profile',page:'Profile',icon:'user'},
+];
+const TEACHER_NAV=[{name:'My Classes',page:'TeacherHome',icon:'classes'},{name:'Materials',page:'Materials',icon:'file'},{name:'Profile',page:'Profile',icon:'user'}];
+function buildNav(){const items=SESSION.role==='teacher'?TEACHER_NAV:STUDENT_NAV;document.getElementById('nav-list').innerHTML=items.map(item=>`<button class="nav-item ${currentPage===item.page?'active':''}" onclick="navigate('${item.page}')">${currentPage===item.page?`<span class="nav-dot" style="background:#8b5cf6"></span>`:''}${ICONS[item.icon]||''}${item.name}</button>`).join('');}
+function navigate(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const el=document.getElementById('page-'+page);if(el){el.classList.add('active');currentPage=page;buildNav();onPageEnter(page);}document.getElementById('sidebar').classList.remove('open');document.getElementById('mob-overlay').classList.remove('open');}
+function onPageEnter(page){
+  if(page==='Home')renderHome();
+  if(page==='TeacherHome')renderTeacherClasses();
+  if(page==='Materials')renderMaterials();
+  if(page==='PreClassPrep')initPrep();
+  if(page==='Rehearsal')initRehearsal();
+  if(page==='DiscussionPhrases')initPhrases();
+  if(page==='Reflection')initReflection();
+  if(page==='Profile')renderProfile();
 }
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('mob-overlay').classList.toggle('open');}
 
-function renderSituationBanks(id){
+// ══ HOME ══
+function renderHome(){
   const d=ud();
-  const el=document.getElementById('situation-banks');
-  el.innerHTML=SITUATION_BANKS.map(sit=>{
-    const custom=d.inclass?.[id]?.[sit.id]||[];
-    const allPhrases=[...sit.phrases,...custom];
-    return `<div class="card mb-4">
-      <div class="card-header" style="padding-bottom:10px">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:34px;height:34px;border-radius:9px;background:${sit.bg};display:flex;align-items:center;justify-content:center;font-size:16px">${sit.emoji}</div>
-          <div><div class="card-title" style="color:${sit.color}">${sit.label}</div><div style="font-size:11.5px;color:var(--s400)">Click any phrase to copy it</div></div>
-        </div>
-      </div>
-      <div class="card-body" style="padding-top:10px">
-        <div>${allPhrases.map((p,pi)=>`<button class="phrase-chip" id="pc-${sit.id}-${pi}" onclick="copyPhrase('${sit.id}',${pi},'${id}')" title="Click to copy">${p}</button>`).join('')}</div>
-      </div>
-    </div>`;
-  }).join('');
+  document.getElementById('stat-materials').textContent=d.materials.length;
+  document.getElementById('stat-rehearsals').textContent=d.preparations.filter(p=>p.rehearsal_completed).length;
+  document.getElementById('stat-preps').textContent=d.preparations.length;
 }
 
-function copyPhrase(sitId,pi,matId){
-  const sit=SITUATION_BANKS.find(s=>s.id===sitId);const d=ud();
-  const custom=d.inclass?.[matId]?.[sitId]||[];
-  const allPhrases=[...sit.phrases,...custom];
-  const text=allPhrases[pi];
-  navigator.clipboard.writeText(text).then(()=>{
-    const btn=document.getElementById(`pc-${sitId}-${pi}`);if(!btn)return;
-    btn.classList.add('copied-flash');btn.textContent='✓ Copied!';
-    setTimeout(()=>{btn.classList.remove('copied-flash');btn.textContent=text;},1500);
-  }).catch(()=>toast(text));
+// ══ CLASS MANAGEMENT ══
+function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase();}
+function createClass(){const name=document.getElementById('new-class-name').value.trim();if(!name){toast('Please enter a class name','error');return;}const code=genCode();CLASS_DB[code]={id:'cls'+Date.now(),code,name,desc:document.getElementById('new-class-desc').value.trim(),teacherEmail:SESSION.email,students:[],materials:[]};document.getElementById('new-class-name').value='';document.getElementById('new-class-desc').value='';closeModal('create-class-modal');renderTeacherClasses();toast(`Class created! Code: ${code}`,'success');}
+function joinClass(){const code=document.getElementById('join-code-input').value.trim().toUpperCase();const err=document.getElementById('join-error');err.classList.add('hidden');if(code.length!==6){err.textContent='Please enter a 6-character code.';err.classList.remove('hidden');return;}const cls=CLASS_DB[code];if(!cls){err.textContent='Class not found. Check the code and try again.';err.classList.remove('hidden');return;}const d=ud();if(d.joinedClasses.includes(code)){err.textContent='You have already joined this class.';err.classList.remove('hidden');return;}d.joinedClasses.push(code);if(!cls.students.includes(SESSION.email))cls.students.push(SESSION.email);cls.materials.forEach(m=>{if(!d.materials.find(x=>x.id===m.id))d.materials.unshift({...m,source:'class',classCode:code});});document.getElementById('join-code-input').value='';closeModal('join-class-modal');populateSelects();toast(`Joined "${cls.name}"!`,'success');}
+function renderTeacherClasses(){const myCls=Object.values(CLASS_DB).filter(c=>c.teacherEmail===SESSION.email);const el=document.getElementById('teacher-classes-list');if(!myCls.length){el.innerHTML=`<div class="card"><div class="empty-state"><h3>No classes yet</h3><p>Create your first class to get started</p></div></div>`;return;}el.innerHTML=myCls.map(cls=>`<div class="class-card mb-4"><div class="flex items-start justify-between flex-wrap gap-3 mb-4"><div><h2 style="font-size:20px;font-weight:800">${cls.name}</h2>${cls.desc?`<p style="font-size:13px;color:var(--s500)">${cls.desc}</p>`:''}</div><button class="btn btn-red btn-sm" onclick="deleteClass('${cls.code}')">Delete</button></div><div class="flex items-center gap-4 flex-wrap mb-4"><div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--s400);margin-bottom:6px">Class Code</div><div class="class-code" onclick="copyCode('${cls.code}')" title="Click to copy">${cls.code} 📋</div></div><div style="display:flex;gap:12px;margin-left:auto"><div style="text-align:center"><div style="font-size:22px;font-weight:800;color:var(--v600)">${cls.students.length}</div><div style="font-size:12px;color:var(--s500)">Students</div></div></div></div><div class="flex gap-2 flex-wrap"><button class="btn btn-outline btn-sm" onclick="viewStudents('${cls.code}')">👥 View Students</button></div></div>`).join('');}
+function copyCode(code){navigator.clipboard.writeText(code).then(()=>toast(`Code "${code}" copied!`,'success')).catch(()=>toast(code));}
+function deleteClass(code){if(!confirm('Delete this class?'))return;delete CLASS_DB[code];renderTeacherClasses();}
+function viewStudents(code){const cls=CLASS_DB[code];if(!cls)return;document.getElementById('students-modal-title').textContent=`👥 ${cls.name} — Students`;document.getElementById('students-modal-list').innerHTML=cls.students.length?cls.students.map(email=>{const u=USERS_DB[email]||{name:email};return`<div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--s50);border-radius:10px;margin-bottom:8px"><div class="av-sm" style="background:linear-gradient(135deg,#a78bfa,#60a5fa)">${u.name[0]}</div><div><div style="font-weight:700">${u.name}</div><div style="font-size:12px;color:var(--s400)">${email}</div></div></div>`;}).join(''):`<div class="empty-state" style="padding:32px"><h3>No students yet</h3><p>Share the class code with your students</p></div>`;openModal('class-students-modal');}
+
+// ══ MATERIALS ══
+function handleDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag-over');}
+function handleDragLeave(){document.getElementById('upload-zone').classList.remove('drag-over');}
+function handleDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)processFile(f);}
+function handleFileSelect(e){const f=e.target.files[0];if(f)processFile(f);}
+function processFile(file){if(file.size>10*1024*1024){toast('File too large','error');return;}pendingFile=file;document.getElementById('file-preview').innerHTML=`<div class="file-preview-box"><div style="font-size:28px">📄</div><div><div style="font-weight:600">${file.name}</div><div style="font-size:12px;color:var(--s500)">${(file.size/1024).toFixed(1)} KB</div></div></div>`;document.getElementById('file-preview').classList.remove('hidden');const tf=document.getElementById('mat-file-title');if(!tf.value)tf.value=file.name.replace(/\.[^/.]+$/,'').replace(/[-_]/g,' ');}
+
+function addMaterial(){
+  const title=document.getElementById('mat-file-title').value.trim();
+  if(!title){toast('Please enter a title','error');return;}
+  if(!pendingFile){toast('Please select a file','error');return;}
+  const kc=document.getElementById('mat-file-concepts').value;
+  const mat={id:'m'+Date.now(),title,subject:document.getElementById('mat-file-subject').value,class_date:document.getElementById('mat-file-date-val').value,content:document.getElementById('mat-file-notes').value,status:'uploaded',key_concepts:kc?kc.split(',').map(s=>s.trim()).filter(Boolean):[],source:'file',fileName:pendingFile.name};
+  const d=ud();d.materials.unshift(mat);
+  // reset modal
+  ['mat-file-title','mat-file-subject','mat-file-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mat-file-concepts').value='';
+  document.getElementById('mat-file-date-val').value='';
+  document.getElementById('dr-file-display').textContent='DD / MM / YY';
+  document.getElementById('dr-file-trigger').classList.remove('has-value');
+  pendingFile=null;document.getElementById('file-preview').classList.add('hidden');document.getElementById('file-input').value='';
+  closeModal('add-material-modal');populateSelects();renderMaterials();toast('Material added!','success');
 }
 
-function addCustomPhrase(){
-  const sit=document.getElementById('custom-phrase-situation').value;
-  const text=document.getElementById('custom-phrase-input').value.trim();
-  const id=document.getElementById('inclass-material-select').value;
-  if(!text||!id||!sit)return;
-  const d=ud();if(!d.inclass)d.inclass={};if(!d.inclass[id])d.inclass[id]={};
-  if(!d.inclass[id][sit])d.inclass[id][sit]=[];
-  d.inclass[id][sit].push(text);
-  document.getElementById('custom-phrase-input').value='';
-  renderSituationBanks(id);toast('Phrase added!','success');
+const DR_MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DR_IH=40;
+function drInit(id){const now=new Date();window['_dr_'+id]={d:{items:Array.from({length:31},(_,i)=>String(i+1).padStart(2,'0')),idx:now.getDate()-1},m:{items:DR_MONTHS.slice(),idx:now.getMonth()},y:{items:Array.from({length:8},(_,i)=>String(now.getFullYear()-1+i)),idx:1}};['d','m','y'].forEach(c=>drBuildCol(id,c));}
+function drBuildCol(id,col){const s=window['_dr_'+id][col];const el=document.getElementById(id+'-'+col);if(!el)return;el.innerHTML='<div style="height:70px"></div>'+s.items.map((v,i)=>`<div class="dr-item" data-i="${i}">${v}</div>`).join('')+'<div style="height:70px"></div>';el.scrollTop=s.idx*DR_IH;el.addEventListener('scroll',()=>{s.idx=Math.max(0,Math.min(s.items.length-1,Math.round(el.scrollTop/DR_IH)));drHighlight(id,col);drRefreshPreview(id);},{passive:true});}
+function drHighlight(id,col){const s=window['_dr_'+id][col];document.getElementById(id+'-'+col).querySelectorAll('.dr-item').forEach((item,i)=>item.classList.toggle('active',i===s.idx));}
+function drRefreshPreview(id){const st=window['_dr_'+id];document.getElementById(id+'-preview').textContent=`${st.d.items[st.d.idx]} / ${st.m.items[st.m.idx]} / ${(st.y.items[st.y.idx]||'').slice(2)}`;}
+function drToggle(id){const popup=document.getElementById(id+'-popup');const trigger=document.getElementById(id+'-trigger');const opening=popup.hidden;document.querySelectorAll('.dr-popup').forEach(p=>{p.hidden=true;});document.querySelectorAll('.dr-trigger').forEach(t=>t.classList.remove('active'));if(opening){if(!window['_dr_'+id])drInit(id);popup.hidden=false;trigger.classList.add('active');const rect=trigger.getBoundingClientRect();popup.style.left=rect.left+'px';popup.style.top=(rect.bottom+6)+'px';popup.style.width=Math.max(rect.width,280)+'px';const st=window['_dr_'+id];['d','m','y'].forEach(c=>{const el=document.getElementById(id+'-'+c);if(el){el.scrollTop=st[c].idx*DR_IH;drHighlight(id,c);}});drRefreshPreview(id);}}
+function drConfirm(id,hiddenId){const st=window['_dr_'+id];['d','m','y'].forEach(c=>{const el=document.getElementById(id+'-'+c);if(el)st[c].idx=Math.max(0,Math.min(st[c].items.length-1,Math.round(el.scrollTop/DR_IH)));});const dd=st.d.items[st.d.idx];const mm=String(DR_MONTHS.indexOf(st.m.items[st.m.idx])+1).padStart(2,'0');const yyyy=st.y.items[st.y.idx];document.getElementById(hiddenId).value=`${yyyy}-${mm}-${dd}`;document.getElementById(id+'-display').textContent=`${dd} / ${st.m.items[st.m.idx]} / ${yyyy.slice(2)}`;document.getElementById(id+'-trigger').classList.add('has-value');document.getElementById(id+'-popup').hidden=true;document.getElementById(id+'-trigger').classList.remove('active');}
+document.addEventListener('click',e=>{document.querySelectorAll('.dr-popup:not([hidden])').forEach(popup=>{const id=popup.id.replace('-popup','');const t=document.getElementById(id+'-trigger');if(!popup.contains(e.target)&&!t.contains(e.target)){popup.hidden=true;t.classList.remove('active');}});});
+
+function formatDate(iso){if(!iso)return'';const[y,m,dd]=iso.split('-');return`${dd} ${DR_MONTHS[parseInt(m)-1]||m} ${y.slice(2)}`;}
+function renderMaterials(){
+  const d=ud();const seen=new Set();const mats=d.materials.filter(m=>{if(seen.has(m.id))return false;seen.add(m.id);return true;});
+  const list=document.getElementById('materials-list');
+  if(!mats.length){list.innerHTML=`<div class="card"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg><h3>No materials yet</h3><p>Upload your first file to get started</p></div></div>`;return;}
+  list.innerHTML=`<div class="card">${mats.map(m=>`<div class="material-item"><div style="width:42px;height:42px;background:var(--b50);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px"><span style="font-weight:700">${m.title}</span>${m.source==='class'?'<span class="badge badge-violet">📋 From Teacher</span>':''}</div>${m.subject?`<p style="font-size:13px;color:var(--s500)">${m.subject}</p>`:''}${m.fileName?`<p style="font-size:12px;color:var(--s400)">📎 ${m.fileName}</p>`:''}${m.class_date?`<p style="font-size:12px;color:var(--s400)">📅 ${formatDate(m.class_date)}</p>`:''}</div><div style="display:flex;align-items:center;gap:8px;flex-shrink:0"><button class="btn btn-outline btn-sm" onclick="prepMaterial('${m.id}')">Prepare →</button>${m.source!=='class'?`<button class="btn btn-ghost btn-icon btn-sm" onclick="deleteMaterial('${m.id}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>`:''}</div></div>`).join('')}</div>`;
+}
+function deleteMaterial(id){const d=ud();d.materials=d.materials.filter(m=>m.id!==id);renderMaterials();populateSelects();}
+function prepMaterial(id){navigate('PreClassPrep');setTimeout(()=>{document.getElementById('prep-material-select').value=id;loadPrepMaterial();},50);}
+function populateSelects(){
+  const d=ud();
+  ['prep-material-select','rehearsal-material-select','phrases-material-select','reflection-material-select'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const cur=el.value;el.innerHTML='<option value="">Choose material...</option>'+d.materials.map(m=>`<option value="${m.id}"${m.id===cur?' selected':''}>${m.title}</option>`).join('');
+  });
 }
 
-// ════════════════════════════════════════
-// STAGE 4 · QUESTIONNAIRE
-// ════════════════════════════════════════
-function initQuestionnaire(){
-  populateSelects();
-  buildLikert('q-scaffold-likert','scaffold');
-  buildLikert('q-prepared-likert','prepared');
-  buildLikert('q-confident-likert','confident');
-}
-function buildLikert(elId,key){
-  const el=document.getElementById(elId);if(!el)return;
-  el.innerHTML=[1,2,3,4,5].map(v=>`<button class="likert-opt ${qLikerts[key]===v?'selected':''}" onclick="setLikert('${key}',${v},this)">${v}</button>`).join('');
-}
-function setLikert(key,val,btn){
-  qLikerts[key]=val;
-  btn.closest('.likert-row').querySelectorAll('.likert-opt').forEach((b,i)=>b.classList.toggle('selected',i+1===val));
-}
-function loadQuestionnaire(){
-  const id=document.getElementById('q-material-select').value;
-  if(!id){document.getElementById('q-content').classList.add('hidden');return;}
-  document.getElementById('q-content').classList.remove('hidden');
-  qParticipated=null;document.getElementById('q-yes-btn').className='speak-btn speak-yes';document.getElementById('q-no-btn').className='speak-btn speak-no';document.getElementById('q-spoke-detail').classList.add('hidden');
-  document.getElementById('q-insights-out').classList.add('hidden');document.getElementById('scaffold-fading-box').classList.add('hidden');
-  // Check scaffold fading hint based on past questionnaires
-  const d=ud();const past=d.questionnaires?.filter(q=>q.scaffold_reliance<=2);
-  if(past?.length>=2){
-    document.getElementById('scaffold-fading-box').innerHTML=`<div class="scaffold-fade-note">✨ <strong>Scaffold fading notice:</strong> Based on your last ${past.length} sessions, you've relied less on sentence starters. Consider trying to participate without them in your next class — you may not need them anymore!</div>`;
-    document.getElementById('scaffold-fading-box').classList.remove('hidden');
-  }
-}
-function setParticipated(val){
-  qParticipated=val;
-  document.getElementById('q-yes-btn').className='speak-btn speak-yes'+(val?' selected':'');
-  document.getElementById('q-no-btn').className='speak-btn speak-no'+(!val?' selected':'');
-  document.getElementById('q-spoke-detail').classList.toggle('hidden',!val);
-}
-function saveQuestionnaire(){
-  const id=document.getElementById('q-material-select').value;
-  if(!id){toast('Please select a material','error');return;}
-  const d=ud();if(!d.questionnaires)d.questionnaires=[];
-  const q={id:'q'+Date.now(),material_id:id,participated:qParticipated,times:parseInt(document.getElementById('q-times').value)||0,scaffold_reliance:qLikerts.scaffold,prepared:qLikerts.prepared,confident:qLikerts.confident,what_helped:document.getElementById('q-what-helped').value,improve:document.getElementById('q-improve').value,ts:Date.now()};
-  d.questionnaires.push(q);
-  toast('Reflection saved!','success');
-}
-async function getQInsights(){
-  const btn=document.getElementById('q-insights-btn');btn.textContent='⏳ Generating…';btn.disabled=true;
-  const participated=qParticipated;const scaffold=qLikerts.scaffold;const prepared=qLikerts.prepared;const confident=qLikerts.confident;
-  let insight='';
-  try{
-    const sys=`You are a supportive learning coach. Give 2–3 sentences of specific, constructive feedback to a student based on their post-class reflection data. Be warm, actionable, and mention the specific pattern you see.`;
-    const u=`Student reflection: Participated: ${participated?'yes':'no'}. Scaffold reliance: ${scaffold}/5. Preparation level: ${prepared}/5. Confidence: ${confident}/5. What helped: "${document.getElementById('q-what-helped').value}". Improvement goal: "${document.getElementById('q-improve').value}".`;
-    insight=await callClaude(sys,u,180);
-  }catch(e){insight=participated?'Great job contributing! Notice how your preparation translated into action. Keep building on this momentum — try speaking a bit earlier in the next class.':'Not participating this time is okay. It\'s a starting point, not a stopping point. Consider setting a small goal: just one contribution next class using your prepared phrases.';}
-  document.getElementById('q-insight-text').textContent=insight;
-  document.getElementById('q-insights-out').classList.remove('hidden');
-  btn.textContent='✨ Get AI Feedback';btn.disabled=false;
-}
+// ══ PREP ══
+function initPrep(){populateSelects();}
+function loadPrepMaterial(){const d=ud();const id=document.getElementById('prep-material-select').value;if(!id){document.getElementById('prep-content').classList.add('hidden');return;}const mat=d.materials.find(m=>m.id===id);if(!mat)return;document.getElementById('prep-content').classList.remove('hidden');const saved=d.preparations.find(p=>p.material_id===id);const concepts=(mat.key_concepts||[]).map((c,i)=>({concept:c,my_explanation:saved?.concept_explanations?.[i]?.my_explanation||'',connection:saved?.concept_explanations?.[i]?.connection||''}));if(saved?.discussion_position)document.getElementById('discussion-position').value=saved.discussion_position;d._prepConcepts=concepts;renderConceptCards(concepts);}
+function renderConceptCards(concepts){const container=document.getElementById('concept-cards');if(!concepts.length){container.innerHTML=`<div class="card mb-4 text-center" style="padding:32px"><p style="font-size:32px;margin-bottom:8px">✨</p><h3>No key concepts yet</h3><p style="color:var(--s500);font-size:13px">Add comma-separated concepts when uploading the material.</p></div>`;updatePrepProgress(0,0);return;}container.innerHTML=concepts.map((c,i)=>`<div class="card concept-card"><div class="concept-header" onclick="toggleConcept(${i})"><div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0"><div class="concept-num ${c.my_explanation&&c.my_explanation.length>20?'done':''}" id="cnum-${i}">${c.my_explanation&&c.my_explanation.length>20?'✓':i+1}</div><span style="font-weight:700;font-size:15px">${c.concept}</span></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2">${prepExpandedIdx===i?'<path d="m18 15-6-6-6 6"/>':'<path d="m6 9 6 6 6-6"/>'}</svg></div><div class="concept-body" id="cbody-${i}" style="${prepExpandedIdx===i?'':'display:none'}"><div class="form-group mt-3"><label class="label">💡 Explain in your own words</label><textarea rows="3" placeholder="What does this mean to you?" id="exp-${i}" oninput="updateConceptExp(${i},this.value)">${c.my_explanation||''}</textarea></div><div class="form-group"><label class="label">🔗 Connect to what you know</label><textarea rows="2" id="conn-${i}" oninput="updateConceptConn(${i},this.value)">${c.connection||''}</textarea></div></div></div>`).join('');updatePrepProgress(concepts.filter(c=>c.my_explanation&&c.my_explanation.length>20).length,concepts.length);}
+function toggleConcept(i){prepExpandedIdx=prepExpandedIdx===i?-1:i;renderConceptCards(ud()._prepConcepts||[]);}
+function updateConceptExp(i,val){const d=ud();if(!d._prepConcepts)return;d._prepConcepts[i].my_explanation=val;const n=document.getElementById('cnum-'+i);if(n){n.className='concept-num'+(val.length>20?' done':'');n.textContent=val.length>20?'✓':i+1;}updatePrepProgress(d._prepConcepts.filter(c=>c.my_explanation&&c.my_explanation.length>20).length,d._prepConcepts.length);}
+function updateConceptConn(i,val){const d=ud();if(d._prepConcepts)d._prepConcepts[i].connection=val;}
+function updatePrepProgress(done,total){const pct=total>0?Math.round(done/total*100):0;document.getElementById('prep-pct').textContent=pct+'%';document.getElementById('prep-bar').style.width=pct+'%';document.getElementById('prep-text').textContent=`${done} of ${total} concepts explained`;}
+function savePrepProgress(){const d=ud();const id=document.getElementById('prep-material-select').value;if(!id)return;const ei=d.preparations.findIndex(p=>p.material_id===id);const data={material_id:id,concept_explanations:d._prepConcepts||[],discussion_position:document.getElementById('discussion-position').value};if(ei>=0)Object.assign(d.preparations[ei],data);else d.preparations.push({id:'prep'+Date.now(),...data,rehearsal_completed:false});toast('Progress saved!','success');}
 
-// ════════════════════════════════════════
-// PROFILE
-// ════════════════════════════════════════
+// ══ PHRASES ══
+const SITUATIONS=[{id:'start',label:'Starting',examples:["I'd like to add a perspective...","Building on what we covered...","One thing that stood out was..."]},{id:'build',label:'Building On',examples:["I agree and would like to expand...","To add to that point...","That connects to..."]},{id:'disagree',label:'Disagreeing',examples:["I see it a bit differently because...","That's valid, though I wonder if...","I'd offer an alternative view..."]},{id:'clarify',label:'Asking',examples:["Could you elaborate on...?","I'm curious how that relates to...","What would be an example of that?"]}];
+function initPhrases(){populateSelects();}
+function loadPhrases(){const id=document.getElementById('phrases-material-select').value;if(!id){document.getElementById('phrases-content').classList.add('hidden');return;}const d=ud();if(!d.phrases[id])d.phrases[id]={};document.getElementById('phrases-content').classList.remove('hidden');renderPhraseTabs(id);switchPhraseTab(currentPhraseTab,id);}
+function renderPhraseTabs(id){const d=ud();document.getElementById('phrase-tabs').innerHTML=SITUATIONS.map(cat=>{const count=(d.phrases[id]?.[cat.id]||[]).length;return`<button class="phrase-tab ${currentPhraseTab===cat.id?'active':''}" onclick="switchPhraseTab('${cat.id}','${id}')">${cat.label}${count?` <span style="background:rgba(124,58,237,.15);color:var(--v700);padding:1px 7px;border-radius:99px;font-size:11px;margin-left:4px">${count}</span>`:''}</button>`;}).join('');}
+function switchPhraseTab(tabId,id){if(!id)id=document.getElementById('phrases-material-select').value;currentPhraseTab=tabId;const cat=SITUATIONS.find(c=>c.id===tabId);document.getElementById('phrase-tab-title').textContent=cat.label;document.getElementById('phrase-examples').innerHTML=cat.examples.map(ex=>`<span class="chip" onclick="document.getElementById('new-phrase-input').value='${ex.replace(/'/g,"\\'")}'">${ex}</span>`).join('');renderPhraseList(id);renderPhraseTabs(id);}
+function renderPhraseList(id){const d=ud();const phrases=d.phrases[id]?.[currentPhraseTab]||[];document.getElementById('phrases-list').innerHTML=phrases.map((p,i)=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:13px 16px;background:var(--s50);border-radius:10px;margin-bottom:8px"><p style="flex:1;font-size:14px;color:var(--s700)">${p}</p><button class="btn btn-ghost btn-icon btn-sm" onclick="deletePhrase(${i},'${id}')">✕</button></div>`).join('');}
+function addPhrase(){const id=document.getElementById('phrases-material-select').value;const text=document.getElementById('new-phrase-input').value.trim();if(!text||!id)return;const d=ud();if(!d.phrases[id])d.phrases[id]={};if(!d.phrases[id][currentPhraseTab])d.phrases[id][currentPhraseTab]=[];d.phrases[id][currentPhraseTab].push(text);document.getElementById('new-phrase-input').value='';renderPhraseList(id);renderPhraseTabs(id);}
+function deletePhrase(i,id){const d=ud();d.phrases[id][currentPhraseTab].splice(i,1);renderPhraseList(id);renderPhraseTabs(id);}
+
+// ══ REFLECTION ══
+function initReflection(){populateSelects();}
+function loadReflection(){const id=document.getElementById('reflection-material-select').value;if(!id){document.getElementById('reflection-content').classList.add('hidden');return;}document.getElementById('reflection-content').classList.remove('hidden');document.getElementById('ai-insights-output').classList.add('hidden');}
+function setSpeak(val){reflectionDidSpeak=val;document.getElementById('speak-yes-btn').className='speak-btn speak-yes'+(val?' selected':'');document.getElementById('speak-no-btn').className='speak-btn speak-no'+(!val?' selected':'');document.getElementById('speak-details').classList.toggle('hidden',!val);}
+function setSatisfaction(val){reflectionSat=val;Array.from(document.getElementById('satisfaction-stars').children).forEach((s,i)=>{s.style.opacity=i<val?'1':'0.3';});document.getElementById('sat-label').textContent=['','😞 Poor','😐 Fair','🙂 Okay','😊 Good','🌟 Great!'][val]||'';}
+function saveReflection(){const d=ud();const id=document.getElementById('reflection-material-select').value;if(!id){toast('Please select a material','error');return;}const r={id:'r'+Date.now(),material_id:id,did_speak:reflectionDidSpeak,times_spoken:parseInt(document.getElementById('times-spoken').value)||0,what_worked:document.getElementById('what-worked').value,challenges:document.getElementById('challenges').value,improvement_notes:document.getElementById('improvement-notes').value,overall_satisfaction:reflectionSat};const ei=d.reflections.findIndex(x=>x.material_id===id);if(ei>=0)d.reflections[ei]=r;else d.reflections.push(r);toast('Reflection saved!','success');}
+function getAIInsights(){const btn=document.getElementById('get-insights-btn');btn.textContent='⏳ Generating…';btn.disabled=true;setTimeout(()=>{document.getElementById('insight-text').textContent=reflectionDidSpeak?"Great job speaking up! Every contribution builds your confidence. Try using 'I'd like to add to that...' as a low-stakes entry next time. 💪":"Not speaking this time is okay. Consider identifying one key moment in the next class where you can share your prepared thought. You've got this! 🌱";document.getElementById('ai-insights-output').classList.remove('hidden');btn.textContent='✨ Get AI Insights';btn.disabled=false;},1200);}
+
+// ══ PROFILE ══
 function renderProfile(){
-  const d=ud();
-  const mats=d.materials.length,preps=(d.preparations||[]).length,rehearsals=(d.preparations||[]).filter(p=>p.rehearsal_completed).length,qs=(d.questionnaires||[]).length;
-  const avgConf=d.questionnaires?.length?Math.round(d.questionnaires.reduce((s,q)=>s+(q.confident||0),0)/d.questionnaires.length*10)/10:'-';
+  const d=ud();const preps=d.preparations.length,rehearsals=d.preparations.filter(p=>p.rehearsal_completed).length,spoken=d.reflections.reduce((s,r)=>s+(r.times_spoken||0),0),refls=d.reflections.length;
   document.getElementById('profile-container').innerHTML=`
-  <div class="profile-hero mb-5">
-    <div class="flex items-start justify-between flex-wrap gap-3">
-      <div class="flex items-start gap-4"><div class="av-lg">${SESSION.name[0].toUpperCase()}</div><div><h1 style="font-size:24px;font-weight:800;margin-bottom:3px">${SESSION.name}</h1><p style="color:rgba(255,255,255,.75);margin-bottom:8px">${SESSION.email}</p><span class="badge badge-white">${SESSION.role==='teacher'?'📋 Teacher':'🎓 Student'}</span></div></div>
+  <div class="profile-hero mb-6">
+    <div class="flex items-start justify-between flex-wrap gap-4">
+      <div class="flex items-start gap-4">
+        <div class="av-lg">${SESSION.name[0].toUpperCase()}</div>
+        <div><h1 style="font-size:26px;font-weight:800;margin-bottom:4px">${SESSION.name}</h1><p style="color:rgba(255,255,255,.75);margin-bottom:10px">${SESSION.email}</p><span class="badge badge-white">${SESSION.role==='teacher'?'📋 Teacher':'🎓 Student'}</span></div>
+      </div>
       <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:white" onclick="logout()">Log Out</button>
     </div>
   </div>
-  <div class="grid-4 mb-5">
-    <div class="card stat-card"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--s400);margin-bottom:6px">Materials</div><div class="stat-num">${mats}</div></div>
-    <div class="card stat-card"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--s400);margin-bottom:6px">Preparations</div><div class="stat-num" style="color:var(--v600)">${preps}</div></div>
-    <div class="card stat-card"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--s400);margin-bottom:6px">Rehearsals</div><div class="stat-num" style="color:var(--b600)">${rehearsals}</div></div>
-    <div class="card stat-card"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--s400);margin-bottom:6px">Avg Confidence</div><div class="stat-num" style="color:var(--e600)">${avgConf}</div></div>
+  <div class="grid-4 mb-6">
+    <div class="card stat-card"><div class="stat-label mb-2">Materials</div><div class="stat-num">${d.materials.length}</div></div>
+    <div class="card stat-card"><div class="stat-label mb-2">Preparations</div><div class="stat-num" style="color:var(--v600)">${preps}</div></div>
+    <div class="card stat-card"><div class="stat-label mb-2">Rehearsals</div><div class="stat-num" style="color:var(--b600)">${rehearsals}</div></div>
+    <div class="card stat-card"><div class="stat-label mb-2">Times Spoken</div><div class="stat-num" style="color:var(--e600)">${spoken}</div></div>
   </div>
-  <div class="card"><div class="card-body">
-    <div style="font-weight:700;margin-bottom:10px">Your Journey Progress</div>
-    <div style="font-size:13px;color:var(--s500);line-height:1.7">
-      ${mats===0?'🔵 Upload your first material to begin.':`✅ ${mats} material${mats>1?'s':''} uploaded.`}<br>
-      ${preps===0?'⭕ Complete Stage 1: Pre-Class Preparation.':`✅ ${preps} preparation${preps>1?'s':''} completed.`}<br>
-      ${rehearsals===0?'⭕ Complete Stage 2: AI Rehearsal.':`✅ ${rehearsals} rehearsal${rehearsals>1?'s':''} done.`}<br>
-      ${qs===0?'⭕ Complete Stage 4: Questionnaire after class.':`✅ ${qs} post-class reflection${qs>1?'s':''} submitted.`}
-    </div>
-  </div></div>`;
+  <div class="card"><div class="card-body"><p style="font-size:13.5px;color:var(--s500)">Keep uploading materials and completing rehearsals to build your discussion confidence!</p></div></div>`;
 }
 
-// ════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════
-function openModal(id){document.getElementById(id).classList.add('open');}
+// ══ UTILS ══
+function openModal(id){document.getElementById(id).classList.add('open');if(id==='add-material-modal'&&SESSION.role==='teacher'){document.getElementById('mat-file-share-group').style.display='block';}}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.addEventListener('click',e=>{document.querySelectorAll('.modal-overlay').forEach(o=>{if(e.target===o)o.classList.remove('open');});});
-function toast(msg,type=''){const c=document.getElementById('toast-container');const el=document.createElement('div');el.className='toast'+(type?' '+type:'');el.innerHTML=`<span>${type==='success'?'✓':type==='error'?'✕':'ℹ'}</span> ${msg}`;c.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},2700);}
+function toast(msg,type=''){const c=document.getElementById('toast-container');const el=document.createElement('div');el.className='toast'+(type?' '+type:'');el.innerHTML=`<span>${type==='success'?'✓':type==='error'?'✕':'ℹ'}</span> ${msg}`;c.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='all .3s';setTimeout(()=>el.remove(),300);},2800);}
+
+// Pre-load voices
+if(window.speechSynthesis){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
 </script>
 </body>
 </html>
