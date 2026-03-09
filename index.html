@@ -972,16 +972,18 @@ function addMaterial() {
   const title = document.getElementById('mat-title').value.trim();
   if (!title) { toast('Please enter a title','error'); return; }
   const notes = document.getElementById('mat-notes').value.trim();
-  const content = pendingFile?._text || notes;
+  const content = notes || pendingFile?._text || '';
   if (!content && !pendingFile) { toast('Please add content or upload a file','error'); return; }
   const mat = {
-    id: 'm'+Date.now(), title,
-    subject: document.getElementById('mat-subject').value,
-    class_date: document.getElementById('mat-date-val').value,
-    content, notes, status:'uploaded',
-    key_concepts:[], ai_concepts:null, ai_vocab:null,
-    source:'file', fileName: pendingFile?.name||''
-  };
+  id: 'm'+Date.now(), title,
+  subject: document.getElementById('mat-subject').value,
+  class_date: document.getElementById('mat-date-val').value,
+  content: content,
+  notes: notes,
+  status:'uploaded',
+  key_concepts:[], ai_concepts:null, ai_vocab:null,
+  source:'file', fileName: pendingFile?.name||''
+};
   const d = ud(); d.materials.unshift(mat);
   const sc = document.getElementById('mat-share-class')?.value;
   if (sc && CLASS_DB[sc]) {
@@ -1090,7 +1092,7 @@ async function loadPrepMaterial() {
 }
 
 async function extractConcepts(mat) {
-  const content = (mat.content || mat.notes || '').substring(0, 4000);
+  const content = (mat.notes || mat.content || '').substring(0, 4000);
   if (!content) return [];
   try {
     const raw = await callClaude(
