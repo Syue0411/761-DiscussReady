@@ -1092,8 +1092,9 @@ async function loadPrepMaterial() {
 }
 
 async function extractConcepts(mat) {
-  const content = (mat.notes || mat.content || '').substring(0, 4000);
-  if (!content) return [];
+  const content = (mat.notes || mat.content || mat.title || '').substring(0, 4000);
+  console.log('DEBUG mat:', JSON.stringify({id: mat.id, title: mat.title, notesLen: (mat.notes||'').length, contentLen: (mat.content||'').length}));
+  if (!content || content === mat.title) return [];
   try {
     const raw = await callClaude(
       `You are an academic reading assistant. Read this material carefully and extract 4-6 key concepts that are SPECIFIC to this text.\n\nTitle: ${mat.title}\nContent: ${content}\n\nReturn ONLY a valid JSON array with no markdown fences, no preamble:\n[{"concept":"Exact term from the text","definition":"1-2 sentence plain English definition based on the text","why_important":"1 sentence on why this concept matters for discussion of THIS material"}]\n\nOnly extract concepts actually present in the text above. Do not invent generic concepts.`,
